@@ -36,11 +36,10 @@ const UserSchema = new mongoose.Schema({
     default: "my city",
   },
   numTel: {
-    type: int,
+    type: Number,
     maxlength: 8,
     minlength: 8,
     trim: true,
-    default: 00000000,
   },
 });
 
