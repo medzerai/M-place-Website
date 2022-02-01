@@ -11,12 +11,19 @@ dotenv.config();
 // connect DB
 import connectDB from "./server/config/connectDB.js";
 
+// middleware
+import notFoundMiddleware from "./server/middleware/not-found.js";
+import errorHandlerMiddleware from "./server/middleware/error-handler.js";
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("Welcome!");
 });
+
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
 
