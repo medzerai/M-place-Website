@@ -1,6 +1,6 @@
 import express from "express";
 const app = express();
-
+import "express-async-errors";
 // const cors = require("cors");
 import cors from "cors";
 app.use(cors());
