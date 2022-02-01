@@ -11,6 +11,9 @@ dotenv.config();
 // connect DB
 import connectDB from "./server/config/connectDB.js";
 
+// Routes
+import authRouter from "./server/routes/authRoutes.js";
+
 // middleware
 import notFoundMiddleware from "./server/middleware/not-found.js";
 import errorHandlerMiddleware from "./server/middleware/error-handler.js";
@@ -21,6 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.send("Welcome!");
 });
+
+app.use("/api/v1/auth", authRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
