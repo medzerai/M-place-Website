@@ -1,4 +1,4 @@
-import User from "../models/User.js";
+import User from "../models/User.model.js";
 import { StatusCodes } from "http-status-codes";
 
 class CustomAPIError extends Error {
