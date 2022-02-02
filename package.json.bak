@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server"
   },
   "repository": {
     "type": "git",
@@ -23,12 +22,8 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "dotenv": "^15.0.0",
     "express": "^4.17.2",
-    "express-async-errors": "^3.1.1",
-    "http-status-codes": "^2.2.0",
-    "mongoose": "^6.1.9",
-    "validator": "^13.7.0"
+    "mongoose": "^6.1.9"
   }
 }
