@@ -37,9 +37,12 @@ const UserSchema = new mongoose.Schema({
   },
   numTel: {
     type: Number,
-    maxlength: 8,
-    minlength: 8,
-    trim: true,
+    validate: {
+      validator: (val) => validator.isLength(val.toString(), 8, 8),
+      message: "numTel has to be 8 digits",
+    },
+    required: [true, "Please provide your Tel number"],
+    unique: true,
   },
 });
 
