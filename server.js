@@ -12,6 +12,7 @@ dotenv.config();
 import db from "./server/config/mongoose.config.js";
 
 import UserRouter from "./server/routes/auth.routes.js";
+import CategoryRouter from "./server/routes/category.routes.js";
 
 import errorHandler from "./server/middleware/error-handler.js";
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", UserRouter);
+app.use("/", CategoryRouter);
 
 app.use(errorHandler);
 

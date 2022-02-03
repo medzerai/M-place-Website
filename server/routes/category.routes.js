@@ -15,7 +15,5 @@ CategoryRouter.route("/categories/:id")
   .get(getCategoryById)
   .patch(updateCategory)
   .delete(deleteCategory);
-// CategoryRouter.route("/updateCategory").patch(updateCategory);
-// CategoryRouter.route("/deleteCategory").delete(deleteCategory);
 
 export default CategoryRouter;
