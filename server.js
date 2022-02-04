@@ -1,24 +1,50 @@
+import { StatusCodes } from "http-status-codes";
 import express from "express";
-const cors = require("cors");
-
 const app = express();
-app.use(cors());
-require("dotenv").config();
+import "express-async-errors";
 
-require("./server/config/mongoose.config");
+import cors from "cors";
+app.use(cors());
+
+import dotenv from "dotenv";
+dotenv.config();
+
+import db from "./server/config/mongoose.config.js";
+
+import UserRouter from "./server/routes/auth.routes.js";
+import CategoryRouter from "./server/routes/category.routes.js";
+
+import errorHandler from "./server/middleware/error-handler.js";
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-require("./server/routes/authRoutes")(app);
+
+app.get("/", (req, res) => {
+  res.send("Welcome!");
+});
+
+app.use("/api/v1/auth", UserRouter);
+app.use("/", CategoryRouter);
+
+app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log("Listening at Port 8000");
-});
 
-//Error handler
 app.use((req, res, next) => {
-  res.status(404);
+  res.status(StatusCodes.NOT_FOUND);
   res.send({
-    error: "not found",
+    error: "Not Found",
   });
 });
+
+const start = async () => {
+  try {
+    await db(process.env.MONGO_URL);
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+start();
