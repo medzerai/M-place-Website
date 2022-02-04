@@ -61,7 +61,10 @@ const login = async (req, res) => {
   if (!isPasswordCorrect) {
     throw new BadRequestError("Invalid Credentials");
   }
-  res.send("login user");
+
+  const token = user.createJWT();
+  user.password = undefined;
+  res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
 const updateUser = async (req, res) => {
