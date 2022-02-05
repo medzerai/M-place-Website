@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/presentation.css"
+import "./../css/presentation.css"
 import {Carousel} from "react-bootstrap";
 import {BsStarFill,BsStarHalf,BsStar} from 'react-icons/bs'
 

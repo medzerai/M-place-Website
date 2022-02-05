@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/navbar.css";
-import logo from "./logo.svg";
+import "./../css/navbar.css";
+import logo from "./../logo.svg";
 import {Link} from 'react-router-dom';
 import { AiOutlineMenu, AiOutlineClose ,AiOutlineSearch} from "react-icons/ai";
 import { FaShoppingCart ,FaUserAlt } from 'react-icons/fa'
@@ -70,7 +70,7 @@ function loadNavbar() {
                       data-id={item.id}
                       onMouseOver={hoverCateg}
                     >
-                      <a href={"/"+item.categorie.replaceAll(" ", "_")}>{item.categorie}</a>
+                      <Link to={"/"+item.categorie.replaceAll(" ", "_")}>{item.categorie}</Link>
                     </li>
                   );
                 })}

@@ -1,15 +1,15 @@
-import Navbar from "./Navbar";
-import Presentation from "./Presentation";
-import About from "./About";
-import Blogs from "./Blogs";
-import Contact from "./Contact";
-import Events from "./Events";
-import Footer from "./footer";
-import Login from "./login";
-import Register from "./register";
-import Erreur404 from "./404";
-import Product from "./product";
-import Category from "./category";
+import Navbar from "./components/Navbar";
+import Presentation from "./components/Presentation";
+import About from "./components/About";
+import Blogs from "./components/Blogs";
+import Contact from "./components/Contact";
+import Events from "./components/Events";
+import Footer from "./components/footer";
+import Login from "./components/login";
+import Register from "./components/register";
+import Erreur404 from "./components/404";
+import Product from "./components/product";
+import Category from "./components/category";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 
