@@ -119,6 +119,7 @@
     background-color: #fff;
     display: none;
     transition: 0.3s;
+    z-index: 2;
   }
   .liste-categorie{
     padding: 0;
@@ -189,12 +190,16 @@
     overflow-x: hidden;
     left: 0;
   top: 0;
-  transition: 0.5s;
+  transition: 0.4s;
   z-index: 9999;
     text-transform: capitalize;
 }
 .open{
   width: 300px;
+}
+.liste-categorie a {
+  text-decoration: none;
+  color: #000;
 }
 .side-bar-categorie a {
   text-decoration: none;
@@ -234,6 +239,12 @@
   }
   .categorie .menuCatgorie{
     font-size: 1.6em;
+  }
+  .marketplace-navbar  .margin-10p{
+    margin: 0;
+  }
+  .marketplace-navbar .container{
+    padding: 0;
   }
 }
 

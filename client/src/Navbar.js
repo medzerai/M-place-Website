@@ -21,9 +21,9 @@ function hoverCateg(e) {
       for (var j = 0; j < json[i]["sous-categorie"].length; j++) {
         sous_categ +=
           '<div class="sous-categorie-bloc"> <a href="/' +
-          json[i]["categorie"] +
+          json[i]["categorie"].replaceAll(" ", "_") +
           "/" +
-          json[i]["sous-categorie"][j]["titre"] +
+          json[i]["sous-categorie"][j]["titre"].replaceAll(" ", "_") +
           '" class="title-sous-categ">' +
           json[i]["sous-categorie"][j]["titre"] +
           "</a>";
@@ -34,11 +34,11 @@ function hoverCateg(e) {
         ) {
           sous_categ +=
             '<a href="/' +
-            json[i]["categorie"] +
+            json[i]["categorie"].replaceAll(" ", "_") +
             "/" +
-            json[i]["sous-categorie"][j]["titre"] +
+            json[i]["sous-categorie"][j]["titre"].replaceAll(" ", "_") +
             "/" +
-            json[i]["sous-categorie"][j]["sous-sous-categ"][k]["name"] +
+            json[i]["sous-categorie"][j]["sous-sous-categ"][k]["name"].replaceAll(" ", "_") +
             '">' +
             json[i]["sous-categorie"][j]["sous-sous-categ"][k]["name"] +
             "</a>";
@@ -68,7 +68,7 @@ function loadNavbar() {
                       data-id={item.id}
                       onMouseOver={hoverCateg}
                     >
-                      {item.categorie}
+                      <a href={"/"+item.categorie.replaceAll(" ", "_")}>{item.categorie}</a>
                     </li>
                   );
                 })}
@@ -181,7 +181,7 @@ const Navbar = () => {
           <div className="row align-items-center position-relative">
             <div className="col-3">
               <div className="site-logo">
-                <a href="index.html" className="font-weight-bold">
+                <a href="/" className="font-weight-bold">
                   <img src={logo} draggable="false"></img>
                 </a>
               </div>
@@ -203,27 +203,27 @@ const Navbar = () => {
               >
                 <ul className="site-menu main-menu js-clone-nav ml-auto ">
                   <li className="active">
-                    <a href="#" className="nav-link">
+                    <a href="/" className="nav-link">
                       Marketplace
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="nav-link">
+                    <a href="/events" className="nav-link">
                       Events
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="nav-link">
+                    <a href="/about" className="nav-link">
                       About
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="nav-link">
+                    <a href="/blogs" className="nav-link">
                       Blog
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="nav-link">
+                    <a href="/contact" className="nav-link">
                       Contact
                     </a>
                   </li>
@@ -262,7 +262,9 @@ const Navbar = () => {
                 </form>
               </div>
             </div>
-            <div className="col-200"></div>
+            <div className="col-200">
+              <a href="/login">login</a>
+            </div>
           </div>
         </div>
       </nav>
