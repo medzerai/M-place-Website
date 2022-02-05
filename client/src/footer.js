@@ -9,33 +9,33 @@ const Footer = () => {
       <div className="col-2">
         <h5>Section</h5>
         <ul className="nav flex-column">
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Home</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Features</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Pricing</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">FAQs</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">About</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">Market Place</a></li>
+          <li className="nav-item mb-2"><a href="/events" className="nav-link p-0 text-muted">Events</a></li>
+          <li className="nav-item mb-2"><a href="/about" className="nav-link p-0 text-muted">About</a></li>
+          <li className="nav-item mb-2"><a href="/blogs" className="nav-link p-0 text-muted">Blogs</a></li>
+          <li className="nav-item mb-2"><a href="/contact" className="nav-link p-0 text-muted">Contact</a></li>
         </ul>
       </div>
 
       <div className="col-2">
         <h5>Section</h5>
         <ul className="nav flex-column">
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Home</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Features</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Pricing</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">FAQs</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">About</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">Home</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">Features</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">Pricing</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">FAQs</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">About</a></li>
         </ul>
       </div>
 
       <div className="col-2">
         <h5>Section</h5>
         <ul className="nav flex-column">
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Home</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Features</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">Pricing</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">FAQs</a></li>
-          <li className="nav-item mb-2"><a href="#" className="nav-link p-0 text-muted">About</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">Home</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">Features</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">Pricing</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">FAQs</a></li>
+          <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-muted">About</a></li>
         </ul>
       </div>
 
@@ -55,9 +55,9 @@ const Footer = () => {
     <div className="d-flex justify-content-between py-4 my-4 border-top">
       <p>© 2022 M-place, Inc. All rights reserved.</p>
       <ul className="list-unstyled d-flex">
-        <li className="ms-3"><a className="link-dark" href="#"><RiFacebookFill/></a></li>
-        <li className="ms-3"><a className="link-dark" href="#"><RiTwitterFill/></a></li>
-        <li className="ms-3"><a className="link-dark" href="#"><RiInstagramFill/></a></li>
+        <li className="ms-3"><a className="link-dark" href="/"><RiFacebookFill/></a></li>
+        <li className="ms-3"><a className="link-dark" href="/"><RiTwitterFill/></a></li>
+        <li className="ms-3"><a className="link-dark" href="/"><RiInstagramFill/></a></li>
       </ul>
     </div>
   </footer>

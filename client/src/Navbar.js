@@ -2,7 +2,9 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/navbar.css";
 import logo from "./logo.svg";
+import {Link} from 'react-router-dom';
 import { AiOutlineMenu, AiOutlineClose ,AiOutlineSearch} from "react-icons/ai";
+import { FaShoppingCart ,FaUserAlt } from 'react-icons/fa'
 
 var json =
   '[{"id":1,"categorie":"Vétements","sous-categorie":[{"id":120,"titre":"mode Homme","sous-sous-categ":[{"name":"pull"},{"name":"veste"},{"name":"T-shirt"},{"name":"chaussure"}]},{"id":120,"titre":"Mode Femme","sous-sous-categ":[{"name":"pull"},{"name":"veste"},{"name":"T-shirt"},{"name":"chaussure"}]},{"id":120,"titre":"sous-categ1","sous-sous-categ":[{"name":"nn1"},{"name":"nn2"},{"name":"nn3"},{"name":"nn4"}]},{"id":121,"titre":"sous-categ2","sous-sous-categ":[{"name":"kn5"},{"name":"nkndhdgd45"}]}]},{"id":2,"categorie":"categ2","sous-categorie":[{"id":122,"titre":"sous-categ3","sous-sous-categ":[{"name":"sjsh"},{"name":"uhded"},{"name":"szohudige"}]},{"id":123,"titre":"sous-categ4","sous-sous-categ":[{"name":"sqszsz"},{"name":"efrf"},{"name":"rfrtgrt"},{"name":"eferfe"}]}]}]';
@@ -91,19 +93,20 @@ function loadNavbar() {
         <div className="side-bar-categorie">
           <AiOutlineClose onClick={closeSideBar} className="closeBtn" />
           <ul className="liste-categorie">
-            {json.map((item, key) => {
+            {json.map((item, i) => {
               return (
-                <li key={item.id} data-id={item.id}>
-                  <a href={"/" + item.categorie.replaceAll(" ", "_")}>
+                <li key={i} data-id={item.id}>
+                  <Link onClick={closeSideBar} to={"/" + item.categorie.replaceAll(" ", "_")}>
                     <div className="bg-orange-categ">{item.categorie}</div>
-                  </a>
+                  </Link>
 
                   <ul>
                     {item["sous-categorie"].map((sous_item, key) => {
                       return (
                         <li key={sous_item.id} data-id={sous_item.id}>
-                          <a
-                            href={
+                          <Link
+                          onClick={closeSideBar}
+                            to={
                               "/" +
                               item.categorie.replaceAll(" ", "_") +
                               "/" +
@@ -113,15 +116,16 @@ function loadNavbar() {
                             <div className="bg-orange-categ">
                               {sous_item.titre}
                             </div>
-                          </a>
+                          </Link>
 
                           <ul>
                             {sous_item["sous-sous-categ"].map(
                               (sous_sous_categ, key) => {
                                 return (
                                   <li key={key}>
-                                    <a
-                                      href={
+                                    <Link
+                                    onClick={closeSideBar}
+                                      to={
                                         "/" +
                                         item.categorie.replaceAll(" ", "_") +
                                         "/" +
@@ -134,7 +138,7 @@ function loadNavbar() {
                                       }
                                     >
                                       {sous_sous_categ.name}
-                                    </a>
+                                    </Link>
                                   </li>
                                 );
                               }
@@ -182,7 +186,7 @@ const Navbar = () => {
             <div className="col-3">
               <div className="site-logo">
                 <a href="/" className="font-weight-bold">
-                  <img src={logo} draggable="false"></img>
+                  <img src={logo} draggable="false" alt="logo"/>
                 </a>
               </div>
             </div>
@@ -190,7 +194,7 @@ const Navbar = () => {
             <div className="col-9  text-right">
               <span className="d-inline-block d-lg-none">
                 <a
-                  href="#"
+                  href="/"
                   className="text-primary site-menu-toggle js-menu-toggle py-5"
                 >
                   <AiOutlineMenu />
@@ -203,29 +207,29 @@ const Navbar = () => {
               >
                 <ul className="site-menu main-menu js-clone-nav ml-auto ">
                   <li className="active">
-                    <a href="/" className="nav-link">
+                    <Link to="/" className="nav-link">
                       Marketplace
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="/events" className="nav-link">
+                    <Link to="/events" className="nav-link">
                       Events
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="/about" className="nav-link">
+                    <Link to="/about" className="nav-link">
                       About
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="/blogs" className="nav-link">
+                    <Link to="/blogs" className="nav-link">
                       Blog
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="/contact" className="nav-link">
+                    <Link to="/contact" className="nav-link">
                       Contact
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>
@@ -262,8 +266,10 @@ const Navbar = () => {
                 </form>
               </div>
             </div>
-            <div className="col-200">
-              <a href="/login">login</a>
+            <div className="col-200 userDetailsNavbar">
+              <FaUserAlt className="iconUser"/>
+              <a href="/login">Sign In</a>/<a href="/register">Sign Up</a>
+              <FaShoppingCart className="iconCart"/>
             </div>
           </div>
         </div>

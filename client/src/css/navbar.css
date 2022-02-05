@@ -295,3 +295,24 @@ input,button:focus{
 .search-button:hover .searchIconBtn{
   fill: #cf7003;
 }
+
+
+
+
+/*******************User detals ***************/
+
+.userDetailsNavbar{
+  height: 50px;
+  padding-top: 0.6em;
+}
+.userDetailsNavbar a{
+  color: white;
+  transition: 0.3s;
+  margin: 8px;
+}
+.userDetailsNavbar a:hover{
+  color: #FB8500;
+}
+.iconUser , .iconCart{
+  font-size: 20px;
+}

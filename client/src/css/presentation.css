@@ -67,28 +67,7 @@
 .trend-product .carousel .item h4, .carousel .item p, .carousel .item ul {
 	margin-bottom: 5px;
 }
-.trend-product .carousel .thumb-content .btn {
-	color: #7ac400;
-	font-size: 11px;
-	text-transform: uppercase;
-	font-weight: bold;
-	background: none;
-	border: 1px solid #7ac400;
-	padding: 6px 14px;
-	margin-top: 5px;
-	line-height: 16px;
-	border-radius: 20px;
-}
-.trend-product .carousel .thumb-content .btn:hover, .carousel .thumb-content .btn:focus {
-	color: #fff;
-	background: #7ac400;
-	box-shadow: none;
-}
-.trend-product .carousel .thumb-content .btn i {
-	font-size: 14px;
-	font-weight: bold;
-	margin-left: 5px;
-}
+
 .trend-product .carousel .item-price {
 	font-size: 13px;
 	padding: 2px 0;
@@ -159,12 +138,11 @@
 .trend-product .star-rating li {
 	padding: 0;
 }
-.trend-product .star-rating i {
-	font-size: 14px;
-	color: #ffc000;
+
+
+.trend-product .star-rating li svg {
+    fill: #f9c800;
 }
-
-
 
 
 
@@ -272,10 +250,3 @@ a {
     margin-bottom: 6px
 }
 
-.btn-group-sm>.btn,
-.btn-sm {
-    padding: .45rem .5rem !important;
-    font-size: .875rem;
-    line-height: 1.5;
-    border-radius: .2rem
-}

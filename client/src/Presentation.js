@@ -2,9 +2,10 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/presentation.css"
 import {Carousel} from "react-bootstrap";
+import {BsStarFill,BsStarHalf,BsStar} from 'react-icons/bs'
 
 
-var categDisplay = '[{"title":"Categ 1","min price":120,"pictures":["https://picsum.photos/id/249/500/500","https://picsum.photos/id/299/500/500","https://picsum.photos/id/322/500/500"]},{"title":"Categ 2","min price":120,"pictures":["https://picsum.photos/id/252/500/500","https://picsum.photos/id/382/500/500","https://picsum.photos/id/256/500/500"]},{"title":"Categ 3","min price":1000,"pictures":["https://picsum.photos/id/282/500/500","https://picsum.photos/id/218/500/500","https://picsum.photos/id/221/500/500"]},{"title":"Categ 4","min price":80,"pictures":["https://picsum.photos/id/272/500/500","https://picsum.photos/id/252/500/500","https://picsum.photos/id/292/500/500"]}]'
+var categDisplay = '[{"id":1,"title":"Categ 1","min price":120,"pictures":["https://picsum.photos/id/249/500/500","https://picsum.photos/id/299/500/500","https://picsum.photos/id/322/500/500"]},{"id":2,"title":"Categ 2","min price":120,"pictures":["https://picsum.photos/id/252/500/500","https://picsum.photos/id/382/500/500","https://picsum.photos/id/256/500/500"]},{"id":3,"title":"Categ 3","min price":1000,"pictures":["https://picsum.photos/id/282/500/500","https://picsum.photos/id/218/500/500","https://picsum.photos/id/221/500/500"]},{"id":4,"title":"Categ 4","min price":80,"pictures":["https://picsum.photos/id/272/500/500","https://picsum.photos/id/252/500/500","https://picsum.photos/id/292/500/500"]}]'
 
 categDisplay = JSON.parse(categDisplay);
 
@@ -67,8 +68,8 @@ const Presentation = () => {
       {
         categDisplay.map((item, key) => {
           return (
-            <div className="col-md-3 col-sm-6" key={key}>
-            <div className="card mb-30"><a className="card-img-tiles" href="#" data-abc="true">
+            <div className="col-md-3 col-sm-6" key={item.id}>
+            <div className="card mb-30"><a className="card-img-tiles" href="/" data-abc="true">
                     <div className="inner">
                         <div className="main-img"><img src={item["pictures"][0]} alt="Category"/></div>
                         <div className="thumblist"><img src={item["pictures"][1]} alt="Category"/><img src={item["pictures"][2]} alt="Category"/></div>
@@ -76,7 +77,7 @@ const Presentation = () => {
                 </a>
                 <div className="card-body text-center">
                     <h4 className="card-title">{item.title}</h4>
-                    <p className="text-muted">Starting from {item["min price"]} TND</p><a className="btn btn-orange btn-sm" href="#" data-abc="true">View Products</a>
+                    <p className="text-muted">Starting from {item["min price"]} TND</p><a className="btn btn-orange btn-sm" href="/" data-abc="true">View Products</a>
                 </div>
             </div>
             </div>
@@ -127,9 +128,9 @@ const Presentation = () => {
 			<h2>Featured <b>Products</b></h2>
 			<div id="myCarousel" className="carousel slide" data-ride="carousel" data-interval="0">
 			<ol className="carousel-indicators">
-				<li data-target="#myCarousel" data-slide-to="0" className="active"></li>
-				<li data-target="#myCarousel" data-slide-to="1"></li>
-				<li data-target="#myCarousel" data-slide-to="2"></li>
+				<li data-target="/myCarousel" data-slide-to="0" className="active"></li>
+				<li data-target="/myCarousel" data-slide-to="1"></li>
+				<li data-target="/myCarousel" data-slide-to="2"></li>
 			</ol>   
 <div className="carousel-inner">
 				<div className="item carousel-item active">
@@ -144,15 +145,15 @@ const Presentation = () => {
 									<h4>Apple iPad</h4>									
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStar/></li>
 										</ul>
 									</div>
-									<p className="item-price"><strike>$400.00</strike> <b>$369.00</b></p>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<p className="item-price"><strike>400.00 TND</strike> <b>369.00 TND</b></p>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>
@@ -166,15 +167,15 @@ const Presentation = () => {
 									<h4>Sony Headphone</h4>									
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStar/></li>
 										</ul>
 									</div>
-									<p className="item-price"><strike>$25.00</strike> <b>$23.99</b></p>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<p className="item-price"><strike>25.00 TND</strike> <b>23.99 TND</b></p>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>		
@@ -188,15 +189,15 @@ const Presentation = () => {
 									<h4>Macbook Air</h4>									
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-half-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarHalf/></li>
 										</ul>
 									</div>
-									<p className="item-price"><strike>$899.00</strike> <b>$649.00</b></p>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<p className="item-price"><strike>899.00 TND</strike> <b>649.00 TND</b></p>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>								
@@ -210,15 +211,15 @@ const Presentation = () => {
 									<h4>Nikon DSLR</h4>									
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-o"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStar/></li>
+											<li className="list-inline-item"><BsStar/></li>
 										</ul>
 									</div>
-									<p className="item-price"><strike>$315.00</strike> <b>$250.00</b></p>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<p className="item-price"><strike>315.00 TND</strike> <b>250.00 TND</b></p>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>
@@ -234,17 +235,17 @@ const Presentation = () => {
 								</div>
 								<div className="thumb-content">
 									<h4>Sony Play Station</h4>
-									<p className="item-price"><strike>$289.00</strike> <span>$269.00</span></p>
+									<p className="item-price"><strike>289.00 TND</strike> <b>269.00 TND</b></p>
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStar/></li>
 										</ul>
 									</div>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>
@@ -256,17 +257,17 @@ const Presentation = () => {
 								</div>
 								<div className="thumb-content">
 									<h4>Macbook Pro</h4>
-									<p className="item-price"><strike>$1099.00</strike> <span>$869.00</span></p>
+									<p className="item-price"><strike>1099.00 TND</strike> <b>869.00 TND</b></p>
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-half-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarHalf/></li>
 										</ul>
 									</div>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>
@@ -278,17 +279,17 @@ const Presentation = () => {
 								</div>
 								<div className="thumb-content">
 									<h4>Bose Speaker</h4>
-									<p className="item-price"><strike>$109.00</strike> <span>$99.00</span></p>
+									<p className="item-price"><strike>109.00 TND</strike> <b>99.00 TND</b></p>
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStar/></li>
 										</ul>
 									</div>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>
@@ -300,17 +301,17 @@ const Presentation = () => {
 								</div>
 								<div className="thumb-content">
 									<h4>Samsung Galaxy S8</h4>
-									<p className="item-price"><strike>$599.00</strike> <span>$569.00</span></p>
+									<p className="item-price"><strike>599.00 TND</strike> <b>569.00 TND</b></p>
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStar/></li>
 										</ul>
 									</div>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>						
@@ -326,17 +327,17 @@ const Presentation = () => {
 								</div>
 								<div className="thumb-content">
 									<h4>Apple iPhone</h4>
-									<p className="item-price"><strike>$369.00</strike> <span>$349.00</span></p>
+									<p className="item-price"><strike>369.00 TND</strike> <b>349.00 TND</b></p>
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStar/></li>
 										</ul>
 									</div>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>
@@ -348,17 +349,17 @@ const Presentation = () => {
 								</div>
 								<div className="thumb-content">
 									<h4>Canon DSLR</h4>
-									<p className="item-price"><strike>$315.00</strike> <span>$250.00</span></p>
+									<p className="item-price"><strike>315.00 TND</strike> <b>250.00 TND</b></p>
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStar/></li>
 										</ul>
 									</div>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>
@@ -370,17 +371,17 @@ const Presentation = () => {
 								</div>
 								<div className="thumb-content">
 									<h4>Google Pixel</h4>
-									<p className="item-price"><strike>$450.00</strike> <span>$418.00</span></p>
+									<p className="item-price"><strike>450.00 TND</strike> <b>418.00 TND</b></p>
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-half-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarHalf/></li>
 										</ul>
 									</div>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>	
@@ -392,27 +393,27 @@ const Presentation = () => {
 								</div>
 								<div className="thumb-content">
 									<h4>Apple Watch</h4>
-									<p className="item-price"><strike>$350.00</strike> <span>$330.00</span></p>
+									<p className="item-price"><strike>350.00 TND</strike> <b>330.00 TND</b></p>
 									<div className="star-rating">
 										<ul className="list-inline">
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star"></i></li>
-											<li className="list-inline-item"><i className="fa fa-star-o"></i></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStarFill/></li>
+											<li className="list-inline-item"><BsStar/></li>
 										</ul>
 									</div>
-									<a href="#" className="btn btn-primary">Add to Cart</a>
+									<a className="btn btn-orange btn-sm" href="/" data-abc="true">Add to Cart</a>
 								</div>						
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-      <a className="carousel-control-prev" href="#myCarousel" data-slide="prev">
+      <a className="carousel-control-prev" href="/myCarousel" data-slide="prev">
 				<i className="fa fa-angle-left"></i>
 			</a>
-			<a className="carousel-control-next" href="#myCarousel" data-slide="next">
+			<a className="carousel-control-next" href="/myCarousel" data-slide="next">
 				<i className="fa fa-angle-right"></i>
 			</a>
 
