@@ -12,9 +12,6 @@ import Product from "./components/product";
 import Category from "./components/category";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-
-
-
 function App() {
   return (
     <Router>
@@ -53,7 +50,7 @@ function App() {
         </Route>
         <Route exact path="/:categ">
           <Navbar />
-          <Category/>
+          <Category />
           <Footer />
         </Route>
         <Route exact path="/:categ/:sousCateg">
@@ -68,7 +65,7 @@ function App() {
         </Route>
         <Route exact path="/:categ/:sousCateg/:sousSousCateg/:product">
           <Navbar />
-          <Product/>
+          <Product />
           <Footer />
         </Route>
 
