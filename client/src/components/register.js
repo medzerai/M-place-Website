@@ -128,6 +128,7 @@ const Register = () => {
       </div>
     </section>
   );
+
 };
 
 export default Register;
