@@ -13,6 +13,7 @@ import db from "./server/config/mongoose.config.js";
 
 import UserRouter from "./server/routes/auth.routes.js";
 import CategoryRouter from "./server/routes/category.routes.js";
+import imageRouter from "./server/routes/image.routes.js";
 
 import errorHandler from "./server/middleware/error-handler.js";
 
@@ -23,9 +24,9 @@ app.get("/", (req, res) => {
   res.send("Welcome!");
 });
 
-app.use("/api/v1/auth", UserRouter);
 app.use("/", CategoryRouter);
-
+app.use("/file", imageRouter);
+app.use("/api/v1/auth", UserRouter);
 app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
