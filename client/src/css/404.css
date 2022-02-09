@@ -1,0 +1,28 @@
+.NotFound{
+    background: #023047;
+    text-align: center;
+    height: 100vh;
+}
+.NotFound img{
+    max-width: 400px;
+    margin: 7em 1em 0;
+    margin-top: 7em;
+}
+.NotFound .btn-primary {
+    background: #fb8500;
+    border: none;
+    border-radius: 4px;
+    padding: 11px;
+    box-shadow: none;
+    margin: auto;
+    margin-top: 26px;
+    text-shadow: none;
+    transition: 0.3s;
+    outline: none !important;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+.NotFound  .btn-primary:hover,.NotFound .btn-primary:active {
+    background: #db7704;
+  }
