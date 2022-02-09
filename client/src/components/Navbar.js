@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./../css/navbar.css";
 import logo from "./../logo.svg";
-import {Link} from 'react-router-dom';
-import { AiOutlineMenu, AiOutlineClose ,AiOutlineSearch} from "react-icons/ai";
-import { FaShoppingCart ,FaUserAlt } from 'react-icons/fa'
+import { Link } from "react-router-dom";
+import { AiOutlineMenu, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
+import { FaShoppingCart, FaUserAlt } from "react-icons/fa";
 
 var json =
   '[{"id":1,"categorie":"Vétements","sous-categorie":[{"id":120,"titre":"mode Homme","sous-sous-categ":[{"name":"pull"},{"name":"veste"},{"name":"T-shirt"},{"name":"chaussure"}]},{"id":120,"titre":"Mode Femme","sous-sous-categ":[{"name":"pull"},{"name":"veste"},{"name":"T-shirt"},{"name":"chaussure"}]},{"id":120,"titre":"sous-categ1","sous-sous-categ":[{"name":"nn1"},{"name":"nn2"},{"name":"nn3"},{"name":"nn4"}]},{"id":121,"titre":"sous-categ2","sous-sous-categ":[{"name":"kn5"},{"name":"nkndhdgd45"}]}]},{"id":2,"categorie":"categ2","sous-categorie":[{"id":122,"titre":"sous-categ3","sous-sous-categ":[{"name":"sjsh"},{"name":"uhded"},{"name":"szohudige"}]},{"id":123,"titre":"sous-categ4","sous-sous-categ":[{"name":"sqszsz"},{"name":"efrf"},{"name":"rfrtgrt"},{"name":"eferfe"}]}]}]';
@@ -82,7 +82,9 @@ function hoverCateg(e) {
             "/" +
             json[i]["sous-categorie"][j]["titre"].replaceAll(" ", "_") +
             "/" +
-            json[i]["sous-categorie"][j]["sous-sous-categ"][k]["name"].replaceAll(" ", "_") +
+            json[i]["sous-categorie"][j]["sous-sous-categ"][k][
+              "name"
+            ].replaceAll(" ", "_") +
             '">' +
             json[i]["sous-categorie"][j]["sous-sous-categ"][k]["name"] +
             "</a>";
@@ -114,7 +116,9 @@ function loadNavbar() {
                       data-id={item.id}
                       onMouseOver={hoverCateg}
                     >
-                      <Link to={"/"+item.categorie.replaceAll(" ", "_")}>{item.categorie}</Link>
+                      <Link to={"/" + item.categorie.replaceAll(" ", "_")}>
+                        {item.categorie}
+                      </Link>
                     </li>
                   );
                 })}
@@ -140,7 +144,10 @@ function loadNavbar() {
             {json.map((item, i) => {
               return (
                 <li key={i} data-id={item.id}>
-                  <Link onClick={closeSideBar} to={"/" + item.categorie.replaceAll(" ", "_")}>
+                  <Link
+                    onClick={closeSideBar}
+                    to={"/" + item.categorie.replaceAll(" ", "_")}
+                  >
                     <div className="bg-orange-categ">{item.categorie}</div>
                   </Link>
 
@@ -149,7 +156,7 @@ function loadNavbar() {
                       return (
                         <li key={sous_item.id} data-id={sous_item.id}>
                           <Link
-                          onClick={closeSideBar}
+                            onClick={closeSideBar}
                             to={
                               "/" +
                               item.categorie.replaceAll(" ", "_") +
@@ -168,7 +175,7 @@ function loadNavbar() {
                                 return (
                                   <li key={key}>
                                     <Link
-                                    onClick={closeSideBar}
+                                      onClick={closeSideBar}
                                       to={
                                         "/" +
                                         item.categorie.replaceAll(" ", "_") +
@@ -229,9 +236,14 @@ const Navbar = () => {
           <div className="row align-items-center position-relative">
             <div className="col-3">
               <div className="site-logo">
-                <Link to="/" className="font-weight-bold">
+
+                <--! <Link to="/" className="font-weight-bold">
                   <img src={logo} draggable="false" alt="logo"/>
-                </Link>
+
+                <a href="/" className="font-weight-bold">
+                  <img src={logo} draggable="false" alt="logo" />
+                </a> --!>
+
               </div>
             </div>
 
@@ -305,15 +317,23 @@ const Navbar = () => {
                     />
                   </div>
                   <button className="search-button" type="submit">
-                  <AiOutlineSearch className="searchIconBtn"/>
+                    <AiOutlineSearch className="searchIconBtn" />
                   </button>
                 </form>
               </div>
             </div>
             <div className="col-200 userDetailsNavbar">
+
+             <!---
               <FaUserAlt className="iconUser"/>
               <Link to="/login">Sign In</Link>/<Link to="/register">Sign Up</Link>
               <FaShoppingCart className="iconCart"/>
+
+              <FaUserAlt className="iconUser" />
+              <a href="/login">Sign In</a>/<a href="/register">Sign Up</a>
+              <FaShoppingCart className="iconCart" />
+--!>
+
             </div>
           </div>
         </div>

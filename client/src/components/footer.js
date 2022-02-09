@@ -68,8 +68,6 @@ const Footer = () => {
             <p className="copyright">M - Place © 2022</p>
           </div>
         </footer>
-
-  );
-};
+  )}
 
 export default Footer;
