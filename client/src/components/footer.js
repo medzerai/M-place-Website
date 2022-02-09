@@ -4,10 +4,10 @@ import './../css/footer.css';
 import { Link } from "react-router-dom";
 const Footer = () => {
   return (
-        <footer class="footer-dark">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 col-md-3 item">
+        <footer className="footer-dark">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-6 col-md-3 item">
                 <h3>Services</h3>
                 <ul>
                   <li>
@@ -27,7 +27,7 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
-              <div class="col-sm-6 col-md-3 item">
+              <div className="col-sm-6 col-md-3 item">
                 <h3>About</h3>
                 <ul>
                   <li>
@@ -41,7 +41,7 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
-              <div class="col-md-6 item text">
+              <div className="col-md-6 item text">
                 <h3>M - Place</h3>
                 <p>
                   Praesent sed lobortis mi. Suspendisse vel placerat ligula.
@@ -50,7 +50,7 @@ const Footer = () => {
                   dictum vel in justo.
                 </p>
               </div>
-              <div class="col item social">
+              <div className="col item social">
                 <a href="#">
                 <RiFacebookFill className="icon"/>
                 </a>
@@ -65,7 +65,7 @@ const Footer = () => {
                 </a>
               </div>
             </div>
-            <p class="copyright">M - Place © 2022</p>
+            <p className="copyright">M - Place © 2022</p>
           </div>
         </footer>
 
