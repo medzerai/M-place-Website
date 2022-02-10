@@ -35,8 +35,8 @@ function App() {
         </Route>
         <Route exact path="/about">
           <Navbar />
-          <Events />
           <About />
+          <Footer />
         </Route>
         <Route exact path="/blogs">
           <Navbar />

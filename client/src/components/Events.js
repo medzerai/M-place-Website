@@ -1,6 +1,7 @@
 import { React } from "react";
+import EventList from "./eventListe";
 const Events = () => {
-  return <div>Events</div>;
+  return <EventList />;
 };
 
 export default Events;
