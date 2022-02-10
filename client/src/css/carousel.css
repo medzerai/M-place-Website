@@ -1,0 +1,146 @@
+.title {
+  color: #000;
+  font-size: 26px;
+  font-weight: 300;
+  text-align: center;
+  text-transform: uppercase;
+  position: relative;
+  margin: 30px 0 20px;
+}
+.title::after {
+  content: "";
+  width: 100px;
+  position: absolute;
+  margin: 0 auto;
+  height: 4px;
+  border-radius: 1px;
+  background: #ffc000;
+  left: 0;
+  right: 0;
+  bottom: -20px;
+}
+.itemCarousel {
+  margin: 50px auto;
+  padding: 0 10px;
+}
+.itemCarousel .item {
+  color: #747d89;
+  min-height: 325px;
+  text-align: center;
+  overflow: hidden;
+}
+.itemCarousel .thumb-wrapper {
+  padding: 25px 15px;
+  background: #fff;
+  border-radius: 6px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+.itemCarousel .item .img-box {
+  height: 120px;
+  margin-bottom: 20px;
+  width: 100%;
+  position: relative;
+}
+.itemCarousel .item img {
+  max-width: 100%;
+  max-height: 100%;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+.itemCarousel .item h4 {
+  font-size: 18px;
+}
+.itemCarousel .item h4,
+.item p,
+.item ul {
+  margin-bottom: 5px;
+}
+
+.itemCarousel .item-price {
+  font-size: 13px;
+  padding: 2px 0;
+}
+.itemCarousel .item-price strike {
+  opacity: 0.7;
+  margin-right: 5px;
+}
+.itemCarousel -control-prev,
+-control-next {
+  height: 44px;
+  width: 40px;
+  background: #ffc000;
+  margin: auto 0;
+  border-radius: 4px;
+  opacity: 0.8;
+}
+.itemCarousel -control-prev:hover,
+-control-next:hover {
+  background: #ffc000;
+  opacity: 1;
+}
+.itemCarousel -control-prev i,
+-control-next i {
+  font-size: 36px;
+  position: absolute;
+  top: 50%;
+  display: inline-block;
+  margin: -19px 0 0 0;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  color: #fff;
+  text-shadow: none;
+  font-weight: bold;
+}
+.itemCarousel -control-prev i {
+  margin-left: -2px;
+}
+.itemCarousel -control-next i {
+  margin-right: -4px;
+}
+.itemCarousel -indicators {
+  bottom: -50px;
+}
+.itemCarousel -indicators li,
+-indicators li.active {
+  width: 10px;
+  height: 10px;
+  margin: 4px;
+  border-radius: 50%;
+  border: none;
+}
+.itemCarousel -indicators li {
+  background: rgba(0, 0, 0, 0.2);
+}
+.itemCarousel -indicators li.active {
+  background: rgba(0, 0, 0, 0.6);
+}
+.itemCarousel .wish-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 99;
+  cursor: pointer;
+  font-size: 16px;
+  color: #abb0b8;
+}
+.itemCarousel .wish-icon .fa-heart {
+  color: #ff6161;
+}
+.itemCarousel .star-rating li {
+  padding: 0;
+}
+
+.itemCarousel .star-rating li svg {
+  fill: #f9c800;
+}
+.slick-prev:before,
+.slick-next:before {
+  color: #f9c800;
+}
