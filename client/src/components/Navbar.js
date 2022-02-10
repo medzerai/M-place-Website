@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./../css/navbar.css";
 import logo from "./../logo.svg";
@@ -11,37 +11,42 @@ var json =
   '[{"id":1,"categorie":"Vétements","sous-categorie":[{"id":120,"titre":"mode Homme","sous-sous-categ":[{"name":"pull"},{"name":"veste"},{"name":"T-shirt"},{"name":"chaussure"}]},{"id":120,"titre":"Mode Femme","sous-sous-categ":[{"name":"pull"},{"name":"veste"},{"name":"T-shirt"},{"name":"chaussure"}]},{"id":120,"titre":"sous-categ1","sous-sous-categ":[{"name":"nn1"},{"name":"nn2"},{"name":"nn3"},{"name":"nn4"}]},{"id":121,"titre":"sous-categ2","sous-sous-categ":[{"name":"kn5"},{"name":"nkndhdgd45"}]}]},{"id":2,"categorie":"categ2","sous-categorie":[{"id":122,"titre":"sous-categ3","sous-sous-categ":[{"name":"sjsh"},{"name":"uhded"},{"name":"szohudige"}]},{"id":123,"titre":"sous-categ4","sous-sous-categ":[{"name":"sqszsz"},{"name":"efrf"},{"name":"rfrtgrt"},{"name":"eferfe"}]}]}]';
 json = JSON.parse(json);
 
-function loadNavbarByCateg(idCateg){
+function loadNavbarByCateg(idCateg) {
   var categ;
-  for(var i=0;i<json.length ;i++ ){
-    if(json[i].id == idCateg){
+  for (var i = 0; i < json.length; i++) {
+    if (json[i].id == idCateg) {
       categ = json[i];
       break;
     }
   }
 
-  if(categ != null){
-    return(
-      categ["sous-categorie"].map((item,id)=>{
-        console.log("its inside");
-        return(
-          <div className="sous-categorie-bloc" key={id}> 
-            <Link to={"/"+categ.categorie+"/"+item.titre} className="title-sous-categ">{item.titre}</Link>
-            {
-              item["sous-sous-categ"].map((sous_categ,idCateg)=>{
-                <Link to={"/"+categ.categorie+"/"+item.titre+"/"+sous_categ.name} key={idCateg}>{sous_categ.name}</Link>
-              })
-            }
-          </div>
-        )
-      })
-    )
-  }else{
-    return(
-      <div>Not found</div>
-    )
+  if (categ != null) {
+    return categ["sous-categorie"].map((item, id) => {
+      console.log("its inside");
+      return (
+        <div className="sous-categorie-bloc" key={id}>
+          <Link
+            to={"/" + categ.categorie + "/" + item.titre}
+            className="title-sous-categ"
+          >
+            {item.titre}
+          </Link>
+          {item["sous-sous-categ"].map((sous_categ, idCateg) => {
+            <Link
+              to={
+                "/" + categ.categorie + "/" + item.titre + "/" + sous_categ.name
+              }
+              key={idCateg}
+            >
+              {sous_categ.name}
+            </Link>;
+          })}
+        </div>
+      );
+    });
+  } else {
+    return <div>Not found</div>;
   }
-
 }
 
 function hoverCateg(e) {
@@ -53,7 +58,7 @@ function hoverCateg(e) {
   var sous_categ = "";
   const id = e.target.getAttribute("data-id");
   //console.log("id: " +id);
- /*  
+  /*  
   if(id != null){
     var x = loadNavbarByCateg(id)
     console.log(typeof x);
@@ -95,8 +100,6 @@ function hoverCateg(e) {
       break;
     }
   }
-
- 
 }
 
 function loadNavbar() {
@@ -236,14 +239,9 @@ const Navbar = () => {
           <div className="row align-items-center position-relative">
             <div className="col-3">
               <div className="site-logo">
-
-                <--! <Link to="/" className="font-weight-bold">
-                  <img src={logo} draggable="false" alt="logo"/>
-
-                <a href="/" className="font-weight-bold">
+                <Link to="/" className="font-weight-bold">
                   <img src={logo} draggable="false" alt="logo" />
-                </a> --!>
-
+                </Link>
               </div>
             </div>
 
@@ -262,27 +260,59 @@ const Navbar = () => {
                 role="navigation"
               >
                 <ul className="site-menu main-menu js-clone-nav ml-auto ">
-                  <li className={! ['events','about','blogs','contact'].includes(window.location.pathname.split("/")[1]) ? "active" :""}>
+                  <li
+                    className={
+                      !["events", "about", "blogs", "contact"].includes(
+                        window.location.pathname.split("/")[1]
+                      )
+                        ? "active"
+                        : ""
+                    }
+                  >
                     <Link to="/" className="nav-link">
                       Marketplace
                     </Link>
                   </li>
-                  <li className={window.location.pathname.split("/")[1] == 'events' ? "active" :""}>
+                  <li
+                    className={
+                      window.location.pathname.split("/")[1] == "events"
+                        ? "active"
+                        : ""
+                    }
+                  >
                     <Link to="/events" className="nav-link">
                       Events
                     </Link>
                   </li>
-                  <li className={window.location.pathname.split("/")[1] == 'about' ? "active" :""}>
+                  <li
+                    className={
+                      window.location.pathname.split("/")[1] == "about"
+                        ? "active"
+                        : ""
+                    }
+                  >
                     <Link to="/about" className="nav-link">
                       About
                     </Link>
                   </li>
-                  <li  className={window.location.pathname.split("/")[1] == 'blogs' ? "active" :""}>
+                  <li
+                    className={
+                      window.location.pathname.split("/")[1] == "blogs"
+                        ? "active"
+                        : ""
+                    }
+                  >
                     <Link to="/blogs" className="nav-link">
                       Blog
                     </Link>
                   </li>
-                  <li className={window.location.pathname.split("/")[1] == 'contact' ? "active" :""}>
+                  <li
+                    className={
+                      window.location.pathname.split("/")[1] == "contact"
+                        ? "active"
+                        : ""
+                    }
+                  >
                     <Link to="/contact" className="nav-link">
                       Contact
                     </Link>
@@ -323,17 +353,10 @@ const Navbar = () => {
               </div>
             </div>
             <div className="col-200 userDetailsNavbar">
-
-             <!---
-              <FaUserAlt className="iconUser"/>
-              <Link to="/login">Sign In</Link>/<Link to="/register">Sign Up</Link>
-              <FaShoppingCart className="iconCart"/>
-
               <FaUserAlt className="iconUser" />
-              <a href="/login">Sign In</a>/<a href="/register">Sign Up</a>
+              <Link to="/login">Sign In</Link>/
+              <Link to="/register">Sign Up</Link>
               <FaShoppingCart className="iconCart" />
---!>
-
             </div>
           </div>
         </div>
