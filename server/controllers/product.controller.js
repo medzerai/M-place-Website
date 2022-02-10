@@ -1,4 +1,5 @@
 import { StatusCodes } from "http-status-codes";
+import Category from "../models/Category.model.js";
 import Product from "../models/Product.model.js";
 
 class CustomAPIError extends Error {
@@ -33,6 +34,10 @@ const addProduct = async (req, res) => {
 
   if (!name || !description || !category) {
     throw new BadRequestError("please provide all values");
+  }
+  const isCategoryExist = await Category.find({ _id: category });
+  if (!isCategoryExist) {
+    throw new BadRequestError("Category id does not exist !!");
   }
 
   const p = await Product.create(prod);
