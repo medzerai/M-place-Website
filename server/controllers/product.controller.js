@@ -120,6 +120,37 @@ const addFiltersToProduct = async (req, res) => {
     });
 };
 
+const deleteFiltersFromProduct = async (req, res) => {
+  const prod = await Product.findById(req.params.id);
+  req.body.filters.map((val) =>
+    prod.filterIds.includes(val)
+      ? prod.filterIds.splice(fruits.indexOf(val), 1)
+      : ""
+  );
+  Product.updateOne({ _id: req.params.id }, prod)
+    .then(() => {
+      res.status(StatusCodes.CREATED).json({
+        message: "Filters added to Product successfully!",
+      });
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
+const getProductByCategory = async (req, res) => {
+  const c = await Category.find({ name: req.params.category });
+  const p = await Product.find({ categoryId: c._id })
+    .then((val) => {
+      val.length == 0
+        ? res.status(StatusCodes.OK).json("No products to show")
+        : res.status(StatusCodes.OK).json(val);
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
 export {
   addProduct,
   getAllProducts,
