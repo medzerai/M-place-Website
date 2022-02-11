@@ -16,6 +16,6 @@ ProductRouter.route("/products/:id")
   .get(getProductById)
   .patch(updateProduct)
   .delete(deleteProduct);
-ProductRouter.route("/productss/:iduser").patch(addFiltersToProduct);
+ProductRouter.route("/productss/:id").patch(addFiltersToProduct);
 
 export default ProductRouter;

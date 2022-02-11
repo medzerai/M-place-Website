@@ -105,8 +105,10 @@ const deleteProduct = async (req, res) => {
 };
 
 const addFiltersToProduct = async (req, res) => {
-  const prod = await Product.findById(req.params.iduser);
-  req.body.filters.map((val) => prod.filterIds.push(val));
+  const prod = await Product.findById(req.params.id);
+  req.body.filters.map((val) =>
+    !prod.filterIds.includes(val) ? prod.filterIds.push(val) : ""
+  );
   Product.updateOne({ _id: req.params.id }, prod)
     .then(() => {
       res.status(StatusCodes.CREATED).json({
@@ -118,20 +120,6 @@ const addFiltersToProduct = async (req, res) => {
     });
 };
 
-// const deleteFiltersFromProduct = async (req, res) => {
-//   const prod = await Product.findById(req.params.iduser);
-//   req.body.filters.map((val) => prod.filterIds.push(val));
-//   Product.updateOne({ _id: req.params.id }, prod)
-//     .then(() => {
-//       res.status(StatusCodes.CREATED).json({
-//         message: "Filters added to Product successfully!",
-//       });
-//     })
-//     .catch((error) => {
-//       throw new BadRequestError(error);
-//     });
-// };
-
 export {
   addProduct,
   getAllProducts,
@@ -139,4 +127,5 @@ export {
   updateProduct,
   deleteProduct,
   addFiltersToProduct,
+  getProductByCategory,
 };
