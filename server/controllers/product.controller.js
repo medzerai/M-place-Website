@@ -151,6 +151,18 @@ const getProductByCategory = async (req, res) => {
     });
 };
 
+const getProductByMarque = async (req, res) => {
+  const p = await Product.find({ marque: req.params.marque })
+    .then((val) => {
+      val.length == 0
+        ? res.status(StatusCodes.OK).json("No products to show")
+        : res.status(StatusCodes.OK).json(val);
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
 export {
   addProduct,
   getAllProducts,
@@ -158,5 +170,7 @@ export {
   updateProduct,
   deleteProduct,
   addFiltersToProduct,
+  deleteFiltersFromProduct,
   getProductByCategory,
+  getProductByMarque,
 };
