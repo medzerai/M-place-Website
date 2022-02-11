@@ -1,4 +1,8 @@
 import { StatusCodes } from "http-status-codes";
+import Category from "../models/Category.model.js";
+import FilterModel from "../models/Filter.model.js";
+import ProductModel from "../models/Product.model.js";
+import VariableModel from "../models/Variable.model.js";
 import Variable from "../models/Variable.model.js";
 
 class CustomAPIError extends Error {
@@ -86,10 +90,30 @@ const deleteVariable = async (req, res) => {
     });
 };
 
+const getCategoryFilters = async (req, res) => {
+  const a = await Category.find({ name: req.params.id });
+  const p = await ProductModel.find({ categoryId: a._id });
+  let t;
+  p.map((val) => {
+    t.push(val.filters);
+  });
+  let f;
+  let g;
+  t.map((val) => {
+    g = VariableModel.find({ _id: val });
+    f.push(g.name);
+  });
+  console.log(f);
+};
+
+const getProductFilters = async (req, res) => {
+  console.log("helllllllo");
+};
 export {
   addVariable,
   getAllVariables,
   getVariableById,
+  getCategoryFilters,
   updateVariable,
   deleteVariable,
 };

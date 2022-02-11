@@ -1,4 +1,5 @@
 import { StatusCodes } from "http-status-codes";
+import Category from "../models/Category.model.js";
 import Filter from "../models/Filter.model.js";
 
 class CustomAPIError extends Error {
