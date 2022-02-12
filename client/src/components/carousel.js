@@ -73,7 +73,7 @@ export default class Responsive extends Component {
     };
     return (
       <div>
-        <h2 className="title">
+        <h2 className="titleCarousel">
           Featured <b>Products</b>
           {console.log(this.props.data)}
         </h2>
