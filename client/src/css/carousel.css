@@ -149,3 +149,11 @@
   margin-left: 0.6em;
   color: #8e8e8e;
 }
+@media (max-width: 600px) {
+  .slick-next {
+    right: -11px;
+  }
+  .slick-prev {
+    left: -11px;
+  }
+}

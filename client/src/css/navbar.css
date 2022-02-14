@@ -170,7 +170,8 @@
 /**********side bar categorie ******************/
 .side-bar-categorie {
   width: 0px;
-  height: 100%;
+  height: calc(100% + 100px);
+  padding-bottom: 100px;
   background: #023047;
   position: fixed;
   top: 0;
@@ -235,23 +236,13 @@
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-.header .form-group{
-    background-color: white;
-    display: flex;
-    max-width: 800px;
-    min-width: 400px;
-    padding: 6px;
-    height: 100%;
+.header .form-group {
+  background-color: white;
+  display: flex;
+  max-width: 800px;
+  min-width: 400px;
+  padding: 6px;
+  height: 100%;
 }
 
 .search {
