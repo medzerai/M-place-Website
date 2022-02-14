@@ -23,16 +23,16 @@ class NotFoundError extends CustomAPIError {
 }
 
 const addFilter = async (req, res) => {
-  const { name, variableId, quantity, price } = req.body;
+  const { name, variables, quantity, price } = req.body;
 
   const v = new Filter({
     name,
-    variableId,
+    variableIds: variables,
     quantity,
     price,
   });
 
-  if (!name || !variableId || !quantity || !price) {
+  if (!name || !variables || !quantity || !price) {
     throw new BadRequestError("please provide all values");
   }
 
@@ -64,7 +64,7 @@ const updateFilter = async (req, res) => {
   const v = new Filter({
     _id: req.params.id,
     name: req.body.name,
-    variableId: req.body.variableId,
+    variableIds: req.body.variables,
     quantity: req.body.quantity,
     price: req.body.price,
   });
@@ -91,4 +91,46 @@ const deleteFilter = async (req, res) => {
     });
 };
 
-export { addFilter, getAllFilters, getFilterById, updateFilter, deleteFilter };
+const addVariablesToFilter = async (req, res) => {
+  const f = await Filter.findById(req.params.id);
+  req.body.variables.map((val) =>
+    !f.variableIds.includes(val) ? prod.variableIds.push(val) : ""
+  );
+  Filter.updateOne({ _id: req.params.id }, f)
+    .then(() => {
+      res.status(StatusCodes.CREATED).json({
+        message: "variables added to Filter successfully!",
+      });
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
+const deleteVariablesFromFilter = async (req, res) => {
+  const f = await Filter.findById(req.params.id);
+  req.body.variables.map((val) =>
+    f.variableIds.includes(val)
+      ? f.variableIds.splice(f.variableIds.indexOf(val), 1)
+      : ""
+  );
+  Filter.updateOne({ _id: req.params.id }, f)
+    .then(() => {
+      res.status(StatusCodes.CREATED).json({
+        message: "Variables deleted from Filter successfully!",
+      });
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
+export {
+  addFilter,
+  getAllFilters,
+  getFilterById,
+  updateFilter,
+  deleteFilter,
+  addVariablesToFilter,
+  deleteVariablesFromFilter,
+};

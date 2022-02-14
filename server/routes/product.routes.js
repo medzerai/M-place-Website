@@ -4,7 +4,6 @@ import {
   getProductById,
   updateProduct,
   deleteProduct,
-  addFiltersToProduct,
 } from "../controllers/product.controller.js";
 
 import express from "express";
@@ -16,6 +15,4 @@ ProductRouter.route("/products/:id")
   .get(getProductById)
   .patch(updateProduct)
   .delete(deleteProduct);
-ProductRouter.route("/productss/:id").patch(addFiltersToProduct);
-
 export default ProductRouter;
