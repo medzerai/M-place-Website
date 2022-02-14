@@ -17,5 +17,7 @@ FilterRouter.route("/filters/:id")
   .get(getFilterById)
   .patch(updateFilter)
   .delete(deleteFilter);
-
+FilterRouter.route("/filterss/:id")
+  .get(addVariablesToFilter)
+  .patch(deleteVariablesFromFilter);
 export default FilterRouter;

@@ -94,7 +94,7 @@ const deleteFilter = async (req, res) => {
 const addVariablesToFilter = async (req, res) => {
   const f = await Filter.findById(req.params.id);
   req.body.variables.map((val) =>
-    !f.variableIds.includes(val) ? prod.variableIds.push(val) : ""
+    !f.variableIds.includes(val) ? f.variableIds.push(val) : ""
   );
   Filter.updateOne({ _id: req.params.id }, f)
     .then(() => {

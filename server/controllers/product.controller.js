@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import Category from "../models/Category.model.js";
 import Product from "../models/Product.model.js";
+import VariableModel from "../models/Variable.model.js";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -161,6 +162,21 @@ const deleteFiltersFromProduct = async (req, res) => {
     .catch((error) => {
       throw new BadRequestError(error);
     });
+};
+
+const getProductFilters = async (req, res) => {
+  let rr;
+  const a = await Product.find({ _id: req.params.id }).then((p) => {
+    p.filterIds.map((f) => {
+      const filters = Filter.find({ _id: f }).then((v) => {
+        v.variableIds.map((vv) => {
+          const variables = VariableModel.find({ _id: vv }).then((r) => {
+            rr.push(r.name);
+          });
+        });
+      });
+    });
+  });
 };
 
 export {
