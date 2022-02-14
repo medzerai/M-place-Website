@@ -187,4 +187,7 @@ export {
   deleteProduct,
   getProductByCategory,
   getProductByMarque,
+  addFiltersToProduct,
+  deleteFiltersFromProduct,
+  getProductFilters,
 };
