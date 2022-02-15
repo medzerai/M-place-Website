@@ -1,16 +1,14 @@
 import "./../../../css/Panel/templatePanel.css";
 import logo from "./../../../logo.svg";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
-
+import RouterPanel from "./routerPanel";
 function menuClick() {
   console.log("cliked");
   const el = document.querySelector(".sidebar");
-  if (el.classList.contains("active")) {
-    console.log("heree");
-    el.classList.remove("active");
+  if (el.classList.contains("activeSideBar")) {
+    el.classList.remove("activeSideBar");
   } else {
-    console.log("else");
-    el.classList.add("active");
+    el.classList.add("activeSideBar");
   }
 }
 const Template = () => {
@@ -36,6 +34,7 @@ const Template = () => {
             <AiOutlineMenuUnfold />
           </div>
         </div>
+        <RouterPanel />
       </div>
     </div>
   );

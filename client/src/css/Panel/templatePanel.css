@@ -34,7 +34,6 @@
 }
 .navbarTemplate {
   width: 100%;
-  height: 50px;
   background: #023047;
 }
 .navbarTemplate {
@@ -49,7 +48,12 @@
 }
 .iconMenu {
   cursor: pointer;
+  width: 50px;
+  text-align: center;
 }
-.active {
+.iconMenu:hover {
+  background: #033f5e;
+}
+.activeSideBar {
   width: 0;
 }

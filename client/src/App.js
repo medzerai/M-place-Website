@@ -10,7 +10,7 @@ import Register from "./components/register";
 import Erreur404 from "./components/404";
 import Product from "./components/product";
 import Category from "./components/category";
-import DashboardAdmin from "./components/Panel/Admin/dashboard";
+import Template from "./components/Panel/components/template";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/admin">
-          <DashboardAdmin />
+          <Template />
         </Route>
         <Route exact path="/login">
           <Login />
