@@ -27,8 +27,9 @@ ProductRouter.route("/products/getProductByMarque/:id").get(getProductByMarque);
 ProductRouter.route("/products/addFiltersToProduct/:id").patch(
   addFiltersToProduct
 );
-ProductRouter.route("/products/addFiltersToProduct/:id").patch(
+ProductRouter.route("/products/deleteFiltersFromProduct/:id").patch(
   deleteFiltersFromProduct
 );
+ProductRouter.route("/products/getProductFilters/:id").get(getProductFilters);
 
 export default ProductRouter;

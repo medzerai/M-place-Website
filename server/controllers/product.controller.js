@@ -1,7 +1,8 @@
 import { StatusCodes } from "http-status-codes";
 import Category from "../models/Category.model.js";
+import Filter from "../models/Filter.model.js";
 import Product from "../models/Product.model.js";
-import VariableModel from "../models/Variable.model.js";
+import Variable from "../models/Variable.model.js";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -133,9 +134,9 @@ const getProductByMarque = async (req, res) => {
 const addFiltersToProduct = async (req, res) => {
   const f = await Product.findById(req.params.id);
   req.body.filters.map((val) =>
-    !f.filterIds.includes(val) ? prod.filterIds.push(val) : ""
+    !f.filterIds.includes(val) ? f.filterIds.push(val) : ""
   );
-  Filter.updateOne({ _id: req.params.id }, f)
+  Product.updateOne({ _id: req.params.id }, f)
     .then(() => {
       res.status(StatusCodes.CREATED).json({
         message: "Filters added to Product successfully!",
@@ -153,7 +154,7 @@ const deleteFiltersFromProduct = async (req, res) => {
       ? f.filterIds.splice(f.filterIds.indexOf(val), 1)
       : ""
   );
-  Filter.updateOne({ _id: req.params.id }, f)
+  Product.updateOne({ _id: req.params.id }, f)
     .then(() => {
       res.status(StatusCodes.CREATED).json({
         message: "Filters deleted from Product successfully!",
@@ -165,18 +166,46 @@ const deleteFiltersFromProduct = async (req, res) => {
 };
 
 const getProductFilters = async (req, res) => {
-  let rr;
-  const a = await Product.find({ _id: req.params.id }).then((p) => {
-    p.filterIds.map((f) => {
-      const filters = Filter.find({ _id: f }).then((v) => {
-        v.variableIds.map((vv) => {
-          const variables = VariableModel.find({ _id: vv }).then((r) => {
-            rr.push(r.name);
-          });
-        });
+  let rr = [];
+  await Product.findById(req.params.id)
+    .then((val) => {
+      console.log(val);
+      val.filterIds.forEach(async (val) => {
+        console.log(val);
+        await Filter.findById(val)
+          .then((val) => {
+            console.log(val);
+
+            val.variableIds.forEach(async (val) => {
+              console.log(val);
+              const a = await Variable.findById(val).exec();
+              console.log(a);
+              console.log("----------", rr, a.name, a._id);
+              !rr.includes(a.name) ? rr.push(a.name) : "";
+            });
+            res.status(StatusCodes.CREATED).json({ filters: rr });
+          })
+          .catch((err) => {});
       });
-    });
-  });
+      // res.status(StatusCodes.CREATED).json({ filters: rr });
+    })
+    .catch((err) => {});
+
+  // const a = await Product.find({ _id: req.params.id })
+  //   .then((p) => {
+  //     p[0].filterIds.forEach(async (f) => {
+  //       const filters = await Filter.find({ _id: f }).then(async (v) => {
+  //         const rr = await v[0].variableIds.forEach(async (vv) => {
+  //           return await Variable.find({ _id: vv }).then((r) => {
+  //             return r[0].name;
+  //           });
+  //         });
+  //         console.log(rr);
+  //       });
+  //     });
+  //     res.status(StatusCodes.CREATED).json(rr);
+  //   })
+  //   .catch((err) => {});
 };
 
 export {
