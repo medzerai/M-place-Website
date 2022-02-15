@@ -10,8 +10,8 @@ const FilterSchema = new mongoose.Schema(
       trim: true,
     },
 
-    variableId: {
-      type: String,
+    variableIds: {
+      type: [String],
       required: [true, "Please provide your Variable Id"],
       trim: true,
     },
