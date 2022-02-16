@@ -16,13 +16,6 @@ const RatingSchema = new mongoose.Schema(
       maxlength: 20,
       trim: true,
     },
-    marque: {
-      type: String,
-      required: [true, "Please provide your Product brand"],
-      minlength: 3,
-      maxlength: 20,
-      trim: true,
-    },
     rate: {
       type: Number,
       required: [true, "Please provide the product rating score"],
