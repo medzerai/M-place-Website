@@ -77,3 +77,34 @@ DELETE  http://localhost:3000/products/getProductFilters/:id
 # get the product filters (still in work)
 
 ###
+
+//------------------------------------ Filter
+
+POST   http://localhost:3000/addFilter
+# add Filter body={ name, variables, quantity, price }
+
+###
+GET   http://localhost:3000/filters
+# get all filters
+
+###
+GET   http://localhost:3000/filters/620a2dcefdc853adfb78633a
+# get filter by id
+
+###
+PATCH  http://localhost:3000/filters/620a2dcefdc853adfb78633a
+# update filter body={ name, variables, quantity, price }
+
+###
+DELETE    http://localhost:3000/filters/620a2dcefdc853adfb78633a
+# delete filter 
+
+###
+PATCH   http://localhost:3000/addVariablesToFilter/620a2dcefdc853adfb78633a
+# add variables to the filter body={ variables }
+
+###
+PATCH    http://localhost:3000/deleteVariablesFromFilter/620a2dcefdc853adfb78633a
+# delete variables from filter body={ variables }
+
+###
