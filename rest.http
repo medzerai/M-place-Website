@@ -158,3 +158,16 @@ GET  http://localhost:3000/ratings/getRatingByProduct/620a267e62ffd4ace9e65863
 # get ratings by product 
 
 ###
+//------------------------------------ Image
+
+POST   http://localhost:3000/file/upload
+# upload image to cloudinary and save it in the disk body=image
+
+###
+GET  http://localhost:3000/file/img
+# get all images saved in the cloudinary
+
+###
+GET  http://localhost:3000/file/img/620e5c9ad859dd26afa465fb
+# get image by id
+###

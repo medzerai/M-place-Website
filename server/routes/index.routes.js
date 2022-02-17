@@ -8,10 +8,15 @@ import ProductRouter from "./product.routes.js";
 import RatingRouter from "./rating.routes.js";
 const router = express.Router();
 
-
-
 router.use("/file", imageRouter);
 router.use("/api/v1/auth", UserRouter);
-router.use("/", CategoryRouter, ProductRouter, VariableRouter, FilterRouter,RatingRouter);
+router.use(
+  "/",
+  CategoryRouter,
+  ProductRouter,
+  FilterRouter,
+  VariableRouter,
+  RatingRouter
+);
 
 export default router;

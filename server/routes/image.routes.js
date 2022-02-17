@@ -5,8 +5,8 @@ import {
   getAllImages,
   getImageById,
 } from "../controllers/image.controller.js";
-import express from "express";
 
+import express from "express";
 const imageRouter = express.Router();
 
 imageRouter.post("/upload", imageUpload.any(), createImage);
