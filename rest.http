@@ -108,3 +108,49 @@ PATCH    http://localhost:3000/deleteVariablesFromFilter/620a2dcefdc853adfb78633
 # delete variables from filter body={ variables }
 
 ###
+
+//------------------------------------ Variable
+
+POST   http://localhost:3000/addVariable
+# add Variable body={ name, option }
+
+###
+GET   http://localhost:3000/variables
+# get all variables
+
+###
+GET   http://localhost:3000/variables/620a214e05220d771477253a
+# get variable by id
+
+###
+PATCH  http://localhost:3000/variables/620a214e05220d771477253a
+# update variable body={ name, option }
+
+###
+DELETE    http://localhost:3000/variables/620a214e05220d771477253a
+# delete variable 
+
+###
+
+//------------------------------------ Rating
+
+POST   http://localhost:3000/addRating
+# add Rating body={ userId, SKU, rate, comment }
+
+###
+GET   http://localhost:3000/ratings
+# get all ratings sorted by rate number
+
+###
+GET   http://localhost:3000/ratings/620e40357e30c08f1b259cee
+# get rating by id
+
+###
+PATCH  http://localhost:3000/ratings/620e40357e30c08f1b259cee
+# update rating body={ userId, SKU, rate, comment }
+
+###
+DELETE  http://localhost:3000/ratings/620e40357e30c08f1b259cee
+# delete rating 
+
+###

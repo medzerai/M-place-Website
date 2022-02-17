@@ -5,15 +5,11 @@ const RatingSchema = new mongoose.Schema(
     userId: {
       type: String,
       required: [true, "Please provide the User id"],
-      minlength: 3,
-      maxlength: 20,
       trim: true,
     },
     productSKU: {
       type: String,
       required: [true, "Please provide the Product SKU"],
-      minlength: 3,
-      maxlength: 20,
       trim: true,
     },
     rate: {

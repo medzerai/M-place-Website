@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import Category from "../models/Category.model.js";
+import Product from "../models/Product.model.js";
 import Rating from "../models/Rating.model.js";
 
 class CustomAPIError extends Error {
@@ -39,7 +39,7 @@ const addRating = async (req, res) => {
 
 const getAllRatings = async (req, res) => {
   const p = await Rating.find({})
-    .sort(["rate", 1])
+    .sort({ rate: -1 })
     .then((val) => {
       val.length == 0
         ? res.status(StatusCodes.OK).json("No ratings to show")
