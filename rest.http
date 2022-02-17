@@ -1,1 +1,36 @@
-POST http://localhost:3000/api/auth/signup
+// User
+
+POST http://localhost:3000/api/v1/auth/register
+# registe  body={ name, email, password, numTel }
+
+###
+POST http://localhost:3000/api/v1/auth/login
+# login body={ email, password } 
+
+###
+PATCH  http://localhost:3000/api/v1/auth/updateUser
+# update user body={ email, name, lastName, location, numTel }
+
+###
+// Category
+
+POST http://localhost:3000/addCategory
+# add category body={ name, parent }
+
+###
+GET http://localhost:3000/categories
+# get all categories
+
+###
+GET  http://localhost:3000/categories/61fbd214a1614d4a0997d5c6
+# get category by id
+
+###
+PATCH  http://localhost:3000/categories/61fbd214a1614d4a0997d5c6
+# update category body={ name, parent }
+
+###
+DELETE  http://localhost:3000/categories/61fbd214a1614d4a0997d5c6
+# 
+
+###
