@@ -98,9 +98,11 @@ const getRatingByProduct = async (req, res) => {
   await Product.findById(req.params.id)
     .then(async (val) => {
       if (val) {
-        await Rating.find({ productSKU: val.SKU }).then((val) => {
-          res.status(StatusCodes.OK).json(val);
-        });
+        await Rating.find({ productSKU: val.SKU })
+          .sort({ rate: -1 })
+          .then((val) => {
+            res.status(StatusCodes.OK).json(val);
+          });
       }
     })
     .catch((err) => {

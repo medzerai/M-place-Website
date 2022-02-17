@@ -142,15 +142,19 @@ GET   http://localhost:3000/ratings
 # get all ratings sorted by rate number
 
 ###
-GET   http://localhost:3000/ratings/620e40357e30c08f1b259cee
+GET   http://localhost:3000/ratings/620e52dbff0f297583612544
 # get rating by id
 
 ###
-PATCH  http://localhost:3000/ratings/620e40357e30c08f1b259cee
+PATCH  http://localhost:3000/ratings/620e52dbff0f297583612544
 # update rating body={ userId, SKU, rate, comment }
 
 ###
-DELETE  http://localhost:3000/ratings/620e40357e30c08f1b259cee
+DELETE  http://localhost:3000/ratings/620e52dbff0f297583612544
 # delete rating 
+
+###
+GET  http://localhost:3000/ratings/getRatingByProduct/620a267e62ffd4ace9e65863
+# get ratings by product 
 
 ###
