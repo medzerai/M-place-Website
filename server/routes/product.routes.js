@@ -20,10 +20,12 @@ ProductRouter.route("/products/:id")
   .get(getProductById)
   .patch(updateProduct)
   .delete(deleteProduct);
-ProductRouter.route("/products/getProductByCategory/:id").get(
+ProductRouter.route("/products/getProductByCategory/:category").get(
   getProductByCategory
 );
-ProductRouter.route("/products/getProductByMarque/:id").get(getProductByMarque);
+ProductRouter.route("/products/getProductByMarque/:marque").get(
+  getProductByMarque
+);
 ProductRouter.route("/products/addFiltersToProduct/:id").patch(
   addFiltersToProduct
 );

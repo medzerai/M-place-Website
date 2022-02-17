@@ -107,15 +107,20 @@ const deleteProduct = async (req, res) => {
 };
 
 const getProductByCategory = async (req, res) => {
-  const c = await Category.find({ name: req.params.category });
-  const p = await Product.find({ categoryId: c._id })
-    .then((val) => {
-      val.length == 0
-        ? res.status(StatusCodes.OK).json("No products to show")
-        : res.status(StatusCodes.OK).json(val);
+  const c = await Category.find({ name: req.params.category })
+    .then(async (cat) => {
+      const p = await Product.find({ categoryId: cat[0]._id })
+        .then((val) => {
+          val.length == 0
+            ? res.status(StatusCodes.OK).json("No products to show")
+            : res.status(StatusCodes.OK).json(val);
+        })
+        .catch((error) => {
+          throw new BadRequestError(error);
+        });
     })
-    .catch((error) => {
-      throw new BadRequestError(error);
+    .catch((err) => {
+      throw new BadRequestError(err);
     });
 };
 
