@@ -58,22 +58,22 @@ DELETE  http://localhost:3000/products/620a267e62ffd4ace9e65863
 
 ###
 GET   http://localhost:3000/products/getProductByCategory/TOM
-# get product by category name
+# get products by category name
 
 ###
 GET  http://localhost:3000/products/getProductByMarque/samsung
-# 
+#  get products by marque or brand name
 
 ###
-DELETE  http://localhost:3000/products/620a267e62ffd4ace9e65863
-# 
+PATCH  http://localhost:3000/products/addFiltersToProduct/620a266262ffd4ace9e65860
+# add filter to a product body={ filters }
 
 ###
-DELETE  http://localhost:3000/products/620a267e62ffd4ace9e65863
-# 
+DELETE  http://localhost:3000/products/deleteFiltersFromProduct/620a266262ffd4ace9e65860
+# delete filters from a product body={ filters }
 
 ###
-DELETE  http://localhost:3000/products/620a267e62ffd4ace9e65863
-# 
+DELETE  http://localhost:3000/products/getProductFilters/:id
+# get the product filters (still in work)
 
 ###
