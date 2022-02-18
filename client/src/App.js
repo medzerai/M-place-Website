@@ -17,8 +17,32 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/admin">
-          <Template />
+        <Route exact path="/admin/product">
+          <Template data={"product"} />
+        </Route>
+        <Route exact path="/admin/dashboard">
+          <Template data={"dashboard"} />
+        </Route>
+        <Route exact path="/admin/users">
+          <Template data={"users"} />
+        </Route>
+        <Route exact path="/admin/category">
+          <Template data={"category"} />
+        </Route>
+        <Route exact path="/admin/productOwner">
+          <Template data={"productOwner"} />
+        </Route>
+        <Route exact path="/admin/messages">
+          <Template data={"messages"} />
+        </Route>
+        <Route exact path="/admin/reports">
+          <Template data={"reports"} />
+        </Route>
+        <Route exact path="/admin/events">
+          <Template data={"events"} />
+        </Route>
+        <Route exact path="/admin/blogs">
+          <Template data={"blogs"} />
         </Route>
         <Route exact path="/login">
           <Login />
