@@ -171,46 +171,33 @@ const deleteFiltersFromProduct = async (req, res) => {
 };
 
 const getProductFilters = async (req, res) => {
-  let rr = [];
+  var rr = ["toto"];
+
   await Product.findById(req.params.id)
-    .then((val) => {
+    .then(async (val) => {
       console.log(val);
-      val.filterIds.forEach(async (val) => {
+      await val.filterIds.forEach(async (val) => {
         console.log(val);
         await Filter.findById(val)
-          .then((val) => {
+          .then(async (val) => {
             console.log(val);
 
-            val.variableIds.forEach(async (val) => {
+            await val.variableIds.forEach(async (val) => {
               console.log(val);
-              const a = await Variable.findById(val).exec();
-              console.log(a);
-              console.log("----------", rr, a.name, a._id);
-              !rr.includes(a.name) ? rr.push(a.name) : "";
+              const a = await Variable.findById(val).then((a) => {
+                return a.name;
+              });
+              !rr.includes(a) ? rr.push(a) : "";
+              console.log("///////", rr);
             });
-            res.status(StatusCodes.CREATED).json({ filters: rr });
           })
-          .catch((err) => {});
+          .catch((error) => {});
       });
+      console.log("++++++++++", rr);
+
       // res.status(StatusCodes.CREATED).json({ filters: rr });
     })
-    .catch((err) => {});
-
-  // const a = await Product.find({ _id: req.params.id })
-  //   .then((p) => {
-  //     p[0].filterIds.forEach(async (f) => {
-  //       const filters = await Filter.find({ _id: f }).then(async (v) => {
-  //         const rr = await v[0].variableIds.forEach(async (vv) => {
-  //           return await Variable.find({ _id: vv }).then((r) => {
-  //             return r[0].name;
-  //           });
-  //         });
-  //         console.log(rr);
-  //       });
-  //     });
-  //     res.status(StatusCodes.CREATED).json(rr);
-  //   })
-  //   .catch((err) => {});
+    .catch((error) => {});
 };
 
 export {

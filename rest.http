@@ -73,8 +73,8 @@ DELETE  http://localhost:3000/products/deleteFiltersFromProduct/620a266262ffd4ac
 # delete filters from a product body={ filters }
 
 ###
-DELETE  http://localhost:3000/products/getProductFilters/:id
-# get the product filters (still in work)
+GET  http://localhost:3000/products/getProductFilters/620a267e62ffd4ace9e65863
+# get the product filters (still in progress)
 
 ###
 
