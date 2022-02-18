@@ -7,13 +7,10 @@ const DashboardAdmin = () => {
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <Link to="/">Home</Link>
-          </li>
-          <li className="breadcrumb-item">
-            <a href="#">Library</a>
+            <Link to="/">Admin</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Data
+            Dashboard
           </li>
         </ol>
       </nav>
