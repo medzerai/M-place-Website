@@ -275,7 +275,7 @@ const Navbar = () => {
                   </li>
                   <li
                     className={
-                      window.location.pathname.split("/")[1] == "events"
+                      window.location.pathname.split("/")[1] === "events"
                         ? "active"
                         : ""
                     }
@@ -286,7 +286,7 @@ const Navbar = () => {
                   </li>
                   <li
                     className={
-                      window.location.pathname.split("/")[1] == "about"
+                      window.location.pathname.split("/")[1] === "about"
                         ? "active"
                         : ""
                     }
@@ -297,7 +297,7 @@ const Navbar = () => {
                   </li>
                   <li
                     className={
-                      window.location.pathname.split("/")[1] == "blogs"
+                      window.location.pathname.split("/")[1] === "blogs"
                         ? "active"
                         : ""
                     }
@@ -308,7 +308,7 @@ const Navbar = () => {
                   </li>
                   <li
                     className={
-                      window.location.pathname.split("/")[1] == "contact"
+                      window.location.pathname.split("/")[1] === "contact"
                         ? "active"
                         : ""
                     }
