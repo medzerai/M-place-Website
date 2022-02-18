@@ -87,11 +87,11 @@ const Presentation = () => {
       </div>
       <div className="brands">
         <a href="#">
-          <img src="//logo.clearbit.com/google.com?greyscale=true" />
-          <img src="//logo.clearbit.com/shopify.com?greyscale=true" />
-          <img src="//logo.clearbit.com/ethereum.org?greyscale=true" />
-          <img src="//logo.clearbit.com/tunisair.com?greyscale=true" />
-          <img src="//logo.clearbit.com/topnet.tn?greyscale=true" />
+          <img alt="" src="//logo.clearbit.com/google.com?greyscale=true" />
+          <img alt="" src="//logo.clearbit.com/shopify.com?greyscale=true" />
+          <img alt="" src="//logo.clearbit.com/ethereum.org?greyscale=true" />
+          <img alt="" src="//logo.clearbit.com/tunisair.com?greyscale=true" />
+          <img alt="" src="//logo.clearbit.com/topnet.tn?greyscale=true" />
         </a>
       </div>
     </div>

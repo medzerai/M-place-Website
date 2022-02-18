@@ -10,12 +10,40 @@ import Register from "./components/register";
 import Erreur404 from "./components/404";
 import Product from "./components/product";
 import Category from "./components/category";
+import Template from "./components/Panel/components/template";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
   return (
     <Router>
       <Switch>
+        <Route exact path="/admin/product">
+          <Template data={"product"} />
+        </Route>
+        <Route exact path="/admin/dashboard">
+          <Template data={"dashboard"} />
+        </Route>
+        <Route exact path="/admin/users">
+          <Template data={"users"} />
+        </Route>
+        <Route exact path="/admin/category">
+          <Template data={"category"} />
+        </Route>
+        <Route exact path="/admin/productOwner">
+          <Template data={"productOwner"} />
+        </Route>
+        <Route exact path="/admin/messages">
+          <Template data={"messages"} />
+        </Route>
+        <Route exact path="/admin/reports">
+          <Template data={"reports"} />
+        </Route>
+        <Route exact path="/admin/events">
+          <Template data={"events"} />
+        </Route>
+        <Route exact path="/admin/blogs">
+          <Template data={"blogs"} />
+        </Route>
         <Route exact path="/login">
           <Login />
         </Route>

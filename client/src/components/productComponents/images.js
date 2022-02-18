@@ -7,12 +7,13 @@ export default class ImagesProduct extends Component {
     const settings = {
       customPaging: function (i) {
         return (
-          <a>
+          <>
             <img
+              alt=""
               className="smallPic"
               src={"https://picsum.photos/id/" + i + "/500/500"}
             />
-          </a>
+          </>
         );
       },
       dots: true,
@@ -26,16 +27,16 @@ export default class ImagesProduct extends Component {
       <div>
         <Slider {...settings}>
           <div>
-            <img src="https://picsum.photos/id/244/500/500" />
+            <img alt="" src="https://picsum.photos/id/244/500/500" />
           </div>
           <div>
-            <img src="https://picsum.photos/id/247/500/500" />
+            <img alt="" src="https://picsum.photos/id/247/500/500" />
           </div>
           <div>
-            <img src="https://picsum.photos/id/248/500/500" />
+            <img alt="" src="https://picsum.photos/id/248/500/500" />
           </div>
           <div>
-            <img src="https://picsum.photos/id/225/500/500" />
+            <img alt="" src="https://picsum.photos/id/225/500/500" />
           </div>
         </Slider>
       </div>
