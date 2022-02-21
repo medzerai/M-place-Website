@@ -68,6 +68,7 @@
   background: white;
   border-radius: 3px;
   border: 1px solid #5454544f;
+  margin-bottom: 1em;
 }
 .cardTemplate .title-cardTemplate {
   width: 100%;
@@ -132,4 +133,24 @@
   padding: 0.4em;
   margin-bottom: 5px;
   font-size: 1.2em;
+  cursor: pointer;
+}
+.actions .action:hover {
+  color: #0a3b82;
+}
+.input {
+  border-radius: 5px;
+  border: 0.5px solid #d6d6d6;
+  padding: 0.5em;
+  margin: 1em;
+  background: #fff;
+}
+.modal-content {
+  background: #eee;
+}
+.itemInput {
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  border: 1px solid #1e1e1e1e;
 }
