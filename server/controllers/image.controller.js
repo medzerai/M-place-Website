@@ -1,5 +1,4 @@
 import { StatusCodes } from "http-status-codes";
-
 import imageModel from "../models/image.model.js";
 import uploads from "../config/cloudinary.config.js";
 

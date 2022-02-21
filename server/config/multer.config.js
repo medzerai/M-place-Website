@@ -18,4 +18,5 @@ const imageStorage = diskStorage({
     cb(null, file.originalname);
   },
 });
+
 export const imageUpload = multer({ storage: imageStorage });

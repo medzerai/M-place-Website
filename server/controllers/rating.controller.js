@@ -38,7 +38,7 @@ const addRating = async (req, res) => {
 };
 
 const getAllRatings = async (req, res) => {
-  const p = await Rating.find({})
+  await Rating.find({})
     .sort({ rate: -1 })
     .then((val) => {
       val.length == 0
@@ -51,7 +51,7 @@ const getAllRatings = async (req, res) => {
 };
 
 const getRatingById = async (req, res) => {
-  const p = await Rating.find({ _id: req.params.id })
+  await Rating.find({ _id: req.params.id })
     .then((val) => {
       val.length == 0
         ? res.status(StatusCodes.OK).json("The rating does not exist")

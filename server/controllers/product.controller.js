@@ -27,7 +27,7 @@ class NotFoundError extends CustomAPIError {
 const addProduct = async (req, res) => {
   const { name, SKU, marque, description, category, filters } = req.body;
 
-  const prod = new Product({
+  const product = new Product({
     name,
     SKU,
     marque,
@@ -44,12 +44,12 @@ const addProduct = async (req, res) => {
     throw new BadRequestError("Category id does not exist !!");
   }
 
-  const p = await Product.create(prod);
-  res.status(StatusCodes.OK).json({ p });
+  const prod = await Product.create(product);
+  res.status(StatusCodes.OK).json({ prod });
 };
 
 const getAllProducts = async (req, res) => {
-  const p = await Product.find({})
+  await Product.find({})
     .then((val) => {
       val.length == 0
         ? res.status(StatusCodes.OK).json("No products to show")
@@ -61,7 +61,7 @@ const getAllProducts = async (req, res) => {
 };
 
 const getProductById = async (req, res) => {
-  const p = await Product.find({ _id: req.params.id })
+  await Product.find({ _id: req.params.id })
     .then((val) => {
       val.length == 0
         ? res.status(StatusCodes.OK).json("The product does not exist")
@@ -73,17 +73,18 @@ const getProductById = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const prod = await Product.findById(req.params.id);
-  const p = new Product({
+  const product = await Product.findById(req.params.id);
+  const newProduct = new Product({
     _id: req.params.id,
-    name: req.body.name || prod.name,
-    SKU: req.body.SKU || prod.SKU,
-    marque: req.body.marque || prod.marque,
-    description: req.body.description || prod.description,
-    categoryId: req.body.category || prod.categoryId,
-    filterIds: req.body.filters || prod.filterIds,
+    name: req.body.name || product.name,
+    SKU: req.body.SKU || product.SKU,
+    marque: req.body.marque || product.marque,
+    description: req.body.description || product.description,
+    categoryId: req.body.category || product.categoryId,
+    filterIds: req.body.filters || product.filterIds,
   });
-  Product.updateOne({ _id: req.params.id }, p)
+
+  Product.updateOne({ _id: req.params.id }, newProduct)
     .then(() => {
       res.status(StatusCodes.CREATED).json({
         message: "Product updated successfully!",
@@ -107,9 +108,9 @@ const deleteProduct = async (req, res) => {
 };
 
 const getProductByCategory = async (req, res) => {
-  const c = await Category.find({ name: req.params.category })
+  await Category.find({ name: req.params.category })
     .then(async (cat) => {
-      const p = await Product.find({ categoryId: cat[0]._id })
+      await Product.find({ categoryId: cat[0]._id })
         .then((val) => {
           val.length == 0
             ? res.status(StatusCodes.OK).json("No products to show")
@@ -125,7 +126,7 @@ const getProductByCategory = async (req, res) => {
 };
 
 const getProductByMarque = async (req, res) => {
-  const p = await Product.find({ marque: req.params.marque })
+  await Product.find({ marque: req.params.marque })
     .then((val) => {
       val.length == 0
         ? res.status(StatusCodes.OK).json("No products to show")
@@ -137,11 +138,11 @@ const getProductByMarque = async (req, res) => {
 };
 
 const addFiltersToProduct = async (req, res) => {
-  const f = await Product.findById(req.params.id);
+  const fil = await Product.findById(req.params.id);
   req.body.filters.map((val) =>
-    !f.filterIds.includes(val) ? f.filterIds.push(val) : ""
+    !fil.filterIds.includes(val) ? fil.filterIds.push(val) : ""
   );
-  Product.updateOne({ _id: req.params.id }, f)
+  Product.updateOne({ _id: req.params.id }, fil)
     .then(() => {
       res.status(StatusCodes.CREATED).json({
         message: "Filters added to Product successfully!",
@@ -153,13 +154,13 @@ const addFiltersToProduct = async (req, res) => {
 };
 
 const deleteFiltersFromProduct = async (req, res) => {
-  const f = await Product.findById(req.params.id);
+  const fil = await Product.findById(req.params.id);
   req.body.filters.map((val) =>
-    f.filterIds.includes(val)
-      ? f.filterIds.splice(f.filterIds.indexOf(val), 1)
+    fil.filterIds.includes(val)
+      ? fil.filterIds.splice(fil.filterIds.indexOf(val), 1)
       : ""
   );
-  Product.updateOne({ _id: req.params.id }, f)
+  Product.updateOne({ _id: req.params.id }, fil)
     .then(() => {
       res.status(StatusCodes.CREATED).json({
         message: "Filters deleted from Product successfully!",
@@ -171,33 +172,47 @@ const deleteFiltersFromProduct = async (req, res) => {
 };
 
 const getProductFilters = async (req, res) => {
-  var rr = ["toto"];
+  var result = [];
 
-  await Product.findById(req.params.id)
-    .then(async (val) => {
-      console.log(val);
-      await val.filterIds.forEach(async (val) => {
-        console.log(val);
-        await Filter.findById(val)
-          .then(async (val) => {
-            console.log(val);
-
-            await val.variableIds.forEach(async (val) => {
-              console.log(val);
-              const a = await Variable.findById(val).then((a) => {
-                return a.name;
-              });
-              !rr.includes(a) ? rr.push(a) : "";
-              console.log("///////", rr);
-            });
-          })
-          .catch((error) => {});
+  const a = async () => {
+    const product = await Product.findById(req.params.id).exec();
+    var filter;
+    
+    product.filterIds.forEach(async (item) => {
+      filter = await Filter.findById(item).exec();
+      var variable;
+      filter.variableIds.forEach(async (val) => {
+        variable = await Variable.findById(val).exec();
+        console.log("1--", result);
+        !result.includes(variable.name) ? result.push(variable.name) : "";
       });
-      console.log("++++++++++", rr);
+    });
+    console.log("2--", result);
+  };
+  await a();
 
-      // res.status(StatusCodes.CREATED).json({ filters: rr });
-    })
-    .catch((error) => {});
+  console.log("3--", result);
+
+  // await Product.findById(req.params.id)
+  //   .then((val) => {
+  //     val.filterIds.forEach((item) =>
+  //       Filter.findById(item)
+  //         .then((itm) => {
+  //           itm.variableIds.forEach((val) => {
+  //             Variable.findById(val)
+  //               .then((a) => {
+  //                 console.log("1--", result);
+  //                 !result.includes(a.name) ? result.push(a.name) : "";
+  //               })
+  //               .catch((err) => console.log(err));
+  //           });
+  //         })
+  //         .catch((err) => console.log(err))
+  //     );
+  //     console.log("2--", result);
+  //   })
+  //   .catch((err) => console.log(err));
+  // console.log("3--", result);
 };
 
 export {
