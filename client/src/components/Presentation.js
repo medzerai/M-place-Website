@@ -86,7 +86,7 @@ const Presentation = () => {
         <Responsive data={tendProduct} />
       </div>
       <div className="brands">
-        <a href="#">
+        <a href="/">
           <img alt="" src="//logo.clearbit.com/google.com?greyscale=true" />
           <img alt="" src="//logo.clearbit.com/shopify.com?greyscale=true" />
           <img alt="" src="//logo.clearbit.com/ethereum.org?greyscale=true" />

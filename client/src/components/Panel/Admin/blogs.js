@@ -1,4 +1,5 @@
 import Template from "../components/template";
+import ReactEditor from "../components/reactEditor";
 import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 const Blogs = () => {
@@ -14,6 +15,7 @@ const Blogs = () => {
           </li>
         </ol>
       </nav>
+      <ReactEditor />
     </div>
   );
 };
