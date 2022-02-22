@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import pic from "./../../../meeting.jpg";
+import ReactEditor from "./../components/reactEditor.js";
 import { useState } from "react";
 import { BiTrashAlt, BiPlayCircle, BiEdit } from "react-icons/bi";
 import { Modal, Button } from "react-bootstrap";
@@ -142,13 +143,111 @@ const Products = () => {
         onHide={ModifyClose}
         backdrop="static"
         keyboard={false}
+        fullscreen={true}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
+          <Modal.Title>Edit Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          I will not close if you click outside me. Don't even try to press
-          escape key.
+          <div className="row">
+            <div className="col-12 col-sm-8">
+              <div className="cardTemplate shadow-sm">
+                <div className="title-cardTemplate">
+                  <h1>Product</h1>
+                </div>
+                <div className="content-cardTemplate">
+                  <input
+                    className="itemInput"
+                    placeholder="Name ( Ex: blue summer shirt.. )"
+                    type="text"
+                  />
+                  <ReactEditor />
+                </div>
+              </div>
+              <div className="cardTemplate shadow-sm">
+                <div className="title-cardTemplate">
+                  <h1>Images</h1>
+                </div>
+                <div className="content-cardTemplate"></div>
+              </div>
+              <div className="cardTemplate shadow-sm">
+                <div className="title-cardTemplate">
+                  <h1>Variants</h1>
+                </div>
+                <div className="content-cardTemplate"></div>
+              </div>
+            </div>
+            <div className="col-12 col-sm-4">
+              <div className="cardTemplate shadow-sm">
+                <div className="title-cardTemplate">
+                  <h1>Visibility</h1>
+                </div>
+                <div className="content-cardTemplate">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Visible
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault2"
+                      checked
+                    />
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Hidden
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="cardTemplate shadow-sm">
+                <div className="title-cardTemplate">
+                  <h1>Storage details</h1>
+                </div>
+                <div className="content-cardTemplate">
+                  <input className="itemInput" placeholder="SKU" type="text" />
+                </div>
+              </div>
+              <div className="cardTemplate shadow-sm">
+                <div className="title-cardTemplate">
+                  <h1>Category</h1>
+                </div>
+                <div className="content-cardTemplate">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Default radio
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault2"
+                      checked
+                    />
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Default checked radio
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={ModifyClose}>
