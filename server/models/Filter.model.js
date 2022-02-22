@@ -23,6 +23,8 @@ const FilterSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Please provide your Price"],
     },
+    Product_id: { type: mongoose.Types.ObjectId, ref: "Product" },
+    Variable_list: [{ type: mongoose.Types.ObjectId, ref: "Variable" }],
   },
   { timestamps: true }
 );

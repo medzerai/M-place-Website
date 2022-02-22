@@ -39,6 +39,7 @@ const ProductSchema = new mongoose.Schema(
       type: [String],
       trim: true,
     },
+    Filter_list: [{ type: mongoose.Types.ObjectId, ref: "Filter" }],
   },
   { timestamps: true }
 );

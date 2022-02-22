@@ -50,6 +50,14 @@ const addProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   await Product.find({})
+    // .populate("Filter_list", "-Product_id")
+    .populate({
+      path: "Filter_list",
+      populate: {
+        path: "Variable_list",
+        model: "Variable",
+      },
+    })
     .then((val) => {
       val.length == 0
         ? res.status(StatusCodes.OK).json("No products to show")
@@ -173,47 +181,64 @@ const deleteFiltersFromProduct = async (req, res) => {
 
 const getProductFilters = async (req, res) => {
   var result = [];
+  const promise1 = new Promise((resolve, reject) => {
+    setTimeout(async () => {
+      const product = await Product.findById(req.params.id).exec();
 
-  const a = async () => {
-    const product = await Product.findById(req.params.id).exec();
-    var filter;
-    
-    product.filterIds.forEach(async (item) => {
-      filter = await Filter.findById(item).exec();
-      var variable;
-      filter.variableIds.forEach(async (val) => {
-        variable = await Variable.findById(val).exec();
-        console.log("1--", result);
-        !result.includes(variable.name) ? result.push(variable.name) : "";
+      var filter;
+
+      await product.filterIds.forEach(async (item) => {
+        filter = await Filter.findById(item).exec();
+
+        var variable;
+        await filter.variableIds.forEach(async (val) => {
+          variable = await Variable.findById(val).exec();
+          !result.includes(variable.name) ? result.push(variable.name) : "";
+          console.log("after push --", result);
+        });
       });
+      console.log("promise 1--", result);
+      resolve();
     });
-    console.log("2--", result);
-  };
-  await a();
+  });
 
-  console.log("3--", result);
-
-  // await Product.findById(req.params.id)
-  //   .then((val) => {
-  //     val.filterIds.forEach((item) =>
-  //       Filter.findById(item)
-  //         .then((itm) => {
-  //           itm.variableIds.forEach((val) => {
-  //             Variable.findById(val)
-  //               .then((a) => {
-  //                 console.log("1--", result);
-  //                 !result.includes(a.name) ? result.push(a.name) : "";
-  //               })
-  //               .catch((err) => console.log(err));
-  //           });
-  //         })
-  //         .catch((err) => console.log(err))
-  //     );
-  //     console.log("2--", result);
-  //   })
-  //   .catch((err) => console.log(err));
-  // console.log("3--", result);
+  const promise2 = new Promise((resolve, reject) => {
+    setTimeout(async () => {
+      console.log("promise2--", result);
+      res.status(500).json({ filter_names: result });
+      resolve();
+    }, 1 * 1000);
+  });
+  Promise.all([promise1, promise2]).then(() => {
+    console.log("doneee");
+  });
 };
+
+// promise1.then(() => {
+//   promise2;
+// });
+
+// await Product.findById(req.params.id)
+//   .then((val) => {
+//     val.filterIds.forEach((item) =>
+//       Filter.findById(item)
+//         .then((itm) => {
+//           itm.variableIds.forEach((val) => {
+//             Variable.findById(val)
+//               .then((a) => {
+//                 console.log("1--", result);
+//                 !result.includes(a.name) ? result.push(a.name) : "";
+//               })
+//               .catch((err) => console.log(err));
+//           });
+//         })
+//         .catch((err) => console.log(err))
+//     );
+//     console.log("2--", result);
+//   })
+//   .catch((err) => console.log(err));
+// console.log("3--", result);
+// };
 
 export {
   addProduct,

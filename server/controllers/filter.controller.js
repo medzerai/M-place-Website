@@ -40,6 +40,7 @@ const addFilter = async (req, res) => {
 
 const getAllFilters = async (req, res) => {
   await Filter.find({})
+    .populate("Variable_list", "-_id")
     .then((val) => {
       res.status(StatusCodes.OK).json(val);
     })
