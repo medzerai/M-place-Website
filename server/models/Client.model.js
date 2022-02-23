@@ -48,6 +48,7 @@ const UserSchema = new mongoose.Schema(
       required: [true, "Please provide your Tel number"],
       unique: true,
     },
+    verified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

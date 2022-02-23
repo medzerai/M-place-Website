@@ -9,12 +9,7 @@ const FilterSchema = new mongoose.Schema(
       maxlength: 20,
       trim: true,
     },
-
-    variableIds: {
-      type: [String],
-      required: [true, "Please provide your Variable Id"],
-      trim: true,
-    },
+    Variable_list: [{ type: mongoose.Types.ObjectId, ref: "Variable" }],
     quantity: {
       type: Number,
       required: [true, "Please provide your Quantity"],
@@ -24,7 +19,6 @@ const FilterSchema = new mongoose.Schema(
       required: [true, "Please provide your Price"],
     },
     Product_id: { type: mongoose.Types.ObjectId, ref: "Product" },
-    Variable_list: [{ type: mongoose.Types.ObjectId, ref: "Variable" }],
   },
   { timestamps: true }
 );

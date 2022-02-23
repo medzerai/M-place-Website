@@ -42,6 +42,7 @@ const register = async (req, res) => {
       location: client.location,
       name: client.name,
       numTel: client.numTel,
+      verified: client.verified,
     },
     token,
   });
@@ -68,17 +69,18 @@ const login = async (req, res) => {
 };
 
 const updateClient = async (req, res) => {
-  const { email, name, lastName, location, numTel } = req.body;
-  if (!email || !name || !lastName || !location || !numTel) {
-    throw new BadRequestError("Please provide all values");
-  }
+  // const { email, name, lastName, location, numTel, verified } = req.body;
+  // if (!email || !name || !lastName || !location || !numTel) {
+  //   throw new BadRequestError("Please provide all values");
+  // }
   const client = await Client.findOne({ _id: req.client.clientId });
 
-  client.email = email;
-  client.name = name;
-  client.lastName = lastName;
-  client.location = location;
-  client.numTel = numTel;
+  client.email = req.body.email || client.email;
+  client.name = req.body.name || client.name;
+  client.lastName = req.body.lastName || client.lastName;
+  client.location = req.body.location || client.location;
+  client.numTel = req.body.numTel || client.numTel;
+  client.verified = req.body.verified || client.verified;
 
   await client.save();
   const token = client.createJWT();
