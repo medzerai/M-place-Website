@@ -22,15 +22,16 @@ class NotFoundError extends CustomAPIError {
 }
 
 const addFilter = async (req, res) => {
-  const { name, variables, quantity, price } = req.body;
+  const { name, variables, quantity, price, product_id } = req.body;
   const newFilter = new Filter({
     name,
-    variableIds: variables,
+    Variable_list: variables,
     quantity,
     price,
+    product_id,
   });
 
-  if (!name || !variables || !quantity || !price) {
+  if (!name || !variables || !quantity || !price || !product_id) {
     throw new BadRequestError("please provide all values");
   }
 
@@ -60,12 +61,14 @@ const getFilterById = async (req, res) => {
 };
 
 const updateFilter = async (req, res) => {
+  const filter = Filter.findOne({ _id: req.params.id });
   const updateFil = new Filter({
     _id: req.params.id,
-    name: req.body.name,
-    variableIds: req.body.variables,
-    quantity: req.body.quantity,
-    price: req.body.price,
+    name: req.body.name || filter.name,
+    Variable_list: req.body.variables || filter.Variable_list,
+    quantity: req.body.quantity || filter.quantity,
+    price: req.body.price || filter.price,
+    product_id: req.body.product_id || filter.product_id,
   });
   Filter.updateOne({ _id: req.params.id }, updateFil)
     .then(() => {
@@ -93,7 +96,7 @@ const deleteFilter = async (req, res) => {
 const addVariablesToFilter = async (req, res) => {
   const fil = await Filter.findById(req.params.id);
   req.body.variables.map((val) =>
-    !fil.variableIds.includes(val) ? fil.variableIds.push(val) : ""
+    !fil.Variable_list.includes(val) ? fil.Variable_list.push(val) : ""
   );
   Filter.updateOne({ _id: req.params.id }, fil)
     .then(() => {
@@ -109,8 +112,8 @@ const addVariablesToFilter = async (req, res) => {
 const deleteVariablesFromFilter = async (req, res) => {
   const fil = await Filter.findById(req.params.id);
   req.body.variables.map((val) =>
-    fil.variableIds.includes(val)
-      ? fil.variableIds.splice(fil.variableIds.indexOf(val), 1)
+    fil.Variable_list.includes(val)
+      ? fil.Variable_list.splice(fil.Variable_list.indexOf(val), 1)
       : ""
   );
   Filter.updateOne({ _id: req.params.id }, fil)

@@ -33,7 +33,7 @@ const addProduct = async (req, res) => {
     marque,
     description,
     categoryId: category,
-    filterIds: filters,
+    Filter_list: filters,
   });
 
   if (!name || !SKU || !marque || !description || !category) {
@@ -89,7 +89,7 @@ const updateProduct = async (req, res) => {
     marque: req.body.marque || product.marque,
     description: req.body.description || product.description,
     categoryId: req.body.category || product.categoryId,
-    filterIds: req.body.filters || product.filterIds,
+    Filter_list: req.body.filters || product.Filter_list,
   });
 
   Product.updateOne({ _id: req.params.id }, newProduct)
@@ -148,7 +148,7 @@ const getProductByMarque = async (req, res) => {
 const addFiltersToProduct = async (req, res) => {
   const fil = await Product.findById(req.params.id);
   req.body.filters.map((val) =>
-    !fil.filterIds.includes(val) ? fil.filterIds.push(val) : ""
+    !fil.Filter_list.includes(val) ? fil.Filter_list.push(val) : ""
   );
   Product.updateOne({ _id: req.params.id }, fil)
     .then(() => {
@@ -164,8 +164,8 @@ const addFiltersToProduct = async (req, res) => {
 const deleteFiltersFromProduct = async (req, res) => {
   const fil = await Product.findById(req.params.id);
   req.body.filters.map((val) =>
-    fil.filterIds.includes(val)
-      ? fil.filterIds.splice(fil.filterIds.indexOf(val), 1)
+    fil.Filter_list.includes(val)
+      ? fil.Filter_list.splice(fil.Filter_list.indexOf(val), 1)
       : ""
   );
   Product.updateOne({ _id: req.params.id }, fil)
@@ -187,7 +187,7 @@ const getProductFilters = async (req, res) => {
 
       var filter;
 
-      await product.filterIds.forEach(async (item) => {
+      await product.Filter_list.forEach(async (item) => {
         filter = await Filter.findById(item).exec();
 
         var variable;
@@ -214,31 +214,6 @@ const getProductFilters = async (req, res) => {
   });
 };
 
-// promise1.then(() => {
-//   promise2;
-// });
-
-// await Product.findById(req.params.id)
-//   .then((val) => {
-//     val.filterIds.forEach((item) =>
-//       Filter.findById(item)
-//         .then((itm) => {
-//           itm.variableIds.forEach((val) => {
-//             Variable.findById(val)
-//               .then((a) => {
-//                 console.log("1--", result);
-//                 !result.includes(a.name) ? result.push(a.name) : "";
-//               })
-//               .catch((err) => console.log(err));
-//           });
-//         })
-//         .catch((err) => console.log(err))
-//     );
-//     console.log("2--", result);
-//   })
-//   .catch((err) => console.log(err));
-// console.log("3--", result);
-// };
 
 export {
   addProduct,
