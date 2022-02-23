@@ -8,8 +8,8 @@ import { Modal, Button } from "react-bootstrap";
 const Users = () => {
   const [show, setModifyShow] = useState(false);
   const [showDelete, setDeleteShow] = useState(false);
-  const ModifyClose = () => setModifyShow(false);
-  const ModifyShow = () => setModifyShow(true);
+  const ConsultClose = () => setModifyShow(false);
+  const ConsultShow = () => setModifyShow(true);
 
   const DeleteClose = () => setDeleteShow(false);
   const DeleteShow = () => setDeleteShow(true);
@@ -67,7 +67,7 @@ const Users = () => {
                 </td>
                 <td>
                   <div className="actions">
-                    <div className="action">
+                    <div className="action" onClick={ConsultShow}>
                       <BiPlayCircle />
                     </div>
                     <div className="action" onClick={DeleteShow}>
@@ -93,7 +93,7 @@ const Users = () => {
                 </td>
                 <td>
                   <div className="actions">
-                    <div className="action">
+                    <div className="action" onClick={ConsultShow}>
                       <BiPlayCircle />
                     </div>
                     <div className="action" onClick={DeleteShow}>
@@ -119,7 +119,7 @@ const Users = () => {
                 </td>
                 <td>
                   <div className="actions">
-                    <div className="action">
+                    <div className="action" onClick={ConsultShow}>
                       <BiPlayCircle />
                     </div>
                     <div className="action" onClick={DeleteShow}>
@@ -134,20 +134,18 @@ const Users = () => {
       </div>
       <Modal
         show={show}
-        onHide={ModifyClose}
+        onHide={ConsultClose}
         backdrop="static"
         keyboard={false}
-        fullscreen={true}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Product</Modal.Title>
+          <Modal.Title>Consult user</Modal.Title>
         </Modal.Header>
         <Modal.Body>consult</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={ModifyClose}>
+          <Button variant="secondary" onClick={ConsultClose}>
             Close
           </Button>
-          <Button variant="primary">Save</Button>
         </Modal.Footer>
       </Modal>
       <Modal
