@@ -13,7 +13,7 @@ const VariableRouter = express.Router();
 VariableRouter.route("/addVariable").post(addVariable);
 VariableRouter.route("/variables").get(getAllVariables);
 VariableRouter.route("/variables/:id")
-  .get(getCategoryFilters)
+  .get(getVariableById)
   .patch(updateVariable)
   .delete(deleteVariable);
 

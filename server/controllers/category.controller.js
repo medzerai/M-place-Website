@@ -43,12 +43,12 @@ const addCategory = async (req, res) => {
     throw new BadRequestError("Category already exists");
   }
 
-  const ctg = await Category.create(cat);
-  res.status(StatusCodes.OK).json({ ctg });
+   await Category.create(cat);
+  res.status(StatusCodes.OK).json({ message : " Category added successfully " });
 };
 
 const getAllCategories = async (req, res) => {
-  const cat = await Category.find({})
+    await Category.find({})
     .then((val) => {
       res.status(StatusCodes.OK).json(val);
     })
@@ -58,7 +58,7 @@ const getAllCategories = async (req, res) => {
 };
 
 const getCategoryById = async (req, res) => {
-  const cat = await Category.find({ _id: req.params.id })
+    await Category.find({ _id: req.params.id })
     .then((val) => {
       res.status(StatusCodes.OK).json(val);
     })

@@ -35,10 +35,7 @@ const ProductSchema = new mongoose.Schema(
       trim: true,
       default: "/",
     },
-    filterIds: {
-      type: [String],
-      trim: true,
-    },
+    Filter_list: [{ type: mongoose.Types.ObjectId, ref: "Filter" }],
   },
   { timestamps: true }
 );

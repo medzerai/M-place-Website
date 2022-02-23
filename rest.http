@@ -1,4 +1,4 @@
-// User
+//------------------------------------ User
 
 POST http://localhost:3000/api/v1/auth/register
 # registe  body={ name, email, password, numTel }
@@ -12,7 +12,7 @@ PATCH  http://localhost:3000/api/v1/auth/updateUser
 # update user body={ email, name, lastName, location, numTel }
 
 ###
-// Category
+//------------------------------------ Category
 
 POST http://localhost:3000/addCategory
 # add category body={ name, parent }
@@ -33,4 +33,141 @@ PATCH  http://localhost:3000/categories/61fbd214a1614d4a0997d5c6
 DELETE  http://localhost:3000/categories/61fbd214a1614d4a0997d5c6
 # 
 
+###
+
+//------------------------------------ Product
+
+POST   http://localhost:3000/addProduct
+# add Product body={ name, SKU, marque, description, category, filters }
+
+###
+GET  http://localhost:3000/products
+# get all products
+
+###
+GET   http://localhost:3000/products/620a267e62ffd4ace9e65863
+# get product by id
+
+###
+PATCH   http://localhost:3000/products/620a267e62ffd4ace9e65863
+# update product body={ name, SKU, marque, description, category, filters }
+
+###
+DELETE  http://localhost:3000/products/620a267e62ffd4ace9e65863
+# delete product
+
+###
+GET   http://localhost:3000/products/getProductByCategory/TOM
+# get products by category name
+
+###
+GET  http://localhost:3000/products/getProductByMarque/samsung
+#  get products by marque or brand name
+
+###
+PATCH  http://localhost:3000/products/addFiltersToProduct/620a266262ffd4ace9e65860
+# add filter to a product body={ filters }
+
+###
+DELETE  http://localhost:3000/products/deleteFiltersFromProduct/620a266262ffd4ace9e65860
+# delete filters from a product body={ filters }
+
+###
+GET  http://localhost:3000/products/getProductFilters/620a266262ffd4ace9e65860
+# get the product filters (still in progress)
+
+###
+
+//------------------------------------ Filter
+
+POST   http://localhost:3000/addFilter
+# add Filter body={ name, variables, quantity, price }
+
+###
+GET   http://localhost:3000/filters
+# get all filters
+
+###
+GET   http://localhost:3000/filters/620a2dcefdc853adfb78633a
+# get filter by id
+
+###
+PATCH  http://localhost:3000/filters/620a2dcefdc853adfb78633a
+# update filter body={ name, variables, quantity, price }
+
+###
+DELETE    http://localhost:3000/filters/620a2dcefdc853adfb78633a
+# delete filter 
+
+###
+PATCH   http://localhost:3000/addVariablesToFilter/620a2dcefdc853adfb78633a
+# add variables to the filter body={ variables }
+
+###
+PATCH    http://localhost:3000/deleteVariablesFromFilter/620a2dcefdc853adfb78633a
+# delete variables from filter body={ variables }
+
+###
+
+//------------------------------------ Variable
+
+POST   http://localhost:3000/addVariable
+# add Variable body={ name, option }
+
+###
+GET   http://localhost:3000/variables
+# get all variables
+
+###
+GET   http://localhost:3000/variables/620a214e05220d771477253a
+# get variable by id
+
+###
+PATCH  http://localhost:3000/variables/620a214e05220d771477253a
+# update variable body={ name, option }
+
+###
+DELETE    http://localhost:3000/variables/620a214e05220d771477253a
+# delete variable 
+
+###
+
+//------------------------------------ Rating
+
+POST   http://localhost:3000/addRating
+# add Rating body={ userId, SKU, rate, comment }
+
+###
+GET   http://localhost:3000/ratings
+# get all ratings sorted by rate number
+
+###
+GET   http://localhost:3000/ratings/620e52dbff0f297583612544
+# get rating by id
+
+###
+PATCH  http://localhost:3000/ratings/620e52dbff0f297583612544
+# update rating body={ userId, SKU, rate, comment }
+
+###
+DELETE  http://localhost:3000/ratings/620e52dbff0f297583612544
+# delete rating 
+
+###
+GET  http://localhost:3000/ratings/getRatingByProduct/620a267e62ffd4ace9e65863
+# get ratings by product 
+
+###
+//------------------------------------ Image
+
+POST   http://localhost:3000/file/upload
+# upload image to cloudinary and save it in the disk body=image
+
+###
+GET  http://localhost:3000/file/img
+# get all images saved in the cloudinary
+
+###
+GET  http://localhost:3000/file/img/620e5c9ad859dd26afa465fb
+# get image by id
 ###

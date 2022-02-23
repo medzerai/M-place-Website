@@ -1,5 +1,4 @@
 import { StatusCodes } from "http-status-codes";
-
 import imageModel from "../models/image.model.js";
 import uploads from "../config/cloudinary.config.js";
 
@@ -11,7 +10,7 @@ const createImage = async (req, res) => {
     imageName: req.files[0].originalname,
   };
 
-  imageModel.find({ imageName: imageDetails.imageName }, (err, callback) => {
+  imageModel.find({ imageName: imageDetails.imageName }, (err) => {
     if (err) {
       res.json({
         err: err,
@@ -52,7 +51,7 @@ const createImage = async (req, res) => {
 };
 
 const getAllImages = async (req, res) => {
-  const imgs = await imageModel
+  await imageModel
     .find({})
     .then((val) => {
       res.status(StatusCodes.OK).json(val);
@@ -63,7 +62,7 @@ const getAllImages = async (req, res) => {
 };
 
 const getImageById = async (req, res) => {
-  const imgs = await imageModel
+  await imageModel
     .find({ _id: req.params.id })
     .then((val) => {
       res.status(StatusCodes.OK).json(val);
