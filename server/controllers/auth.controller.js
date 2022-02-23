@@ -1,4 +1,4 @@
-import User from "../models/User.model.js";
+import Client from "../models/Client.model.js";
 import { StatusCodes } from "http-status-codes";
 
 class CustomAPIError extends Error {
@@ -28,20 +28,20 @@ const register = async (req, res) => {
     throw new BadRequestError("please provide all values");
   }
 
-  const userAlreadyExists = await User.findOne({ email } || { numTel });
-  if (userAlreadyExists) {
-    throw new BadRequestError("User already exists");
+  const clientAlreadyExists = await Client.findOne({ email } || { numTel });
+  if (clientAlreadyExists) {
+    throw new BadRequestError("Client already exists");
   }
 
-  const user = await User.create({ name, email, password, numTel });
-  const token = user.createJWT();
+  const client = await Client.create({ name, email, password, numTel });
+  const token = client.createJWT();
   res.status(StatusCodes.OK).json({
-    user: {
-      email: user.email,
-      lastname: user.lastname,
-      location: user.location,
-      name: user.name,
-      numTel: user.numTel,
+    client: {
+      email: client.email,
+      lastname: client.lastname,
+      location: client.location,
+      name: client.name,
+      numTel: client.numTel,
     },
     token,
   });
@@ -52,37 +52,37 @@ const login = async (req, res) => {
   if (!email || !password) {
     throw new BadRequestError("Please provide all values");
   }
-  const user = await User.findOne({ email }).select("+password");
-  if (!user) {
+  const client = await Client.findOne({ email }).select("+password");
+  if (!client) {
     throw new BadRequestError("Invalid Credentials");
   }
-  console.log(user);
-  const isPasswordCorrect = await user.comparePassword(password);
+  console.log(client);
+  const isPasswordCorrect = await client.comparePassword(password);
   if (!isPasswordCorrect) {
     throw new BadRequestError("Invalid Credentials");
   }
 
-  const token = user.createJWT();
-  user.password = undefined;
-  res.status(StatusCodes.OK).json({ user, token, location: user.location });
+  const token = client.createJWT();
+  client.password = undefined;
+  res.status(StatusCodes.OK).json({ client, token, location: client.location });
 };
 
-const updateUser = async (req, res) => {
+const updateClient = async (req, res) => {
   const { email, name, lastName, location, numTel } = req.body;
   if (!email || !name || !lastName || !location || !numTel) {
     throw new BadRequestError("Please provide all values");
   }
-  const user = await User.findOne({ _id: req.user.userId });
+  const client = await Client.findOne({ _id: req.client.clientId });
 
-  user.email = email;
-  user.name = name;
-  user.lastName = lastName;
-  user.location = location;
-  user.numTel = numTel;
+  client.email = email;
+  client.name = name;
+  client.lastName = lastName;
+  client.location = location;
+  client.numTel = numTel;
 
-  await user.save();
-  const token = user.createJWT();
-  res.status(StatusCodes.OK).json({ user, token, location: user.location });
+  await client.save();
+  const token = client.createJWT();
+  res.status(StatusCodes.OK).json({ client, token, location: client.location });
 };
 
-export { register, login, updateUser };
+export { register, login, updateClient };
