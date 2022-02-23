@@ -50,14 +50,6 @@ const addProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   await Product.find({})
-    // .populate("Filter_list", "-Product_id")
-    // .populate({
-    //   path: "Filter_list",
-    //   populate: {
-    //     path: "Variable_list",
-    //     model: "Variable",
-    //   },
-    // })
     .then((val) => {
       val.length == 0
         ? res.status(StatusCodes.OK).json("No products to show")
@@ -179,9 +171,8 @@ const deleteFiltersFromProduct = async (req, res) => {
     });
 };
 
-const getProductFilters = async (req, res) => {
+const getProductFilters = (req, res) => {
   var result = [];
-
   Product.findById(req.params.id)
     // .populate("Filter_list", "-Product_id")
     .populate({
