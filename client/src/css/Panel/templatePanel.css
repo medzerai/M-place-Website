@@ -128,12 +128,14 @@
 .actions {
   width: 100px;
   display: flex;
+  margin: auto;
 }
 .actions .action {
   padding: 0.4em;
   margin-bottom: 5px;
   font-size: 1.2em;
   cursor: pointer;
+  margin: auto;
 }
 .actions .action:hover {
   color: #0a3b82;
