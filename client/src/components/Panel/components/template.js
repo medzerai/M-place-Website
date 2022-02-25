@@ -12,6 +12,8 @@ import Category from "../Admin/category";
 import Reports from "../Admin/report";
 import Blogs from "../Admin/blogs";
 import ProductOwner from "../Admin/ProductOwner";
+import { BiSubdirectoryRight } from "react-icons/bi";
+import "bootstrap/dist/js/bootstrap.js";
 function menuClick() {
   console.log("cliked");
   const element = document.querySelector(".sidebar");
@@ -109,11 +111,24 @@ export default class Responsive extends Component {
                     : "item"
                 }
               >
-                <Link to="/admin/productOwner">
-                  <p>Product Owner</p>
-                </Link>
+                <p data-bs-toggle="collapse" data-bs-target="#productOwner">
+                  Product Owner
+                </p>
+                <div className="collapse" id="productOwner">
+                  <ul>
+                    <li>
+                      <Link to="/admin/productOwner">
+                        <BiSubdirectoryRight /> All Product Owner
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/admin/productOwner">
+                        <BiSubdirectoryRight /> PO not verified
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </li>
-
               <li
                 className={
                   window.location.pathname.split("/")[2] === "messages"
