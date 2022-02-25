@@ -14,13 +14,7 @@ class BadRequestError extends CustomAPIError {
   }
 }
 
-class NotFoundError extends CustomAPIError {
-  constructor(message) {
-    super(message);
-    this.statusCode = StatusCodes.NOT_FOUND;
-  }
-}
-
+// Add a new filter
 const addFilter = async (req, res) => {
   const { name, variables, quantity, price, product_id } = req.body;
   const newFilter = new Filter({
@@ -50,6 +44,7 @@ const getAllFilters = async (req, res) => {
     });
 };
 
+// Get a filter by id
 const getFilterById = async (req, res) => {
   await Filter.find({ _id: req.params.id })
     .then((val) => {
@@ -60,6 +55,7 @@ const getFilterById = async (req, res) => {
     });
 };
 
+// Update a filter by id
 const updateFilter = async (req, res) => {
   const filter = Filter.findOne({ _id: req.params.id });
   const updateFil = new Filter({
@@ -81,6 +77,7 @@ const updateFilter = async (req, res) => {
     });
 };
 
+// Delete a filter by id
 const deleteFilter = async (req, res) => {
   Filter.deleteOne({ _id: req.params.id })
     .then(() => {
@@ -93,6 +90,7 @@ const deleteFilter = async (req, res) => {
     });
 };
 
+// Add variables to the filter
 const addVariablesToFilter = async (req, res) => {
   const fil = await Filter.findById(req.params.id);
   req.body.variables.map((val) =>
@@ -109,6 +107,7 @@ const addVariablesToFilter = async (req, res) => {
     });
 };
 
+// Delete variables from the filter
 const deleteVariablesFromFilter = async (req, res) => {
   const fil = await Filter.findById(req.params.id);
   req.body.variables.map((val) =>

@@ -21,6 +21,7 @@ class NotFoundError extends CustomAPIError {
   }
 }
 
+//  Sign in a Client
 const register = async (req, res) => {
   const { name, email, password, numTel } = req.body;
 
@@ -48,6 +49,7 @@ const register = async (req, res) => {
   });
 };
 
+// Log in a Client
 const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -56,6 +58,11 @@ const login = async (req, res) => {
   const client = await Client.findOne({ email }).select("+password");
   if (!client) {
     throw new BadRequestError("Invalid Credentials");
+  }
+  if (client.verified == false) {
+    throw new BadRequestError(
+      "Account not verified yet, Please check your mail !!"
+    );
   }
   console.log(client);
   const isPasswordCorrect = await client.comparePassword(password);
@@ -68,6 +75,7 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ client, token, location: client.location });
 };
 
+// Update a Client
 const updateClient = async (req, res) => {
   // const { email, name, lastName, location, numTel, verified } = req.body;
   // if (!email || !name || !lastName || !location || !numTel) {
