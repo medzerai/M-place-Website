@@ -123,6 +123,14 @@
   background-color: rgba(251, 50, 63, 0.2);
   color: #fb323f;
 }
+.gold {
+  background-color: #ffd90033;
+  color: #ffd700;
+}
+.pro {
+  background-color: #46464633;
+  color: #464646;
+}
 .name {
   max-width: 400px;
   width: 35%;
