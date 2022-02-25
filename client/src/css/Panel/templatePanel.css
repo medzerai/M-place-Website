@@ -63,6 +63,8 @@
 }
 .ContentTemplate {
   padding: 1em;
+  overflow: auto;
+  height: calc(100vh - 53px);
 }
 .cardTemplate {
   background: white;
@@ -155,4 +157,10 @@
   padding: 0.5em;
   margin-bottom: 1em;
   border: 1px solid #1e1e1e1e;
+}
+.item li {
+  padding: 7px 30px;
+}
+.item li a {
+  color: #fff;
 }
