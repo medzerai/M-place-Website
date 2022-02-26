@@ -32,6 +32,12 @@ function App() {
         <Route exact path="/admin/productOwner">
           <Template data={"productOwner"} />
         </Route>
+        <Route exact path="/admin/productOwnerNotVerified">
+          <Template data={"productOwnerNotVerified"} />
+        </Route>
+        <Route exact path="/admin/productOwnerDeleted">
+          <Template data={"productOwnerDeleted"} />
+        </Route>
         <Route exact path="/admin/messages">
           <Template data={"messages"} />
         </Route>

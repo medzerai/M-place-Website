@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
-import pic from "./../../../meeting.jpg";
-import ReactEditor from "./../components/reactEditor.js";
 import { useState } from "react";
 import { BiTrashAlt, BiPlayCircle, BiEdit } from "react-icons/bi";
 import { Modal, Button } from "react-bootstrap";
-
-const Users = () => {
+import pic from "./../../../../meeting.jpg";
+const ProductOwner = () => {
   const [show, setModifyShow] = useState(false);
   const [showDelete, setDeleteShow] = useState(false);
-  const ConsultClose = () => setModifyShow(false);
-  const ConsultShow = () => setModifyShow(true);
+  const ModifyClose = () => setModifyShow(false);
+  const ModifyShow = () => setModifyShow(true);
 
   const DeleteClose = () => setDeleteShow(false);
   const DeleteShow = () => setDeleteShow(true);
@@ -20,27 +18,34 @@ const Users = () => {
           <li className="breadcrumb-item">
             <Link to="/">Admin</Link>
           </li>
+          <li className="breadcrumb-item">Product Owner</li>
           <li className="breadcrumb-item active" aria-current="page">
-            Users
+            All Product Owner
           </li>
         </ol>
       </nav>
 
       <div className="cardTemplate shadow-sm">
         <div className="title-cardTemplate">
-          <h1>List of products</h1>
+          <h1>List of Product Owner Verified</h1>
         </div>
         <div className="content-cardTemplate">
           <table>
             <thead>
               <th>
-                <div className="data picture"></div>
+                <div className="data picture">logo</div>
               </th>
               <th>
-                <div className="data">Full name</div>
+                <div className="data">Name</div>
               </th>
               <th>
-                <div className="data">Phone</div>
+                <div className="data">Email</div>
+              </th>
+              <th>
+                <div className="data">Products</div>
+              </th>
+              <th>
+                <div className="data">Pack</div>
               </th>
               <th>
                 <div className="data">Creation date</div>
@@ -57,21 +62,32 @@ const Users = () => {
                   </div>
                 </td>
                 <td>
-                  <div className="data">Mohamed ben Salah</div>
+                  <div className="data">Lenovo</div>
                 </td>
                 <td>
-                  <div className="data">20 874 254</div>
+                  <div className="data">contact@lenovo.com</div>
+                </td>
+                <td>
+                  <div className="data">25 / 100</div>
+                </td>
+                <td>
+                  <div className="data">
+                    <div className="visibility gold">Gold</div>
+                  </div>
                 </td>
                 <td>
                   <div className="data">12-05-2021 17:33:15</div>
                 </td>
                 <td>
                   <div className="actions">
-                    <div className="action" onClick={ConsultShow}>
+                    <div className="action">
                       <BiPlayCircle />
                     </div>
                     <div className="action" onClick={DeleteShow}>
                       <BiTrashAlt />
+                    </div>
+                    <div className="action" onClick={ModifyShow}>
+                      <BiEdit />
                     </div>
                   </div>
                 </td>
@@ -83,47 +99,32 @@ const Users = () => {
                   </div>
                 </td>
                 <td>
-                  <div className="data">Mohamed ben Salah</div>
+                  <div className="data">Lenovo</div>
                 </td>
                 <td>
-                  <div className="data">20 874 254</div>
+                  <div className="data">contact@lenovo.com</div>
+                </td>
+                <td>
+                  <div className="data">25 / 50</div>
+                </td>
+                <td>
+                  <div className="data">
+                    <div className="visibility pro">Pro</div>
+                  </div>
                 </td>
                 <td>
                   <div className="data">12-05-2021 17:33:15</div>
                 </td>
                 <td>
                   <div className="actions">
-                    <div className="action" onClick={ConsultShow}>
+                    <div className="action">
                       <BiPlayCircle />
                     </div>
                     <div className="action" onClick={DeleteShow}>
                       <BiTrashAlt />
                     </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="data picture">
-                    <img src={pic} alt="" />
-                  </div>
-                </td>
-                <td>
-                  <div className="data">Mohamed ben Salah</div>
-                </td>
-                <td>
-                  <div className="data">20 874 254</div>
-                </td>
-                <td>
-                  <div className="data">12-05-2021 17:33:15</div>
-                </td>
-                <td>
-                  <div className="actions">
-                    <div className="action" onClick={ConsultShow}>
-                      <BiPlayCircle />
-                    </div>
-                    <div className="action" onClick={DeleteShow}>
-                      <BiTrashAlt />
+                    <div className="action" onClick={ModifyShow}>
+                      <BiEdit />
                     </div>
                   </div>
                 </td>
@@ -132,41 +133,8 @@ const Users = () => {
           </table>
         </div>
       </div>
-      <Modal
-        show={show}
-        onHide={ConsultClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Consult user</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>consult</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={ConsultClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal
-        show={showDelete}
-        onHide={DeleteClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Delete</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>You wanna really delete ?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={DeleteClose}>
-            No
-          </Button>
-          <Button variant="danger">Yes</Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };
 
-export default Users;
+export default ProductOwner;
