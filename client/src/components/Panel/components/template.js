@@ -7,11 +7,15 @@ import Users from "../Admin/users";
 import Products from "../Admin/product";
 import Events from "../Admin/events";
 import DashboardAdmin from "../Admin/dashboard";
+import ProductOwnerNotVerified from "../Admin/productOwner/ProductOwnerNotVerified";
+import ProductOwnerDeleted from "../Admin/productOwner/ProductOwnerDeleted";
 import Messages from "../Admin/message";
 import Category from "../Admin/category";
 import Reports from "../Admin/report";
 import Blogs from "../Admin/blogs";
-import ProductOwner from "../Admin/ProductOwner";
+import ProductOwner from "../Admin/productOwner/ProductOwner";
+import { BiSubdirectoryRight } from "react-icons/bi";
+import "bootstrap/dist/js/bootstrap.js";
 function menuClick() {
   console.log("cliked");
   const element = document.querySelector(".sidebar");
@@ -35,6 +39,10 @@ export default class Responsive extends Component {
           return <Category />;
         case "productOwner":
           return <ProductOwner />;
+        case "productOwnerNotVerified":
+          return <ProductOwnerNotVerified />;
+        case "productOwnerDeleted":
+          return <ProductOwnerDeleted />;
         case "messages":
           return <Messages />;
         case "reports":
@@ -43,6 +51,7 @@ export default class Responsive extends Component {
           return <Events />;
         case "blogs":
           return <Blogs />;
+
         default:
           return <h1>No project match</h1>;
       }
@@ -109,11 +118,29 @@ export default class Responsive extends Component {
                     : "item"
                 }
               >
-                <Link to="/admin/productOwner">
-                  <p>Product Owner</p>
-                </Link>
+                <p data-bs-toggle="collapse" data-bs-target="#productOwner">
+                  Product Owner
+                </p>
+                <div className="collapse" id="productOwner">
+                  <ul>
+                    <li>
+                      <Link to="/admin/productOwner">
+                        <BiSubdirectoryRight /> All Product Owner
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/admin/productOwnerNotVerified">
+                        <BiSubdirectoryRight /> PO not verified
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/admin/productOwnerDeleted">
+                        <BiSubdirectoryRight /> PO deleted
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </li>
-
               <li
                 className={
                   window.location.pathname.split("/")[2] === "messages"

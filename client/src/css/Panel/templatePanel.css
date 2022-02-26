@@ -63,6 +63,8 @@
 }
 .ContentTemplate {
   padding: 1em;
+  overflow: auto;
+  height: calc(100vh - 53px);
 }
 .cardTemplate {
   background: white;
@@ -121,6 +123,14 @@
   background-color: rgba(251, 50, 63, 0.2);
   color: #fb323f;
 }
+.gold {
+  background-color: #ffd90033;
+  color: #ffd700;
+}
+.pro {
+  background-color: #46464633;
+  color: #464646;
+}
 .name {
   max-width: 400px;
   width: 35%;
@@ -155,4 +165,10 @@
   padding: 0.5em;
   margin-bottom: 1em;
   border: 1px solid #1e1e1e1e;
+}
+.item li {
+  padding: 7px 30px;
+}
+.item li a {
+  color: #fff;
 }
