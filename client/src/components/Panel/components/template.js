@@ -17,12 +17,14 @@ import ProductOwner from "../Admin/productOwner/ProductOwner";
 import { BiSubdirectoryRight } from "react-icons/bi";
 import "bootstrap/dist/js/bootstrap.js";
 function menuClick() {
-  console.log("cliked");
+  const elementContent = document.querySelector(".content");
   const element = document.querySelector(".sidebar");
   if (element.classList.contains("activeSideBar")) {
     element.classList.remove("activeSideBar");
+    elementContent.classList.remove("contentFull");
   } else {
     element.classList.add("activeSideBar");
+    elementContent.classList.add("contentFull");
   }
 }
 export default class Responsive extends Component {

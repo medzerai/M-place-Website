@@ -4,13 +4,17 @@
   display: flex;
 }
 .sidebar {
-  width: 300px;
+  width: 230px;
   height: 100vh;
   background: #023047;
   overflow: hidden;
   transition: 0.3s;
 }
 .content {
+  width: calc(100% - 230px);
+  transition: 0.3s;
+}
+.contentFull {
   width: 100%;
 }
 .logoTemplate {
