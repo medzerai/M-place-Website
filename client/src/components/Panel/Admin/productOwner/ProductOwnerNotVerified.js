@@ -1,16 +1,72 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { BiTrashAlt, BiPlayCircle, BiEdit } from "react-icons/bi";
+import { BiXCircle, BiPlayCircle, BiCheckCircle } from "react-icons/bi";
 import { Modal, Button } from "react-bootstrap";
 import pic from "./../../../../meeting.jpg";
 const ProductOwnerNotVerified = () => {
-  const [show, setModifyShow] = useState(false);
-  const [showDelete, setDeleteShow] = useState(false);
-  const ModifyClose = () => setModifyShow(false);
-  const ModifyShow = () => setModifyShow(true);
+  const [showDetails, setDetailsShow] = useState(false);
+  const [showRefuse, setRefuseShow] = useState(false);
+  const [showAccept, setAcceptShow] = useState(false);
 
-  const DeleteClose = () => setDeleteShow(false);
-  const DeleteShow = () => setDeleteShow(true);
+  const DetailsClose = () => setDetailsShow(false);
+  const DetailsShow = () => setDetailsShow(true);
+
+  const RefuseClose = () => setRefuseShow(false);
+  const RefuseShow = () => setRefuseShow(true);
+
+  const AcceptClose = () => setAcceptShow(false);
+  const AcceptShow = () => setAcceptShow(true);
+  function findPack(pack) {
+    var classPack = "";
+    var NamePack = "";
+    switch (pack) {
+      case 1:
+        classPack = "visibility gold";
+        NamePack = "Gold";
+        break;
+      case 2:
+        classPack = "visibility pro";
+        NamePack = "Pro";
+        break;
+      default:
+        classPack = "visibility pro";
+        NamePack = "Pro";
+        break;
+    }
+    return (
+      <td>
+        <div className="data">
+          <div className={classPack}>{NamePack}</div>
+        </div>
+      </td>
+    );
+  }
+  const [POs, setPOs] = useState([
+    {
+      id: 12545,
+      name: "lenovo",
+      logo: "https://logo.clearbit.com/lenovo.com",
+      pack: 2,
+      date: "12-05-2021 17:33:15",
+      email: "contact@lenovo.com",
+    },
+    {
+      id: 12485,
+      name: "apple",
+      logo: "https://logo.clearbit.com/apple.com",
+      pack: 1,
+      date: "03-08-2022 17:33:15",
+      email: "Admin@apple.com",
+    },
+    {
+      id: 128485,
+      name: "chanel",
+      logo: "https://logo.clearbit.com/chanel.com",
+      pack: 2,
+      date: "06-01-2022 17:33:15",
+      email: "marketing@chanel.com",
+    },
+  ]);
   return (
     <div>
       <nav aria-label="breadcrumb">
@@ -24,7 +80,6 @@ const ProductOwnerNotVerified = () => {
           </li>
         </ol>
       </nav>
-
       <div className="cardTemplate shadow-sm">
         <div className="title-cardTemplate">
           <h1>List of Product Owner Not Verified</h1>
@@ -32,103 +87,62 @@ const ProductOwnerNotVerified = () => {
         <div className="content-cardTemplate">
           <table>
             <thead>
-              <th>
-                <div className="data picture">logo</div>
-              </th>
-              <th>
-                <div className="data">Name</div>
-              </th>
-              <th>
-                <div className="data">Email</div>
-              </th>
-              <th>
-                <div className="data">Products</div>
-              </th>
-              <th>
-                <div className="data">Pack</div>
-              </th>
-              <th>
-                <div className="data">Creation date</div>
-              </th>
-              <th>
-                <div className="data">Actions</div>
-              </th>
+              <tr>
+                <th>
+                  <div className="data picture">logo</div>
+                </th>
+                <th>
+                  <div className="data">Name</div>
+                </th>
+                <th>
+                  <div className="data">Email</div>
+                </th>
+                <th>
+                  <div className="data">Pack</div>
+                </th>
+                <th>
+                  <div className="data">Creation date</div>
+                </th>
+                <th>
+                  <div className="data">Actions</div>
+                </th>
+              </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <div className="data picture">
-                    <img src={pic} alt="" />
-                  </div>
-                </td>
-                <td>
-                  <div className="data">Lenovo</div>
-                </td>
-                <td>
-                  <div className="data">contact@lenovo.com</div>
-                </td>
-                <td>
-                  <div className="data">25 / 100</div>
-                </td>
-                <td>
-                  <div className="data">
-                    <div className="visibility gold">Gold</div>
-                  </div>
-                </td>
-                <td>
-                  <div className="data">12-05-2021 17:33:15</div>
-                </td>
-                <td>
-                  <div className="actions">
-                    <div className="action">
-                      <BiPlayCircle />
-                    </div>
-                    <div className="action" onClick={DeleteShow}>
-                      <BiTrashAlt />
-                    </div>
-                    <div className="action" onClick={ModifyShow}>
-                      <BiEdit />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="data picture">
-                    <img src={pic} alt="" />
-                  </div>
-                </td>
-                <td>
-                  <div className="data">Lenovo</div>
-                </td>
-                <td>
-                  <div className="data">contact@lenovo.com</div>
-                </td>
-                <td>
-                  <div className="data">25 / 50</div>
-                </td>
-                <td>
-                  <div className="data">
-                    <div className="visibility pro">Pro</div>
-                  </div>
-                </td>
-                <td>
-                  <div className="data">12-05-2021 17:33:15</div>
-                </td>
-                <td>
-                  <div className="actions">
-                    <div className="action">
-                      <BiPlayCircle />
-                    </div>
-                    <div className="action" onClick={DeleteShow}>
-                      <BiTrashAlt />
-                    </div>
-                    <div className="action" onClick={ModifyShow}>
-                      <BiEdit />
-                    </div>
-                  </div>
-                </td>
-              </tr>
+              {POs.map((PO) => {
+                return (
+                  <tr key={PO.id}>
+                    <td>
+                      <div className="data picture">
+                        <img src={PO.logo} alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div className="data">{PO.name}</div>
+                    </td>
+                    <td>
+                      <div className="data">{PO.email}</div>
+                    </td>
+                    {findPack(PO.pack)}
+                    <td>
+                      <div className="data">{PO.date}</div>
+                    </td>
+                    <td>
+                      <div className="actions">
+                        <div className="action" onClick={DetailsClose}>
+                          <BiPlayCircle />
+                        </div>
+                        <div className="action" onClick={RefuseClose}>
+                          <BiXCircle />
+                        </div>
+                        <div className="action" onClick={AcceptClose}>
+                          <BiCheckCircle />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
