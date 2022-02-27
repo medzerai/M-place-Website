@@ -115,7 +115,11 @@ export default class Responsive extends Component {
 
               <li
                 className={
-                  window.location.pathname.split("/")[2] === "productOwner"
+                  [
+                    "productOwner",
+                    "productOwnerNotVerified",
+                    "productOwnerDeleted",
+                  ].includes(window.location.pathname.split("/")[2])
                     ? "item active"
                     : "item"
                 }
@@ -127,17 +131,23 @@ export default class Responsive extends Component {
                   <ul>
                     <li>
                       <Link to="/admin/productOwner">
-                        <BiSubdirectoryRight /> All Product Owner
+                        <p>
+                          <BiSubdirectoryRight /> All Product Owner
+                        </p>
                       </Link>
                     </li>
                     <li>
                       <Link to="/admin/productOwnerNotVerified">
-                        <BiSubdirectoryRight /> PO not verified
+                        <p>
+                          <BiSubdirectoryRight /> PO not verified
+                        </p>
                       </Link>
                     </li>
                     <li>
                       <Link to="/admin/productOwnerDeleted">
-                        <BiSubdirectoryRight /> PO deleted
+                        <p>
+                          <BiSubdirectoryRight /> PO deleted
+                        </p>
                       </Link>
                     </li>
                   </ul>

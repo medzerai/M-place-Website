@@ -27,12 +27,12 @@
 .sidebar ul {
   list-style-type: none;
   padding: 0;
-  width: 300px;
 }
 .navbarTemplate {
   width: 100%;
   background: #023047;
 }
+
 .navbarTemplate {
   font-size: 35px;
   fill: white;
@@ -53,6 +53,9 @@
 }
 .activeSideBar {
   width: 0;
+}
+.items {
+  width: 230px;
 }
 .items .active {
   background: #033f5e;
@@ -170,9 +173,10 @@
   margin-bottom: 1em;
   border: 1px solid #1e1e1e1e;
 }
-.item li {
-  padding: 7px 30px;
+.item li p {
+  padding: 7px 35px;
 }
-.item li a {
-  color: #fff;
+.item ul {
+  border-top: 0.5px solid #ffffff2d;
+  background: #005581;
 }
