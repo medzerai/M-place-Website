@@ -106,7 +106,6 @@ export {
   addVariable,
   getAllVariables,
   getVariableById,
-  getCategoryFilters,
   updateVariable,
   deleteVariable,
 };

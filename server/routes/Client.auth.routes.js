@@ -2,7 +2,7 @@ import {
   register,
   login,
   updateClient,
-} from "../controllers/auth.controller.js";
+} from "../controllers/Client.auth.controller.js";
 import express from "express";
 import auth from "../middleware/authenticateClient.js";
 const ClientRouter = express.Router();

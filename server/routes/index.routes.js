@@ -1,5 +1,5 @@
 import express from "express";
-import ClientRouter from "./auth.routes.js";
+import ClientRouter from "./Client.auth.routes.js";
 import CategoryRouter from "./category.routes.js";
 import imageRouter from "./image.routes.js";
 import FilterRouter from "./filter.routes.js";
