@@ -11,7 +11,7 @@ import RatingRouter from "./rating.routes.js";
 const router = express.Router();
 
 router.use("/file", imageRouter);
-router.use("/api/v1/auth", ClientRouter, AuthPORouter);
+router.use("/api/v1/auth", AuthPORouter, ClientRouter);
 router.use(
   "/",
   PORouter,
