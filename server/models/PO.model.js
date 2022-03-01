@@ -12,7 +12,7 @@ const POSchema = new mongoose.Schema(
       maxlength: 20,
       trim: true,
     },
-    professional_email: {
+    company_email: {
       type: String,
       required: [true, "Please provide your professional email"],
       validate: {
@@ -36,7 +36,7 @@ const POSchema = new mongoose.Schema(
       maxlength: 20,
       trim: true,
       default: "country",
-    },
+    }, //company_name,company_name,password,logo_url,country,city,state,zip_code,address,
     city: {
       type: String,
       maxlength: 20,
@@ -55,7 +55,8 @@ const POSchema = new mongoose.Schema(
         validator: (val) => validator.isLength(val.toString(), 4, 4),
         message: "zip code has to be 4 digits",
       },
-      default: 0000,
+      required: [true, "Please provide your professional phone number"],
+      unique: true,
     },
     address: {
       type: String,
@@ -78,9 +79,10 @@ const POSchema = new mongoose.Schema(
       min: 0,
       max: 4,
       default: 0,
+      select: false,
     },
     creation_date: {
-      type: date,
+      type: Date,
       default: Date.now(),
     },
     tax_ID_number: {
