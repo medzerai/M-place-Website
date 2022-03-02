@@ -4,16 +4,13 @@ import {
   getRdvById,
   updateRdv,
   deleteRdv,
-} from "../controllers/variable.controller.js";
+} from "../controllers/Rdv.controller.js";
 
 import express from "express";
-const VariableRouter = express.Router();
+const RdvRouter = express.Router();
 
-VariableRouter.route("/addVariable").post(addVariable);
-VariableRouter.route("/variables").get(getAllVariables);
-VariableRouter.route("/variables/:id")
-  .get(getVariableById)
-  .patch(updateVariable)
-  .delete(deleteVariable);
+RdvRouter.route("/addRdv").post(addRdv);
+RdvRouter.route("/Rdvs").get(getAllRdvs);
+RdvRouter.route("/Rdvs/:id").get(getRdvById).patch(updateRdv).delete(deleteRdv);
 
-export default VariableRouter;
+export default RdvRouter;
