@@ -31,7 +31,7 @@ const register = async (req, res) => {
 
   const clientAlreadyExists = await Client.findOne({ email } || { numTel });
   if (clientAlreadyExists) {
-    throw new BadRequestError("Client already exists");
+    throw new NotFoundError("Client already exists");
   }
 
   const client = await Client.create({ name, email, password, numTel });
