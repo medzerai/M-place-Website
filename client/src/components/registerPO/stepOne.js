@@ -100,6 +100,38 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
                 ""
               )}
             </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>CIN</Form.Label>
+              <Form.Control
+                style={{ border: error ? "2px solid red" : "" }}
+                type="text"
+                placeholder="Identifiant Fiscale"
+                onChange={handleFormData("identifiantFiscale")}
+              />
+              {error ? (
+                <Form.Text style={{ color: "red" }}>
+                  This is a required field
+                </Form.Text>
+              ) : (
+                ""
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>File CIN</Form.Label>
+              <Form.Control
+                style={{ border: error ? "2px solid red" : "" }}
+                type="file"
+                placeholder="Lofgo"
+                onChange={handleFormData("fileidentifiantFiscale")}
+              />
+              {error ? (
+                <Form.Text style={{ color: "red" }}>
+                  This is a required field
+                </Form.Text>
+              ) : (
+                ""
+              )}
+            </Form.Group>
             <Button variant="primary" type="submit">
               Continue
             </Button>
