@@ -1,7 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import Category from "../models/Category.model.js";
-import Product from "../models/Product.model.js";
-import Variable from "../models/Variable.model.js";
+import Rdv from "../models/Rdv.model.js";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -16,26 +14,26 @@ class BadRequestError extends CustomAPIError {
   }
 }
 
-// Add a new Variable
-const addVariable = async (req, res) => {
-  const { name, option } = req.body;
+// Add a new Rendez-vous
+const addRdv = async (req, res) => {
+  const { for_PO, date } = req.body;
 
-  const v = new Variable({
-    name,
-    option,
+  const v = new Rdv({
+    for_PO,
+    date,
   });
 
-  if (!name || !option) {
+  if (!for_PO || !date) {
     throw new BadRequestError("please provide all values");
   }
 
-  const variable = await Variable.create(v);
-  res.status(StatusCodes.OK).json({ variable });
+  const rdv = await Rdv.create(v);
+  res.status(StatusCodes.OK).json({ rdv });
 };
 
-// Get all variables
-const getAllVariables = async (req, res) => {
-  const v = await Variable.find({})
+// Get all Rendez-vous
+const getAllRdvs = async (req, res) => {
+  Rdv.find({})
     .then((val) => {
       res.status(StatusCodes.OK).json(val);
     })
@@ -44,9 +42,9 @@ const getAllVariables = async (req, res) => {
     });
 };
 
-// Get variable by id
-const getVariableById = async (req, res) => {
-  const v = await Variable.find({ _id: req.params.id })
+// Get Rendez-vous by id
+const getRdvById = async (req, res) => {
+  Rdv.find({ _id: req.params.id })
     .then((val) => {
       res.status(StatusCodes.OK).json(val);
     })
@@ -54,17 +52,18 @@ const getVariableById = async (req, res) => {
       throw new BadRequestError(error);
     });
 };
-// Update variable by id
-const updateVariable = async (req, res) => {
-  const v = new Variable({
+
+// Update Rendez-vous by id
+const updateRdv = async (req, res) => {
+  const v = new Rdv({
     _id: req.params.id,
-    name: req.body.name,
-    option: req.body.option,
+    for_PO: req.body.for_PO,
+    date: req.body.date,
   });
-  Variable.updateOne({ _id: req.params.id }, v)
+  Rdv.updateOne({ _id: req.params.id }, v)
     .then(() => {
       res.status(StatusCodes.CREATED).json({
-        message: "Variable updated successfully!",
+        message: "Rendez-vous updated successfully!",
       });
     })
     .catch((error) => {
@@ -72,12 +71,12 @@ const updateVariable = async (req, res) => {
     });
 };
 
-// Delete variable by id
-const deleteVariable = async (req, res) => {
-  Variable.deleteOne({ _id: req.params.id })
+// Delete Rendez-vous by id
+const deleteRdv = async (req, res) => {
+  Rdv.deleteOne({ _id: req.params.id })
     .then(() => {
       res.status(StatusCodes.CREATED).json({
-        message: "Variable Deleted successfully!",
+        message: "Rendez-vous Deleted successfully!",
       });
     })
     .catch((error) => {
@@ -85,10 +84,4 @@ const deleteVariable = async (req, res) => {
     });
 };
 
-export {
-  addVariable,
-  getAllVariables,
-  getVariableById,
-  updateVariable,
-  deleteVariable,
-};
+export { addRdv, getAllRdvs, getRdvById, updateRdv, deleteRdv };
