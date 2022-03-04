@@ -36,7 +36,7 @@ const Register = () => {
     e.preventDefault();
     axios
       .post(
-        "http://172.16.134.104:3000/api/v1/auth/Client/register",
+        "http://172.16.134.111:3000/api/v1/auth/Client/register",
         registerInfo,
         {
           withCredentials: true,
