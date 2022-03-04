@@ -1,0 +1,182 @@
+.template {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+}
+.sidebar {
+  width: 230px;
+  height: 100vh;
+  background: #023047;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.content {
+  width: calc(100% - 230px);
+  transition: 0.3s;
+}
+.contentFull {
+  width: 100%;
+}
+.logoTemplate {
+  text-align: center;
+  padding: 1em;
+}
+.logoTemplate img {
+  height: 4em;
+}
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+.navbarTemplate {
+  width: 100%;
+  background: #023047;
+}
+
+.navbarTemplate {
+  font-size: 35px;
+  fill: white;
+}
+.sidebar {
+  color: white;
+}
+.iconMenu svg {
+  fill: white;
+}
+.iconMenu {
+  cursor: pointer;
+  width: 50px;
+  text-align: center;
+}
+.iconMenu:hover {
+  background: #033f5e;
+}
+.activeSideBar {
+  width: 0;
+}
+.items {
+  width: 230px;
+}
+.items .active {
+  background: #033f5e;
+}
+.items p {
+  padding: 7px 20px;
+  color: white;
+  margin: 0;
+}
+.items p:hover {
+  background: #0688c9;
+}
+.ContentTemplate {
+  padding: 1em;
+  overflow: auto;
+  height: calc(100vh - 53px);
+}
+.cardTemplate {
+  background: white;
+  border-radius: 3px;
+  border: 1px solid #5454544f;
+  margin-bottom: 1em;
+}
+.cardTemplate .title-cardTemplate {
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid #5454544f;
+}
+.cardTemplate .title-cardTemplate h1 {
+  font-size: 1em;
+  padding: 1em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.cardTemplate .content-cardTemplate {
+  padding: 1em;
+  overflow-x: auto;
+}
+.cardTemplate .content-cardTemplate table {
+  width: 100%;
+  text-align: center;
+  min-width: 1000px;
+}
+.cardTemplate .content-cardTemplate table tr {
+  border-bottom: 0.5px solid #5454544f;
+}
+.cardTemplate .content-cardTemplate table thead {
+  background: #033f5e;
+  color: white;
+}
+.data {
+  min-height: 40px;
+  padding: 1em;
+  margin: 0;
+}
+.picture {
+  width: 7em;
+}
+.picture img {
+  width: 100%;
+}
+.visibility {
+  text-align: center;
+  padding: 0 15px;
+  border-radius: 3px;
+}
+.visible {
+  background-color: rgba(0, 200, 83, 0.2);
+  color: #00c853;
+}
+.hidden {
+  background-color: rgba(251, 50, 63, 0.2);
+  color: #fb323f;
+}
+.gold {
+  background-color: #ffd90033;
+  color: #ffd700;
+}
+.pro {
+  background-color: #46464633;
+  color: #464646;
+}
+.name {
+  max-width: 400px;
+  width: 35%;
+}
+.actions {
+  width: 100px;
+  display: flex;
+  margin: auto;
+}
+.actions .action {
+  padding: 0.4em;
+  margin-bottom: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin: auto;
+}
+.actions .action:hover {
+  color: #0a3b82;
+}
+.input {
+  border-radius: 5px;
+  border: 0.5px solid #d6d6d6;
+  padding: 0.5em;
+  margin: 1em;
+  background: #fff;
+}
+.modal-content {
+  background: #eee;
+}
+.itemInput {
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  border: 1px solid #1e1e1e1e;
+}
+.item li p {
+  padding: 7px 35px;
+}
+.item ul {
+  border-top: 0.5px solid #ffffff2d;
+  background: #005581;
+}

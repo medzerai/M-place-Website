@@ -6,10 +6,9 @@ import "./../css/carousel.css";
 import { Link } from "react-router-dom";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 
-/*
 function showStars(stars) {
   const nbr = Math.trunc(stars);
-  var rows;
+  var rows = [];
   for (var i = 0; i < nbr; i++) {
     rows.push(
       <li className="list-inline-item">
@@ -41,7 +40,7 @@ function showStars(stars) {
   }
   return rows;
 }
-*/
+
 export default class Responsive extends Component {
   render() {
     var settings = {
@@ -55,13 +54,19 @@ export default class Responsive extends Component {
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: 4,
+            slidesToShow: 3,
+          },
+        },
+        {
+          breakpoint: 800,
+          settings: {
+            slidesToShow: 2,
           },
         },
         {
           breakpoint: 600,
           settings: {
-            slidesToShow: 2,
+            slidesToShow: 1,
           },
         },
         {
@@ -74,7 +79,7 @@ export default class Responsive extends Component {
     };
     return (
       <div>
-        <h2 className="title">
+        <h2 className="titleCarousel">
           Featured <b>Products</b>
           {console.log(this.props.data)}
         </h2>
@@ -98,23 +103,7 @@ export default class Responsive extends Component {
                       <b>{item.newPrise} TND</b>
                     </p>
                     <div className="star-rating">
-                      <ul className="list-inline">
-                        <li className="list-inline-item">
-                          <BsStarFill />
-                        </li>
-                        <li className="list-inline-item">
-                          <BsStarFill />
-                        </li>
-                        <li className="list-inline-item">
-                          <BsStarFill />
-                        </li>
-                        <li className="list-inline-item">
-                          <BsStarFill />
-                        </li>
-                        <li className="list-inline-item">
-                          <BsStar />
-                        </li>
-                      </ul>
+                      <ul className="list-inline">{showStars(item.stars)}</ul>
                     </div>
                     <Link
                       className="btn btn-orange btn-sm"

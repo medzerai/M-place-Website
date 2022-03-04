@@ -1,0 +1,95 @@
+.cart-product {
+  background: #fff;
+  padding: 2em 3em;
+  border-radius: 3px 3px 0 0;
+}
+.smallPic {
+  width: 100%;
+}
+.slick-dots {
+  position: initial;
+  margin-bottom: 1em;
+}
+
+.slick-dots li {
+  width: 50px;
+  height: 40px;
+}
+.list-group-horizontal {
+  margin-top: 3em !important;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  margin: auto;
+}
+.description {
+  text-align: justify;
+  padding-bottom: 2em;
+}
+.slick-slide img {
+  margin: auto;
+}
+.statusOfProduct {
+  width: 100%;
+  border-top: 1px solid grey;
+  text-align: center;
+  font-weight: 600;
+}
+.priceProduct {
+  font-size: 2em;
+  padding: 1em 1em;
+  font-weight: 700;
+}
+.orange {
+  color: #f9c800;
+}
+.title {
+  font-size: 1.2em;
+  font-weight: 300;
+  text-transform: uppercase;
+  border-bottom: 1px solid #000;
+  padding-bottom: 0.8em;
+}
+.star-rating li {
+  padding: 0;
+}
+
+.star-rating li svg {
+  fill: #f9c800;
+}
+
+.list-group-item.active {
+  z-index: 2;
+  color: #fff;
+  background-color: #f9c800;
+  border-color: #f9c800;
+}
+
+.selection .itemChoise select {
+  width: 100%;
+  padding-left: 0.4em;
+  height: 2.2em;
+}
+.selection .itemTitle {
+  font-size: 1.4em;
+  font-weight: 500;
+  padding-left: 1.5em;
+  text-transform: uppercase;
+}
+.vectorUser {
+  overflow: hidden;
+  width: 100px;
+}
+.vectorUser img {
+  width: 100%;
+  border-radius: 50%;
+}
+.w-120 {
+  width: 120px !important;
+}
+.itemReview {
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 1em;
+  margin-top: 1em;
+}
