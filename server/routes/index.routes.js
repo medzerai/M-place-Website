@@ -8,6 +8,8 @@ import FilterRouter from "./filter.routes.js";
 import VariableRouter from "./variable.routes.js";
 import ProductRouter from "./product.routes.js";
 import RatingRouter from "./rating.routes.js";
+import RdvRouter from "./Rdv.routes.js";
+
 const router = express.Router();
 
 router.use("/file", imageRouter);
@@ -19,7 +21,8 @@ router.use(
   ProductRouter,
   FilterRouter,
   VariableRouter,
-  RatingRouter
+  RatingRouter,
+  RdvRouter
 );
 
 export default router;

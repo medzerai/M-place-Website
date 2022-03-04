@@ -66,6 +66,12 @@ ClientSchema.methods.createJWT = function () {
   });
 };
 
+ClientSchema.methods.createVerJWT = function () {
+  return jwt.sign({ clientId: this._id }, process.env.VER_JWT_SECRET, {
+    expiresIn: process.env.VER_JWT_LIFETIME,
+  });
+};
+
 ClientSchema.methods.comparePassword = async function (candidatePassword) {
   const isMatch = await bcrypt.compare(candidatePassword, this.password);
   return isMatch;
