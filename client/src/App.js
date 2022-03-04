@@ -10,6 +10,7 @@ import Register from "./components/register";
 import Erreur404 from "./components/404";
 import Product from "./components/product";
 import Category from "./components/category";
+import RegisterPO from "./components/registerPO/registerPO";
 import Template from "./components/Panel/components/template";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -17,6 +18,9 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route exact path="/test">
+          <RegisterPO />
+        </Route>
         <Route exact path="/admin/product">
           <Template data={"product"} />
         </Route>
