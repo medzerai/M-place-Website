@@ -1,7 +1,6 @@
 import {
   addVariable,
   getAllVariables,
-  getCategoryFilters,
   getVariableById,
   updateVariable,
   deleteVariable,

@@ -15,6 +15,7 @@ class BadRequestError extends CustomAPIError {
   }
 }
 
+// Add a new rating
 const addRating = async (req, res) => {
   const { userId, SKU, rate, comment } = req.body;
 
@@ -37,6 +38,7 @@ const addRating = async (req, res) => {
   res.status(StatusCodes.OK).json({ p });
 };
 
+// Get all ratings
 const getAllRatings = async (req, res) => {
   await Rating.find({})
     .sort({ rate: -1 })
@@ -50,6 +52,7 @@ const getAllRatings = async (req, res) => {
     });
 };
 
+// Get a rating by id
 const getRatingById = async (req, res) => {
   await Rating.find({ _id: req.params.id })
     .then((val) => {
@@ -62,6 +65,7 @@ const getRatingById = async (req, res) => {
     });
 };
 
+// Update rating by id
 const updateRating = async (req, res) => {
   const prod = await Rating.findById(req.params.id);
   const p = new Rating({
@@ -82,6 +86,7 @@ const updateRating = async (req, res) => {
     });
 };
 
+// Delete rating by id
 const deleteRating = async (req, res) => {
   await Rating.deleteOne({ _id: req.params.id })
     .then(() => {
@@ -94,6 +99,7 @@ const deleteRating = async (req, res) => {
     });
 };
 
+// Get rating by product id
 const getRatingByProduct = async (req, res) => {
   await Product.findById(req.params.id)
     .then(async (val) => {

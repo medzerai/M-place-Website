@@ -5,6 +5,8 @@ import uploads from "../config/cloudinary.config.js";
 const addImage = async (req, res) => {
   return res.json({ picture: req.file.path });
 };
+
+// Add an image to cloudinary and mongoDB
 const createImage = async (req, res) => {
   let imageDetails = {
     imageName: req.files[0].originalname,
@@ -50,6 +52,7 @@ const createImage = async (req, res) => {
   });
 };
 
+// Get all images registred in mongoDB
 const getAllImages = async (req, res) => {
   await imageModel
     .find({})
@@ -61,6 +64,7 @@ const getAllImages = async (req, res) => {
     });
 };
 
+// Get image by id
 const getImageById = async (req, res) => {
   await imageModel
     .find({ _id: req.params.id })

@@ -16,13 +16,7 @@ class BadRequestError extends CustomAPIError {
   }
 }
 
-class NotFoundError extends CustomAPIError {
-  constructor(message) {
-    super(message);
-    this.statusCode = StatusCodes.NOT_FOUND;
-  }
-}
-
+// Add a new Variable
 const addVariable = async (req, res) => {
   const { name, option } = req.body;
 
@@ -39,6 +33,7 @@ const addVariable = async (req, res) => {
   res.status(StatusCodes.OK).json({ variable });
 };
 
+// Get all variables
 const getAllVariables = async (req, res) => {
   const v = await Variable.find({})
     .then((val) => {
@@ -49,6 +44,7 @@ const getAllVariables = async (req, res) => {
     });
 };
 
+// Get variable by id
 const getVariableById = async (req, res) => {
   const v = await Variable.find({ _id: req.params.id })
     .then((val) => {
@@ -58,7 +54,7 @@ const getVariableById = async (req, res) => {
       throw new BadRequestError(error);
     });
 };
-
+// Update variable by id
 const updateVariable = async (req, res) => {
   const v = new Variable({
     _id: req.params.id,
@@ -76,6 +72,7 @@ const updateVariable = async (req, res) => {
     });
 };
 
+// Delete variable by id
 const deleteVariable = async (req, res) => {
   Variable.deleteOne({ _id: req.params.id })
     .then(() => {
@@ -88,30 +85,27 @@ const deleteVariable = async (req, res) => {
     });
 };
 
-const getCategoryFilters = async (req, res) => {
-  const a = await Category.find({ name: req.params.id });
-  const p = await Product.find({ categoryId: a._id });
-  let t;
-  p.map((val) => {
-    t.push(val.filters);
-  });
-  let f;
-  let g;
-  t.map((val) => {
-    g = Variable.find({ _id: val });
-    f.push(g.name);
-  });
-  console.log(f);
-};
+// Get variable filters
+// const getCategoryFilters = async (req, res) => {
+//   const a = await Category.find({ name: req.params.id });
+//   const p = await Product.find({ categoryId: a._id });
+//   let t;
+//   p.map((val) => {
+//     t.push(val.filters);
+//   });
+//   let f;
+//   let g;
+//   t.map((val) => {
+//     g = Variable.find({ _id: val });
+//     f.push(g.name);
+//   });
+//   console.log(f);
+// };
 
-const getProductFilters = async (req, res) => {
-  console.log("helllllllo");
-};
 export {
   addVariable,
   getAllVariables,
   getVariableById,
-  getCategoryFilters,
   updateVariable,
   deleteVariable,
 };

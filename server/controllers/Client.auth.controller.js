@@ -1,5 +1,8 @@
 import Client from "../models/Client.model.js";
 import { StatusCodes } from "http-status-codes";
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -21,6 +24,7 @@ class NotFoundError extends CustomAPIError {
   }
 }
 
+//  Sign in a Client
 const register = async (req, res) => {
   const { name, email, password, numTel } = req.body;
 
@@ -37,6 +41,7 @@ const register = async (req, res) => {
   const token = client.createJWT();
   res.status(StatusCodes.OK).json({
     client: {
+      id: client._id,
       email: client.email,
       lastname: client.lastname,
       location: client.location,
@@ -46,8 +51,25 @@ const register = async (req, res) => {
     },
     token,
   });
+
+  const verToken = client.createVerJWT();
+  let transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: { user: process.env.GMAIL_EMAIL, pass: process.env.GMAIL_PASSWORD },
+  });
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: process.env.GMAIL_EMAIL, // sender address
+    to: client.email, // list of receivers
+    subject: "Email Verification", // Subject line
+    text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
+    // html: verification(client.firstname, client._id),
+  });
+  transporter.sendMail(info);
 };
 
+// Log in a Client
 const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -57,6 +79,11 @@ const login = async (req, res) => {
   if (!client) {
     throw new BadRequestError("Invalid Credentials");
   }
+  if (client.verified == false) {
+    throw new BadRequestError(
+      "Account not verified yet, Please check your mail !!"
+    );
+  }
   console.log(client);
   const isPasswordCorrect = await client.comparePassword(password);
   if (!isPasswordCorrect) {
@@ -64,10 +91,12 @@ const login = async (req, res) => {
   }
 
   const token = client.createJWT();
+
   client.password = undefined;
   res.status(StatusCodes.OK).json({ client, token, location: client.location });
 };
 
+// Update a Client
 const updateClient = async (req, res) => {
   // const { email, name, lastName, location, numTel, verified } = req.body;
   // if (!email || !name || !lastName || !location || !numTel) {
@@ -87,4 +116,21 @@ const updateClient = async (req, res) => {
   res.status(StatusCodes.OK).json({ client, token, location: client.location });
 };
 
-export { register, login, updateClient };
+const verifyClient = async (req, res) => {
+  try {
+    const payload = jwt.verify(req.params.token, process.env.VER_JWT_SECRET);
+    await Client.findOneAndUpdate(
+      { _id: payload.clientId },
+      {
+        $set: {
+          verified: true,
+        },
+      }
+    );
+    res.status(StatusCodes.OK).json("Account Verified!!!!!!!");
+  } catch (error) {
+    throw new BadRequestError(error);
+  }
+};
+
+export { register, login, updateClient, verifyClient };

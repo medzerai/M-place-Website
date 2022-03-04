@@ -1,8 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import Category from "../models/Category.model.js";
-import Filter from "../models/Filter.model.js";
 import Product from "../models/Product.model.js";
-import Variable from "../models/Variable.model.js";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -17,13 +15,7 @@ class BadRequestError extends CustomAPIError {
   }
 }
 
-class NotFoundError extends CustomAPIError {
-  constructor(message) {
-    super(message);
-    this.statusCode = StatusCodes.NOT_FOUND;
-  }
-}
-
+// Add a new product
 const addProduct = async (req, res) => {
   const { name, SKU, marque, description, category, filters } = req.body;
 
@@ -48,6 +40,7 @@ const addProduct = async (req, res) => {
   res.status(StatusCodes.OK).json({ prod });
 };
 
+// Get all products
 const getAllProducts = async (req, res) => {
   await Product.find({})
     .then((val) => {
@@ -60,6 +53,7 @@ const getAllProducts = async (req, res) => {
     });
 };
 
+// Get product by id
 const getProductById = async (req, res) => {
   await Product.find({ _id: req.params.id })
     .then((val) => {
@@ -72,6 +66,7 @@ const getProductById = async (req, res) => {
     });
 };
 
+// Update product by id
 const updateProduct = async (req, res) => {
   const product = await Product.findById(req.params.id);
   const newProduct = new Product({
@@ -95,6 +90,7 @@ const updateProduct = async (req, res) => {
     });
 };
 
+// Delete product by id
 const deleteProduct = async (req, res) => {
   Product.deleteOne({ _id: req.params.id })
     .then(() => {
@@ -107,6 +103,7 @@ const deleteProduct = async (req, res) => {
     });
 };
 
+// Get poduct by category name
 const getProductByCategory = async (req, res) => {
   await Category.find({ name: req.params.category })
     .then(async (cat) => {
@@ -125,6 +122,7 @@ const getProductByCategory = async (req, res) => {
     });
 };
 
+// Get product by marque name
 const getProductByMarque = async (req, res) => {
   await Product.find({ marque: req.params.marque })
     .then((val) => {
@@ -137,6 +135,7 @@ const getProductByMarque = async (req, res) => {
     });
 };
 
+// Add filters to the product
 const addFiltersToProduct = async (req, res) => {
   const fil = await Product.findById(req.params.id);
   req.body.filters.map((val) =>
@@ -153,6 +152,7 @@ const addFiltersToProduct = async (req, res) => {
     });
 };
 
+// Delete filters form a product
 const deleteFiltersFromProduct = async (req, res) => {
   const fil = await Product.findById(req.params.id);
   req.body.filters.map((val) =>
@@ -171,10 +171,10 @@ const deleteFiltersFromProduct = async (req, res) => {
     });
 };
 
+// Get product filter names
 const getProductFilters = (req, res) => {
   var result = [];
   Product.findById(req.params.id)
-    // .populate("Filter_list", "-Product_id")
     .populate({
       path: "Filter_list",
       populate: {

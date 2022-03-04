@@ -3,7 +3,7 @@ import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const UserSchema = new mongoose.Schema(
+const ClientSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -46,28 +46,35 @@ const UserSchema = new mongoose.Schema(
         message: "numTel has to be 8 digits",
       },
       required: [true, "Please provide your Tel number"],
-      unique: true,
+      default: "22666333",
+      // unique: true,
     },
     verified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
 
-UserSchema.pre("save", async function () {
+ClientSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-UserSchema.methods.createJWT = function () {
-  return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
+ClientSchema.methods.createJWT = function () {
+  return jwt.sign({ clientId: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   });
 };
 
-UserSchema.methods.comparePassword = async function (candidatePassword) {
+ClientSchema.methods.createVerJWT = function () {
+  return jwt.sign({ clientId: this._id }, process.env.VER_JWT_SECRET, {
+    expiresIn: process.env.VER_JWT_LIFETIME,
+  });
+};
+
+ClientSchema.methods.comparePassword = async function (candidatePassword) {
   const isMatch = await bcrypt.compare(candidatePassword, this.password);
   return isMatch;
 };
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model("Client", ClientSchema);
