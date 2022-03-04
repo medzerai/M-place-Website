@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   const history = useHistory();
+  if (localStorage.getItem("token") !== null) {
+    history.push("/");
+  }
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -17,35 +20,41 @@ const Login = () => {
       ...loginInfo,
       [e.target.name]: e.target.value,
     });
+    console.log(loginInfo);
   };
-
+  const [ErreurDisplay, setErreurDisplay] = useState("");
   const login = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8000/api/login", loginInfo, {
+      .post("http://172.16.134.104:3000/api/v1/auth/Client/login", loginInfo, {
         withCredentials: true,
       })
       .then((res) => {
         console.log("LOGGGIN IN RESPONSE", res);
-        if (res.data.msg === "success!") {
-          history.push("/dashboard");
-        }
+
+        localStorage.setItem("token", res.data.token);
+        history.push("/");
       })
-      .catch((err) => console.log(err));
+      .catch(function (error) {
+        if (error.response) {
+          setErreurDisplay(error.response.data.msg);
+        }
+      });
   };
 
   return (
     <section className="login">
-      <form method="post">
+      <form onSubmit={login}>
         <h2 className="visually-hidden">Login Form</h2>
         <div className="logo">
-        <img src={logoDark} draggable="false" alt="logo"/>
+          <img src={logoDark} draggable="false" alt="logo" />
         </div>
         <div className="mb-3">
           <input
             className="form-control"
             type="email"
             name="email"
+            onChange={loginChangeHandler}
             placeholder="Email"
           />
         </div>
@@ -54,9 +63,11 @@ const Login = () => {
             className="form-control"
             type="password"
             name="password"
+            onChange={loginChangeHandler}
             placeholder="Password"
           />
         </div>
+        {ErreurDisplay}
         <div className="mb-3">
           <button className="btn btn-primary d-block w-100" type="submit">
             Log In
@@ -68,7 +79,6 @@ const Login = () => {
       </form>
     </section>
   );
-
 };
 
 export default Login;

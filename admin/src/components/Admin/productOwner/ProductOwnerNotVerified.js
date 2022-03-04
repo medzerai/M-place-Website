@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { BiXCircle, BiPlayCircle, BiCheckCircle } from "react-icons/bi";
 import { Modal, Button } from "react-bootstrap";
-import pic from "./../../../../meeting.jpg";
+import pic from "./../../../meeting.jpg";
 const ProductOwnerNotVerified = () => {
   //modal details
   const [showDetails, setDetailsShow] = useState(false);
