@@ -91,7 +91,7 @@ const login = async (req, res) => {
     throw new BadRequestError("Invalid Credentials");
   }
 
-  const token = generateRefreshToken(client._id);
+  const access_token = generateAccessToken(client._id);
   const refresh_token = jwt.sign(
     { Client: client._id },
     process.env.REFRESH_TOKEN
@@ -100,15 +100,17 @@ const login = async (req, res) => {
     token: refresh_token,
   });
   const savedToken = await refreshtoken.save();
-  console.log(savedToken);
-  console.log(token);
+  console.log("refresh_token", savedToken.token);
+  console.log("access_token", access_token);
   console.log("logged in");
-  res.header("Authorization", token).send(token);
+  res
+    .header("Authorization", access_token)
+    .json({ access_token: access_token, refresh_token: savedToken.token });
 };
 
-function generateRefreshToken(id) {
+function generateAccessToken(id) {
   return jwt.sign({ Client: id }, process.env.ACCESS_TOKEN, {
-    expiresIn: "20m",
+    expiresIn: "60s",
   });
 }
 //   const token = client.createJWT();
@@ -124,8 +126,8 @@ const refreshToken = async (req, res) => {
   if (!savedToken) res.sendStatus(403);
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, client) => {
     if (err) return res.sendStatus(403);
-    const token = generateRefreshToken({ id: client._id });
-    res.json(token);
+    const token = generateAccessToken({ id: client._id });
+    res.json({ accesToken: token });
   });
 };
 
@@ -208,4 +210,22 @@ const verifyClient = async (req, res) => {
   }
 };
 
-export { register, login, updateClient, verifyClient };
+const getAllClient = (req, res) => {
+  Client.find()
+    .then((val) => {
+      res.status(200).json(val);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+export {
+  register,
+  login,
+  logout,
+  updateClient,
+  verifyClient,
+  resetPassword,
+  getAllClient,
+  refreshToken,
+};
