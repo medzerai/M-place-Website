@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import RefreshToken from "../models/RefreshToken.model.js";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -38,7 +39,7 @@ const register = async (req, res) => {
   }
 
   const client = await Client.create({ name, email, password, numTel });
-  const token = client.createJWT();
+  // const token = client.createJWT();
   res.status(StatusCodes.OK).json({
     client: {
       id: client._id,
@@ -49,7 +50,7 @@ const register = async (req, res) => {
       numTel: client.numTel,
       verified: client.verified,
     },
-    token,
+    // token,
   });
 
   const verToken = client.createVerJWT();
@@ -90,10 +91,86 @@ const login = async (req, res) => {
     throw new BadRequestError("Invalid Credentials");
   }
 
-  const token = client.createJWT();
+  const access_token = generateAccessToken(client._id);
+  const refresh_token = jwt.sign(
+    { Client: client._id },
+    process.env.REFRESH_TOKEN
+  );
+  const refreshtoken = new RefreshToken({
+    token: refresh_token,
+  });
+  const savedToken = await refreshtoken.save();
+  console.log("refresh_token", savedToken.token);
+  console.log("access_token", access_token);
+  console.log("logged in");
+  res
+    .header("Authorization", access_token)
+    .json({ access_token: access_token, refresh_token: savedToken.token });
+};
 
-  client.password = undefined;
-  res.status(StatusCodes.OK).json({ client, token, location: client.location });
+function generateAccessToken(id) {
+  return jwt.sign({ Client: id }, process.env.ACCESS_TOKEN, {
+    expiresIn: "60s",
+  });
+}
+//   const token = client.createJWT();
+
+//   client.password = undefined;
+//   res.status(StatusCodes.OK).json({ client, token, location: client.location });
+// };
+
+const refreshToken = async (req, res) => {
+  const refreshToken = req.body.token;
+  if (refreshToken == null) return res.sendStatus(401);
+  const savedToken = await RefreshToken.findOne({ token: refreshToken });
+  if (!savedToken) res.sendStatus(403);
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, client) => {
+    if (err) return res.sendStatus(403);
+    const token = generateAccessToken({ id: client._id });
+    res.json({ accesToken: token });
+  });
+};
+
+const logout = async (req, res) => {
+  try {
+    const ToBeRemovedToken = await RefreshToken.findOneAndDelete(
+      req.body.token
+    );
+    console.log(ToBeRemovedToken);
+    res.send("logged out!");
+  } catch (err) {
+    res.json({ message: err });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const verified = jwt.verify(req.params.token, process.env.ACCESS_TOKEN);
+    if (!verified) return res.send("Acces denied");
+    console.log(verified);
+    if (!(req.body.password == req.body.confirmPassword))
+      return res.send("please confirm with the right password");
+    ///// Hash passwords/////
+    const salt = await bcrypt.genSalt(10);
+
+    const hash = await bcrypt.hash(req.body.password, salt);
+
+    console.log(hash);
+    const client = await Client.findOneAndUpdate(
+      { _id: req.params.clientId },
+      {
+        $set: {
+          password: hash,
+        },
+      }
+    );
+    if (!client) return res.send("Invalid Id...");
+    console.log(client);
+
+    res.json(client);
+  } catch (err) {
+    res.json({ message: err });
+  }
 };
 
 // Update a Client
@@ -127,10 +204,28 @@ const verifyClient = async (req, res) => {
         },
       }
     );
-    res.status(StatusCodes.OK).json("Account Verified!!!!!!!");
+    res.status(StatusCodes.OK).json("Account Verified !");
   } catch (error) {
     throw new BadRequestError(error);
   }
 };
 
-export { register, login, updateClient, verifyClient };
+const getAllClient = (req, res) => {
+  Client.find()
+    .then((val) => {
+      res.status(200).json(val);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+export {
+  register,
+  login,
+  logout,
+  updateClient,
+  verifyClient,
+  resetPassword,
+  getAllClient,
+  refreshToken,
+};

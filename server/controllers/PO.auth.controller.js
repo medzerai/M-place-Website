@@ -109,6 +109,7 @@ const register = async (req, res) => {
 };
 
 // Log in a PO
+
 const login = async (req, res) => {
   const { company_email, password } = req.body;
   if (!company_email || !password) {
@@ -127,16 +128,54 @@ const login = async (req, res) => {
       );
     }
   }
-
   console.log(po);
   const isPasswordCorrect = await po.comparePassword(password);
   if (!isPasswordCorrect) {
     throw new BadRequestError("Invalid Credentials");
   }
 
-  const token = po.createJWT();
-  po.password = undefined;
-  res.status(StatusCodes.OK).json({ po, token });
+  const access_token = generateAccessToken(po._id);
+  const refresh_token = jwt.sign({ PO: po._id }, process.env.REFRESH_TOKEN);
+  const refreshtoken = new RefreshToken({
+    token: refresh_token,
+  });
+  const savedToken = await refreshtoken.save();
+  console.log("refresh_token", savedToken.token);
+  console.log("access_token", access_token);
+  console.log("logged in");
+  res
+    .header("Authorization", access_token)
+    .json({ access_token: access_token, refresh_token: savedToken.token });
+};
+
+function generateAccessToken(id) {
+  return jwt.sign({ PO: id }, process.env.ACCESS_TOKEN, {
+    expiresIn: "60s",
+  });
+}
+
+const refreshToken = async (req, res) => {
+  const refreshToken = req.body.token;
+  if (refreshToken == null) return res.sendStatus(401);
+  const savedToken = await RefreshToken.findOne({ token: refreshToken });
+  if (!savedToken) res.sendStatus(403);
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, admin) => {
+    if (err) return res.sendStatus(403);
+    const token = generateAccessToken({ id: po._id });
+    res.json({ accesToken: token });
+  });
+};
+
+const logout = async (req, res) => {
+  try {
+    const ToBeRemovedToken = await RefreshToken.findOneAndDelete(
+      req.body.token
+    );
+    console.log(ToBeRemovedToken);
+    res.send("logged out!");
+  } catch (err) {
+    res.json({ message: err });
+  }
 };
 
 // Update a PO
@@ -167,4 +206,4 @@ const updatePO = async (req, res) => {
   res.status(StatusCodes.OK).json({ po, token });
 };
 
-export { register, login, updatePO };
+export { register, login, logout, refreshToken, updatePO };
