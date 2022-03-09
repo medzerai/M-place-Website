@@ -10,10 +10,10 @@ const ClientRouter = express.Router();
 
 ClientRouter.route("/Client/update").patch(auth, updateClient);
 
-ClientRouter.route("/Clients").get(auth, getAllClient);
+ClientRouter.route("/Clients").get(getAllClient);
 
-ClientRouter.route("/Client/Verified").get(auth, getVerifiedClients);
+ClientRouter.route("/Client/Verified").get(getVerifiedClients);
 
-ClientRouter.route("/Client/NoneVerified").get(auth, getNoneVerifiedClients);
+ClientRouter.route("/Client/NoneVerified").get(getNoneVerifiedClients);
 
 export default ClientRouter;
