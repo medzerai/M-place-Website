@@ -21,6 +21,7 @@ const ClientSchema = new mongoose.Schema(
       },
       unique: true,
     },
+    profile_img: { type: mongoose.Types.ObjectId, ref: "Filter" },
     password: {
       type: String,
       required: [true, "Please provide your password"],

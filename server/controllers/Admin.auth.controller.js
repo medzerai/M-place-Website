@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import RefreshToken from "../models/RefreshToken.model.js";
+import { redirect } from "express/lib/response";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -117,4 +118,27 @@ const resetPassword = async (req, res) => {
   }
 };
 
-export { login, logout, resetPassword, refreshToken };
+const verifyPassword = (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer")) {
+    res.status(StatusCodes.FORBIDDEN).json({ Error: "Authentication Invalid" });
+  }
+  const token = authHeader.split(" ")[1];
+  try {
+    const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
+    const admin = Admin.find({ _id: payload.adminId });
+  } catch (error) {
+    res.status(StatusCodes.FORBIDDEN).json({ Error: "Authentication Invalid" });
+  }
+  const isPasswordCorrect = await admin.comparePassword(req.body.password);
+  if (isPasswordCorrect) {
+    res.status(StatusCodes.OK).json({ message: "Confirmed !!" });
+  } else {
+    res
+      .status(StatusCodes.FORBIDDEN)
+      .json({ message: "Mot de passe in correct !!" });
+    redirect("/logout");
+  }
+};
+
+export { login, logout, resetPassword, refreshToken, verifyPassword };

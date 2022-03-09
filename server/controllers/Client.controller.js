@@ -72,6 +72,7 @@ const getNoneVerifiedClients = (req, res) => {
 
 export {
   updateClient,
+  deleteClient,
   getAllClient,
   getVerifiedClients,
   getNoneVerifiedClients,
