@@ -4,6 +4,7 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import RefreshToken from "../models/RefreshToken.model.js";
+import verification from "../templates/validation.js";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -27,7 +28,8 @@ class NotFoundError extends CustomAPIError {
 
 //  Sign in a Client
 const register = async (req, res) => {
-  const { name, email, password, numTel } = req.body;
+  const { name, email, password, numTel, profile_img, lastName, location } =
+    req.body;
 
   if (!name || !email || !password || !numTel) {
     throw new BadRequestError("please provide all values");
@@ -37,21 +39,19 @@ const register = async (req, res) => {
   if (clientAlreadyExists) {
     throw new BadRequestError("Client already exists");
   }
-
-  const client = await Client.create({ name, email, password, numTel });
-  // const token = client.createJWT();
-  res.status(StatusCodes.OK).json({
-    client: {
-      id: client._id,
-      email: client.email,
-      lastname: client.lastname,
-      location: client.location,
-      name: client.name,
-      numTel: client.numTel,
-      verified: client.verified,
-    },
-    // token,
+  const newClient = new Client({
+    name,
+    email,
+    password,
+    numTel,
+    profile_img,
+    lastName,
+    location,
   });
+
+  const client = await Client.create(newClient);
+  // const client = await Client.create({ name, email, password, numTel });
+  // const token = client.createJWT();
 
   const verToken = client.createVerJWT();
   let transporter = nodemailer.createTransport({
@@ -64,10 +64,15 @@ const register = async (req, res) => {
     from: process.env.GMAIL_EMAIL, // sender address
     to: client.email, // list of receivers
     subject: "Email Verification", // Subject line
-    text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
-    // html: verification(client.firstname, client._id),
+    // text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
+    html: verification(client.name, verToken),
   });
   transporter.sendMail(info);
+
+  res.status(StatusCodes.OK).json({
+    client,
+    // token,
+  });
 };
 
 // Log in a Client

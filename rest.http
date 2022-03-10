@@ -4,7 +4,7 @@ POST http://localhost:3000/api/v1/auth/Client/register
 # registe  body={ name, email, password, numTel }
 
 ###
-POST http://localhost:3000/api/v1/auth/login
+POST http://localhost:3000/api/v1/auth/Client/login
 # login body={ email, password } 
 
 ###

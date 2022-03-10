@@ -70,6 +70,16 @@ const getNoneVerifiedClients = (req, res) => {
     });
 };
 
+const deleteClient = (req, res) => {
+  Client.deleteOne({ _id: req.params.id })
+    .then((val) => {
+      res.status(StatusCodes.ACCEPTED).json(val);
+    })
+    .catch((err) => {
+      res.status(StatusCodes.FORBIDDEN).json(err);
+    });
+};
+
 export {
   updateClient,
   deleteClient,

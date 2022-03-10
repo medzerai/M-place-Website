@@ -3,7 +3,6 @@ import { StatusCodes } from "http-status-codes";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import RefreshToken from "../models/RefreshToken.model.js";
-import { redirect } from "express/lib/response";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -91,7 +90,7 @@ const logout = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const verified = jwt.verify(req.params.token, process.env.ACCESS_TOKEN);
-    if (!verified) return res.send("Acces denied");
+    if (!verified) return res.send("Access denied");
     console.log(verified);
     if (!(req.body.password == req.body.confirmPassword))
       return res.send("please confirm with the right password");
@@ -118,7 +117,7 @@ const resetPassword = async (req, res) => {
   }
 };
 
-const verifyPassword = (req, res) => {
+const verifyPassword = async (req, res) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer")) {
     res.status(StatusCodes.FORBIDDEN).json({ Error: "Authentication Invalid" });
@@ -127,17 +126,18 @@ const verifyPassword = (req, res) => {
   try {
     const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
     const admin = Admin.find({ _id: payload.adminId });
+
+    const isPasswordCorrect = await admin.comparePassword(req.body.password);
+    if (isPasswordCorrect) {
+      res.status(StatusCodes.OK).json({ message: "Confirmed !!" });
+    } else {
+      res
+        .status(StatusCodes.FORBIDDEN)
+        .json({ message: "Mot de passe in correct !!" });
+      // redirect("/Admin/logout");
+    }
   } catch (error) {
     res.status(StatusCodes.FORBIDDEN).json({ Error: "Authentication Invalid" });
-  }
-  const isPasswordCorrect = await admin.comparePassword(req.body.password);
-  if (isPasswordCorrect) {
-    res.status(StatusCodes.OK).json({ message: "Confirmed !!" });
-  } else {
-    res
-      .status(StatusCodes.FORBIDDEN)
-      .json({ message: "Mot de passe in correct !!" });
-    redirect("/logout");
   }
 };
 
