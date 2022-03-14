@@ -45,6 +45,13 @@ const addCategory = async (req, res) => {
 const getAllCategories = async (req, res) => {
   await Category.find({})
     .then((val) => {
+      let arr = [];
+      val.map((x) => {
+        if (x.parent == "/") arr.push({ id: x._id, category: x.name });
+      });
+
+      const newval = val.map((item) => ({ ...item, new: false }));
+      console.log("2----", newval);
       res.status(StatusCodes.OK).json(val);
     })
     .catch((error) => {
@@ -96,6 +103,8 @@ const deleteCategory = async (req, res) => {
       throw new BadRequestError(error);
     });
 };
+
+const updateAll = async (req, res) => {};
 
 export {
   addCategory,

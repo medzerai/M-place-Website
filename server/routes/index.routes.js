@@ -18,8 +18,7 @@ import RdvRouter from "./Rdv.routes.js";
 const router = express.Router();
 
 router.use("/file", imageRouter);
-router.use("/api/v1/auth", ClientAuthRouter, AdminRouter);
-router.use("/api/v1/auth", POAuthRouter);
+router.use("/api/v1/auth", ClientAuthRouter, POAuthRouter, AdminRouter);
 
 router.use(
   "/",

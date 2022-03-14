@@ -13,7 +13,7 @@ ClientRouter.route("/Client/update").patch(auth, updateClient);
 
 ClientRouter.route("/Client/:id").delete(deleteClient);
 
-ClientRouter.route("/Clients").get(getAllClient);
+ClientRouter.route("/Clients").get(auth, getAllClient);
 
 ClientRouter.route("/Client/Verified").get(getVerifiedClients);
 

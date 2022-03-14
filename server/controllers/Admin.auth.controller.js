@@ -125,16 +125,15 @@ const verifyPassword = async (req, res) => {
   const token = authHeader.split(" ")[1];
   try {
     const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
-    const admin = Admin.find({ _id: payload.adminId });
+    const admin = await Admin.findOne({ _id: payload.Admin });
 
-    const isPasswordCorrect = await admin.comparePassword(req.body.password);
+    const isPasswordCorrect = admin.comparePassword(req.body.password);
     if (isPasswordCorrect) {
       res.status(StatusCodes.OK).json({ message: "Confirmed !!" });
     } else {
       res
         .status(StatusCodes.FORBIDDEN)
         .json({ message: "Mot de passe in correct !!" });
-      // redirect("/Admin/logout");
     }
   } catch (error) {
     res.status(StatusCodes.FORBIDDEN).json({ Error: "Authentication Invalid" });
