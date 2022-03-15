@@ -127,13 +127,11 @@ const verifyPassword = async (req, res) => {
     const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
     const admin = await Admin.findOne({ _id: payload.Admin });
 
-    const isPasswordCorrect = admin.comparePassword(req.body.password);
+    const isPasswordCorrect = await admin.comparePassword(req.body.password);
     if (isPasswordCorrect) {
-      res.status(StatusCodes.OK).json({ message: "Confirmed !!" });
+      res.status(StatusCodes.OK).json({ message: true });
     } else {
-      res
-        .status(StatusCodes.FORBIDDEN)
-        .json({ message: "Mot de passe in correct !!" });
+      res.status(StatusCodes.OK).json({ message: false });
     }
   } catch (error) {
     res.status(StatusCodes.FORBIDDEN).json({ Error: "Authentication Invalid" });
