@@ -15,12 +15,6 @@ const CategorySchema = new mongoose.Schema(
       default: "/",
       trim: true,
     },
-    category: {
-      type: String,
-      minlength: 3,
-      trim: true,
-      unique: true,
-    },
   },
   { timestamps: true }
 );
