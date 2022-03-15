@@ -22,7 +22,7 @@ const convertCategoryJson = (val) => {
         break;
       }
       k = arr.filter((item) => {
-        return item.category == val[j].parent;
+        return item.id == val[j].parent;
       });
 
       if (k.length > 0) {
@@ -54,7 +54,6 @@ const convertCategoryJson = (val) => {
       arr.map((v) => {
         checkSubCategories(j, v.child, val);
       });
-
       break;
     }
   }
