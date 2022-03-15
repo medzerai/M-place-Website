@@ -90,7 +90,7 @@ const logout = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const verified = jwt.verify(req.params.token, process.env.ACCESS_TOKEN);
-    if (!verified) return res.send("Acces denied");
+    if (!verified) return res.send("Access denied");
     console.log(verified);
     if (!(req.body.password == req.body.confirmPassword))
       return res.send("please confirm with the right password");
@@ -117,4 +117,25 @@ const resetPassword = async (req, res) => {
   }
 };
 
-export { login, logout, resetPassword, refreshToken };
+const verifyPassword = async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer")) {
+    res.status(StatusCodes.FORBIDDEN).json({ Error: "Authentication Invalid" });
+  }
+  const token = authHeader.split(" ")[1];
+  try {
+    const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
+    const admin = await Admin.findOne({ _id: payload.Admin });
+
+    const isPasswordCorrect = await admin.comparePassword(req.body.password);
+    if (isPasswordCorrect) {
+      res.status(StatusCodes.OK).json({ message: true });
+    } else {
+      res.status(StatusCodes.OK).json({ message: false });
+    }
+  } catch (error) {
+    res.status(StatusCodes.FORBIDDEN).json({ Error: "Authentication Invalid" });
+  }
+};
+
+export { login, logout, resetPassword, refreshToken, verifyPassword };

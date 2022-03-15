@@ -14,6 +14,101 @@ class BadRequestError extends CustomAPIError {
   }
 }
 
+const convertJsonToCategories = (val) => {
+  let cat;
+  let catList = [];
+  let addedCategory;
+  // console.log("----", val);
+  const addSubCategories = (par, arr) => {
+    if (arr.length > 0) {
+      arr.map(async (item) => {
+        if (item.new == false) {
+          cat = new Category({
+            _id: item.id,
+            name: item.category,
+            parent: par,
+          });
+        } else {
+          cat = new Category({
+            name: item.category,
+            parent: par,
+          });
+        }
+        // console.log("****", cat);
+        catList.push(cat);
+        addSubCategories(cat._id, item.child);
+      });
+    }
+    return 0;
+  };
+
+  val.map(async (item) => {
+    if (item.new == false) {
+      cat = new Category({
+        _id: item.id,
+        name: item.category,
+        parent: "/",
+      });
+    } else {
+      cat = new Category({
+        name: item.category,
+        parent: "/",
+      });
+    }
+    // console.log("****", cat);
+    catList.push(cat);
+    addSubCategories(cat._id, item.child);
+  });
+
+  return catList;
+};
+
+const convertCategoryJson = (val) => {
+  const checkSubCategories = (j, arr, val) => {
+    let k;
+    while (true) {
+      if (j >= val.length) {
+        break;
+      }
+      k = arr.filter((item) => {
+        return item.id == val[j].parent;
+      });
+
+      if (k.length > 0) {
+        arr[arr.indexOf(k[0])].child.push({
+          id: val[j]._id,
+          category: val[j].name,
+          child: [],
+          new: false,
+        });
+        val.splice(j, 1);
+      } else {
+        j++;
+      }
+    }
+  };
+  let j = 0;
+  let arr = [];
+  while (val.length != 0) {
+    if (val[j].parent == "/") {
+      arr.push({
+        id: val[j]._id,
+        category: val[j].name,
+        child: [],
+        new: false,
+      });
+      val.splice(j, 1);
+    } else {
+      checkSubCategories(j, arr, val);
+      arr.map((v) => {
+        checkSubCategories(j, v.child, val);
+      });
+      break;
+    }
+  }
+  return arr;
+};
+
 // Add a new Category
 const addCategory = async (req, res) => {
   const { name, parent } = req.body;
@@ -21,8 +116,6 @@ const addCategory = async (req, res) => {
   const cat = new Category({
     name,
     parent: parent || "/",
-    category:
-      parent === undefined || parent === "/" ? "/" + name : parent + "/" + name,
   });
 
   if (!name) {
@@ -42,10 +135,11 @@ const addCategory = async (req, res) => {
 };
 
 // Get all the categories
-const getAllCategories = async (req, res) => {
-  await Category.find({})
+const getAllCategories = (req, res) => {
+  Category.find({})
     .then((val) => {
-      res.status(StatusCodes.OK).json(val);
+      const newVal = convertCategoryJson(val);
+      res.status(StatusCodes.OK).json(newVal);
     })
     .catch((error) => {
       throw new BadRequestError(error);
@@ -68,10 +162,6 @@ const updateCategory = async (req, res) => {
     _id: req.params.id,
     name: req.body.name,
     parent: req.body.parent || "/",
-    category:
-      req.body.parent === undefined || req.body.parent === "/"
-        ? "/" + req.body.name
-        : req.body.parent + "/" + req.body.name,
   });
   Category.updateOne({ _id: req.params.id }, cat)
     .then(() => {
@@ -97,10 +187,27 @@ const deleteCategory = async (req, res) => {
     });
 };
 
+const updateAll = async (req, res) => {
+  let c;
+  Category.deleteMany()
+    .then(async () => {
+      const categoryList = await convertJsonToCategories(req.body.categories);
+      console.log(categoryList);
+
+      await Category.create(categoryList);
+
+      res.status(StatusCodes.OK).json("goood");
+    })
+    .catch((err) => {
+      res.status(StatusCodes.BAD_REQUEST).json(err);
+    });
+};
+
 export {
   addCategory,
   getAllCategories,
   getCategoryById,
   updateCategory,
+  updateAll,
   deleteCategory,
 };

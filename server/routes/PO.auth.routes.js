@@ -1,14 +1,16 @@
 import {
   register,
   login,
+  logout,
+  refreshToken,
   updatePO,
 } from "../controllers/PO.auth.controller.js";
 import express from "express";
 import auth from "../middleware/authenticateClient.js";
-const AuthPORouter = express.Router();
+const POAuthRouter = express.Router();
 
-AuthPORouter.route("PO/register").post(register);
-AuthPORouter.route("PO/login").post(login);
-AuthPORouter.route("PO/update").patch(auth, updatePO);
+POAuthRouter.route("/PO/register").post(register);
+POAuthRouter.route("/PO/login").post(login);
+POAuthRouter.route("/PO/update").patch(updatePO);
 
-export default AuthPORouter;
+export default POAuthRouter;

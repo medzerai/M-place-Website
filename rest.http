@@ -1,17 +1,30 @@
-//------------------------------------ User
+//------------------------------------ Client
 
 POST http://localhost:3000/api/v1/auth/Client/register
 # registe  body={ name, email, password, numTel }
 
 ###
-POST http://localhost:3000/api/v1/auth/login
+POST http://localhost:3000/api/v1/auth/Client/login
 # login body={ email, password } 
 
 ###
-PATCH  http://localhost:3000/api/v1/auth/updateUser
+
+// update client
+PATCH  http://localhost:3000/Client/update
 # update user body={ email, name, lastName, location, numTel }
 
 ###
+// get all clients
+GET  http://localhost:3000/Clients
+
+###
+
+// get verified clients
+GET  http://localhost:3000/Client/Verified
+###
+// get None verified clients
+GET  http://localhost:3000/Client/NoneVerified
+
 //------------------------------------ Category
 
 POST http://localhost:3000/addCategory
@@ -32,6 +45,40 @@ PATCH  http://localhost:3000/categories/61fbd214a1614d4a0997d5c6
 ###
 DELETE  http://localhost:3000/categories/61fbd214a1614d4a0997d5c6
 # 
+
+###
+
+//------------------------------------ Product Owner
+###
+//get All POs
+GET http://localhost:3000/POs 
+###
+//getBlockedPOs
+GET http://localhost:3000/bockedPOs
+###
+//get deleted PO
+GET http://localhost:3000/deletedPOs
+###
+//get PO by id
+GET http://localhost:3000/POs/:id
+###
+//update PO
+PATCH http://localhost:3000/POs/:id
+###
+// verify the po
+PATCH http://localhost:3000/POs/verify/:id
+###
+//approve the po
+PATCH http://localhost:3000/POs/approve/:id
+###
+//block the po 
+PATCH http://localhost:3000/POs/Block/:id
+###
+// unblock the po
+PATCH http://localhost:3000/POs/unBlock/:id
+###
+// delete the po
+PATCH http://localhost:3000/POs/Delete/:id
 
 ###
 
@@ -111,7 +158,7 @@ PATCH    http://localhost:3000/deleteVariablesFromFilter/620a2dcefdc853adfb78633
 
 //------------------------------------ Variable
 
-POST   http://localhost:3000/addVariable
+POST   http://localhost:3000/variable/addVariable
 # add Variable body={ name, option }
 
 ###
@@ -119,7 +166,7 @@ GET   http://localhost:3000/variables
 # get all variables
 
 ###
-GET   http://localhost:3000/variables/620a214e05220d771477253a
+GET   http://localhost:3000/variable/620a214e05220d771477253a
 # get variable by id
 
 ###

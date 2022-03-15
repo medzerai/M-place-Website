@@ -11,6 +11,7 @@ const POSchema = new mongoose.Schema(
       minlength: 3,
       maxlength: 20,
       trim: true,
+      unique: true,
     },
     company_email: {
       type: String,
@@ -30,6 +31,7 @@ const POSchema = new mongoose.Schema(
     logo_url: {
       type: String,
       required: [true, "Please provide your logo url"],
+      unique: true,
     },
     country: {
       type: String,
@@ -56,7 +58,6 @@ const POSchema = new mongoose.Schema(
         message: "zip code has to be 4 digits",
       },
       required: [true, "Please provide your professional phone number"],
-      unique: true,
     },
     address: {
       type: String,
@@ -90,11 +91,13 @@ const POSchema = new mongoose.Schema(
       minlength: 20,
       maxlength: 20,
       required: [true, "Please provide your tax ID number"],
+      unique: true,
     },
     tax_ID_card: {
       type: String,
       minlength: 20,
       required: [true, "Please provide your tax ID card URL"],
+      unique: true,
     },
     owner_ID_type: {
       type: String,
@@ -108,6 +111,7 @@ const POSchema = new mongoose.Schema(
     RNE_number: {
       type: Number,
       required: [true, "Please provide your RNE number"],
+      unique: true,
     },
   },
   { timestamps: true }
