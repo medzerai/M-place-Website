@@ -14,6 +14,53 @@ class BadRequestError extends CustomAPIError {
   }
 }
 
+const convertCategoryJson = (val) => {
+  const checkSubCategories = (j, arr, val) => {
+    let k;
+    while (true) {
+      if (j >= val.length) {
+        break;
+      }
+      k = arr.filter((item) => {
+        return item.category == val[j].parent;
+      });
+
+      if (k.length > 0) {
+        arr[arr.indexOf(k[0])].child.push({
+          id: val[j]._id,
+          category: val[j].name,
+          child: [],
+          new: false,
+        });
+        val.splice(j, 1);
+      } else {
+        j++;
+      }
+    }
+  };
+  let j = 0;
+  let arr = [];
+  while (val.length != 0) {
+    if (val[j].parent == "/") {
+      arr.push({
+        id: val[j]._id,
+        category: val[j].name,
+        child: [],
+        new: false,
+      });
+      val.splice(j, 1);
+    } else {
+      checkSubCategories(j, arr, val);
+      arr.map((v) => {
+        checkSubCategories(j, v.child, val);
+      });
+
+      break;
+    }
+  }
+  return arr;
+};
+
 // Add a new Category
 const addCategory = async (req, res) => {
   const { name, parent } = req.body;
@@ -45,14 +92,8 @@ const addCategory = async (req, res) => {
 const getAllCategories = async (req, res) => {
   await Category.find({})
     .then((val) => {
-      let arr = [];
-      val.map((x) => {
-        if (x.parent == "/") arr.push({ id: x._id, category: x.name });
-      });
-
-      const newval = val.map((item) => ({ ...item, new: false }));
-      console.log("2----", newval);
-      res.status(StatusCodes.OK).json(val);
+      const newVal = convertCategoryJson(val);
+      res.status(StatusCodes.OK).json(newVal);
     })
     .catch((error) => {
       throw new BadRequestError(error);
