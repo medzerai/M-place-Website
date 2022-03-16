@@ -13,5 +13,6 @@ AdminRouter.route("/Admin/login").post(login);
 AdminRouter.route("/Admin/logout").post(logout);
 AdminRouter.route("/Admin/refreshToken").post(refreshToken);
 AdminRouter.route("/Admin/resetPassword").post(resetPassword);
+
 AdminRouter.route("/Admin/verifyPassword").post(verifyPassword);
 export default AdminRouter;

@@ -178,32 +178,51 @@ const logout = async (req, res) => {
   }
 };
 
-// Update a PO
-const updatePO = async (req, res) => {
-  const po = await PO.findOne({ _id: req.PO.POId });
+const resetPassword = async (req, res) => {
+  try {
+    const verified = jwt.verify(req.params.token, process.env.ACCESS_TOKEN);
+    if (!verified) return res.send("Acces denied");
+    console.log(verified);
+    if (!(req.body.password == req.body.confirmPassword))
+      return res.send("please confirm with the right password");
+    ///// Hash passwords/////
+    const salt = await bcrypt.genSalt(10);
 
-  po.company_name = req.body.company_name || po.company_name;
-  po.company_email = req.body.company_email || po.company_email;
-  po.password = req.body.password || po.password;
-  po.logo_url = req.body.logo_url || po.logo_url;
-  po.country = req.body.country || po.country;
-  po.city = req.body.city || po.city;
-  po.state = req.body.state || po.state;
-  po.zip_code = req.body.zip_code || po.zip_code;
-  po.address = req.body.address || po.address;
-  po.professional_phone_number =
-    req.body.professional_phone_number || po.professional_phone_number;
-  po.verification = req.body.verification || po.verification;
-  po.creation_date = req.body.creation_date || po.creation_date;
-  po.tax_ID_number = req.body.tax_ID_number || po.tax_ID_number;
-  po.tax_ID_card = req.body.tax_ID_card || po.tax_ID_card;
-  po.owner_ID_type = req.body.owner_ID_type || po.owner_ID_type;
-  po.owner_ID = req.body.owner_ID || po.owner_ID;
-  po.RNE_number = req.body.RNE_number || po.RNE_number;
+    const hash = await bcrypt.hash(req.body.password, salt);
 
-  await po.save();
-  const token = po.createJWT();
-  res.status(StatusCodes.OK).json({ po, token });
+    console.log(hash);
+    const po = await PO.findOneAndUpdate(
+      { _id: req.params.poId },
+      {
+        $set: {
+          password: hash,
+        },
+      }
+    );
+    if (!po) return res.send("Invalid Id...");
+    console.log(po);
+
+    res.json(po);
+  } catch (err) {
+    res.json({ message: err });
+  }
 };
 
-export { register, login, logout, refreshToken, updatePO };
+const verifyPO = async (req, res) => {
+  try {
+    const payload = jwt.verify(req.params.token, process.env.VER_JWT_SECRET);
+    await PO.findOneAndUpdate(
+      { _id: payload.PO },
+      {
+        $set: {
+          verification: 1,
+        },
+      }
+    );
+    res.status(StatusCodes.OK).json("Account Verified !");
+  } catch (error) {
+    throw new BadRequestError(error);
+  }
+};
+
+export { register, login, logout, refreshToken, resetPassword, verifyPO };

@@ -103,6 +103,20 @@ const getDeletedPOs = async (req, res) => {
 
 // verify the product owner account
 const verifyPO = async (req, res) => {
+  // try {
+  //   const payload = jwt.verify(req.params.token, process.env.VER_JWT_SECRET);
+  //   await PO.findOneAndUpdate(
+  //     { _id: payload.clientId },
+  //     {
+  //       $set: {
+  //         verified: true,
+  //       },
+  //     }
+  //   );
+  //   res.status(StatusCodes.OK).json("Account Verified !");
+  // } catch (error) {
+  //   throw new BadRequestError(error);
+  // }
   const po = await PO.find({ _id: req.params.id }).select("+verification");
   if (po.verification == 0) {
     PO.findOneAndUpdate({ _id: req.params.id }, { verification: 1 })
@@ -196,6 +210,7 @@ const deletePO = async (req, res) => {
 
 // Update a po by id
 const updatePO = (req, res) => {
+  // const po = await PO.findOne({ _id: req.PO.POId });
   const po = PO.findOne({ _id: req.params.id }).select("+verification");
   const updatePo = new PO({
     _id: req.params.id,
