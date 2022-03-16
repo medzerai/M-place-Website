@@ -57,6 +57,28 @@ const getPOById = async (req, res) => {
     });
 };
 
+// get none-approved product owners
+const getNoneApprovedPOs = async (req, res) => {
+  await PO.find({ verification: 1 })
+    .then((val) => {
+      res.status(StatusCodes.OK).json(val);
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
+// get functional product owners
+const getFunctionalPOs = async (req, res) => {
+  await PO.find({ verification: 2 })
+    .then((val) => {
+      res.status(StatusCodes.OK).json(val);
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
 // get blocked product owners
 const getBlockedPOs = async (req, res) => {
   await PO.find({ verification: 3 })
@@ -198,6 +220,8 @@ const updatePO = (req, res) => {
 export {
   getAllPOs,
   getPOById,
+  getNoneApprovedPOs,
+  getFunctionalPOs,
   getBlockedPOs,
   getDeletedPOs,
   verifyPO,
