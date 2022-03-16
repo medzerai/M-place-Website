@@ -7,8 +7,7 @@ config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
-export default function uploads(file) {
+const uploads = (file) => {
   return new Promise((resolve) => {
     uploader.upload(
       file,
@@ -18,4 +17,16 @@ export default function uploads(file) {
       { resource_type: "auto", folder: "E-Market/Images" }
     );
   });
-}
+};
+const fileUploads = (file) => {
+  return new Promise((resolve) => {
+    uploader.upload(
+      file,
+      (result) => {
+        resolve({ url: result.url, id: result.public_id });
+      },
+      { resource_type: "auto", folder: "E-Market/Files" }
+    );
+  });
+};
+export { uploads, fileUploads };

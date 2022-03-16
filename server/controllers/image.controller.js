@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
-import imageModel from "../models/image.model.js";
-import uploads from "../config/cloudinary.config.js";
+import  imageModel  from "../models/image.model.js";
+import {uploads} from "../config/cloudinary.config.js";
 
 const addImage = async (req, res) => {
   return res.json({ picture: req.file.path });
