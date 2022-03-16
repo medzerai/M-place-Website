@@ -3,7 +3,7 @@ import {
   createPdfFile,
   getAllPdfFiles,
   getPdfFileById,
-} from "../controllers/image.controller.js";
+} from "../controllers/PDFfile.controller.js";
 
 import express from "express";
 const pdfFileRouter = express.Router();
