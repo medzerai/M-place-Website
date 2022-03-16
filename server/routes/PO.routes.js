@@ -1,6 +1,8 @@
 import {
   getAllPOs,
   getPOById,
+  getNoneApprovedPOs,
+  getFunctionalPOs,
   getBlockedPOs,
   getDeletedPOs,
   verifyPO,
@@ -15,6 +17,8 @@ import express from "express";
 const PORouter = express.Router();
 
 PORouter.route("/POs").get(getAllPOs);
+PORouter.route("/noneApprovedPOs").get(getNoneApprovedPOs);
+PORouter.route("/functionalPOs").get(getFunctionalPOs);
 PORouter.route("/bockedPOs").get(getBlockedPOs);
 PORouter.route("/deletedPOs").get(getDeletedPOs);
 PORouter.route("/POs/:id").get(getPOById).patch(updatePO);
