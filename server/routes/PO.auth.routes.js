@@ -17,5 +17,5 @@ POAuthRouter.route("/PO/refreshToken").post(refreshToken);
 
 POAuthRouter.route("/PO/resetPassword/:token").post(resetPassword);
 
-POAuthRouter.route("/PO/verify/:token").get(verifyPO);
+POAuthRouter.route("/PO/verify/:token").patch(verifyPO);
 export default POAuthRouter;

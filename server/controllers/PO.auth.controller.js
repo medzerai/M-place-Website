@@ -192,7 +192,7 @@ const resetPassword = async (req, res) => {
 
     console.log(hash);
     const po = await PO.findOneAndUpdate(
-      { _id: req.params.poId },
+      { _id: verified.Client },
       {
         $set: {
           password: hash,
