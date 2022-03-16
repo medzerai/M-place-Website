@@ -1,16 +1,15 @@
 import { fileUpload } from "../config/multer.config.js";
 import {
-  createImage,
-  addImage,
-  getAllImages,
-  getImageById,
+  createPdfFile,
+  getAllPdfFiles,
+  getPdfFileById,
 } from "../controllers/image.controller.js";
 
 import express from "express";
-const imageRouter = express.Router();
+const pdfFileRouter = express.Router();
 
-imageRouter.post("/file/upload", fileUpload.any(), createImage);
-imageRouter.get("/files", getAllImages);
-imageRouter.get("/file/:id", getImageById);
+pdfFileRouter.post("/file/upload", fileUpload.any(), createPdfFile);
+pdfFileRouter.get("/files", getAllPdfFiles);
+pdfFileRouter.get("/file/:id", getPdfFileById);
 
-export default imageRouter;
+export default pdfFileRouter;

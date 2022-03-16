@@ -1,7 +1,6 @@
 import { imageUpload } from "../config/multer.config.js";
 import {
   createImage,
-  addImage,
   getAllImages,
   getImageById,
 } from "../controllers/image.controller.js";
