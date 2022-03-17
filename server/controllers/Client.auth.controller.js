@@ -147,6 +147,7 @@ const logout = async (req, res) => {
     res.json({ message: err });
   }
 };
+
 const forgetPassword = async (req, res) => {
   const client = await Client.findOne({ email: req.body.email });
   const verToken = client.createVerJWT();
