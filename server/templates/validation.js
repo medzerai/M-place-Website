@@ -303,4 +303,4 @@ const verification = (name, hash) => {
 `;
 };
 
-export default verification
+export default verification;

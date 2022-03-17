@@ -89,7 +89,10 @@ const convertCategoryJson = (val) => {
   };
   let j = 0;
   let arr = [];
-  while (val.length != 0) {
+  while (true) {
+    if (val.length == 0) {
+      break;
+    }
     if (val[j].parent == "/") {
       arr.push({
         id: val[j]._id,
