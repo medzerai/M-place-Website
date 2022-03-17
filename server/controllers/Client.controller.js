@@ -49,6 +49,16 @@ const getAllClient = (req, res) => {
     });
 };
 
+const getClientById = (req, res) => {
+  Client.findById(req.params.id)
+    .then((val) => {
+      res.status(StatusCodes.OK).json({ val });
+    })
+    .catch((err) => {
+      throw new BadRequestError(err);
+    });
+};
+
 // get verified clients
 const getVerifiedClients = (req, res) => {
   Client.find({ verified: true })
@@ -84,6 +94,7 @@ export {
   updateClient,
   deleteClient,
   getAllClient,
+  getClientById,
   getVerifiedClients,
   getNoneVerifiedClients,
 };

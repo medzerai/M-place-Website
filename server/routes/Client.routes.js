@@ -1,6 +1,7 @@
 import {
   updateClient,
   getAllClient,
+  getClientById,
   getVerifiedClients,
   getNoneVerifiedClients,
   deleteClient,

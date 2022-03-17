@@ -103,7 +103,6 @@ const convertCategoryJson = (val) => {
       arr.map((v) => {
         checkSubCategories(j, v.child, val);
       });
-      break;
     }
   }
   return arr;
