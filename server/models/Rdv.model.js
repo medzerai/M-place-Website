@@ -11,6 +11,7 @@ const RdvSchema = new mongoose.Schema(
     date: {
       type: Date,
       required: [true, "Please provide your Rendez-vous date"],
+      unique: true,
     },
   },
   { timestamps: true }

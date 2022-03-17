@@ -1,10 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import imageModel from "../models/image.model.js";
-import uploads from "../config/cloudinary.config.js";
-
-const addImage = async (req, res) => {
-  return res.json({ picture: req.file.path });
-};
+import { uploads } from "../config/cloudinary.config.js";
 
 // Add an image to cloudinary and mongoDB
 const createImage = async (req, res) => {
@@ -76,4 +72,4 @@ const getImageById = async (req, res) => {
     });
 };
 
-export { createImage, addImage, getAllImages, getImageById };
+export { createImage, getAllImages, getImageById };

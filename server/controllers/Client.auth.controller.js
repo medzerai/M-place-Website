@@ -162,7 +162,7 @@ const resetPassword = async (req, res) => {
 
     console.log(hash);
     const client = await Client.findOneAndUpdate(
-      { _id: req.params.clientId },
+      { _id: verified.Client },
       {
         $set: {
           password: hash,
@@ -182,7 +182,7 @@ const verifyClient = async (req, res) => {
   try {
     const payload = jwt.verify(req.params.token, process.env.VER_JWT_SECRET);
     await Client.findOneAndUpdate(
-      { _id: payload.clientId },
+      { _id: payload.Client },
       {
         $set: {
           verified: true,

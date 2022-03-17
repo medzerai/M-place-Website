@@ -6,7 +6,7 @@ const CategorySchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide your Category name"],
       minlength: 2,
-      maxlength: 20,
+      maxlength: 50,
       trim: true,
     },
     parent: {

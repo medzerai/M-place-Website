@@ -124,7 +124,7 @@ POSchema.pre("save", async function () {
 });
 
 POSchema.methods.createJWT = function () {
-  return jwt.sign({ POId: this._id }, process.env.JWT_SECRET, {
+  return jwt.sign({ PO: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   });
 };

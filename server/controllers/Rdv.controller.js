@@ -1,4 +1,5 @@
 import { StatusCodes } from "http-status-codes";
+import PO from "../models/PO.model.js";
 import Rdv from "../models/Rdv.model.js";
 
 class CustomAPIError extends Error {
@@ -13,22 +14,48 @@ class BadRequestError extends CustomAPIError {
     this.statusCode = StatusCodes.BAD_REQUEST;
   }
 }
+//generate random date
+function randomDate(start, end) {
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
+}
 
 // Add a new Rendez-vous
 const addRdv = async (req, res) => {
   const { for_PO, date } = req.body;
-
-  const v = new Rdv({
-    for_PO,
-    date,
-  });
-
-  if (!for_PO || !date) {
+  if (!for_PO) {
     throw new BadRequestError("please provide all values");
   }
 
-  const rdv = await Rdv.create(v);
-  res.status(StatusCodes.OK).json({ rdv });
+  const po = await PO.findById(for_PO);
+  if (!po) {
+    throw new BadRequestError("Product Owner does not exist !!!");
+  }
+
+  const rdv = await Rdv.find({ for_PO: for_PO });
+  if (rdv) {
+    throw new BadRequestError("Product Owner already had a Rendez-vous !!!");
+  }
+  // const d = new Date();
+
+  const v = new Rdv({
+    for_PO,
+    date:
+      date ||
+      randomDate(
+        new Date(),
+        new Date(new Date().setDate(new Date().getDate() + 7))
+      ),
+  });
+
+  Rdv.create(v)
+    .then((rdv) => {
+      res.status(StatusCodes.OK).json({ rdv });
+    })
+    .catch((err) => {
+      throw new BadRequestError(err);
+    });
 };
 
 // Get all Rendez-vous

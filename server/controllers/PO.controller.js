@@ -57,6 +57,28 @@ const getPOById = async (req, res) => {
     });
 };
 
+// get none-approved product owners
+const getNoneApprovedPOs = async (req, res) => {
+  await PO.find({ verification: 1 })
+    .then((val) => {
+      res.status(StatusCodes.OK).json(val);
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
+// get functional product owners
+const getFunctionalPOs = async (req, res) => {
+  await PO.find({ verification: 2 })
+    .then((val) => {
+      res.status(StatusCodes.OK).json(val);
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
 // get blocked product owners
 const getBlockedPOs = async (req, res) => {
   await PO.find({ verification: 3 })
@@ -81,55 +103,83 @@ const getDeletedPOs = async (req, res) => {
 
 // verify the product owner account
 const verifyPO = async (req, res) => {
-  const po = await PO.find({ _id: req.params.id }).exec();
-  po.verification = 1;
-  PO.updateOne({ _id: req.params.id }, po)
-    .then(() => {
-      res.status(StatusCodes.CREATED).json({
-        message: "Product Owner verified successfully!",
+  // try {
+  //   const payload = jwt.verify(req.params.token, process.env.VER_JWT_SECRET);
+  //   await PO.findOneAndUpdate(
+  //     { _id: payload.clientId },
+  //     {
+  //       $set: {
+  //         verified: true,
+  //       },
+  //     }
+  //   );
+  //   res.status(StatusCodes.OK).json("Account Verified !");
+  // } catch (error) {
+  //   throw new BadRequestError(error);
+  // }
+  const po = await PO.find({ _id: req.params.id }).select("+verification");
+  if (po.verification == 0) {
+    PO.findOneAndUpdate({ _id: req.params.id }, { verification: 1 })
+      .then(() => {
+        res.status(StatusCodes.CREATED).json({
+          message: "Product Owner verified successfully!",
+        });
+      })
+      .catch((error) => {
+        throw new BadRequestError(error);
       });
-    })
-    .catch((error) => {
-      throw new BadRequestError(error);
+  } else {
+    res.status(StatusCodes.CREATED).json({
+      message: "Product Owner is already been verified !!",
     });
+  }
 };
 
 // approve the product owner account (made by the admin)
 const approvePO = async (req, res) => {
-  const po = await PO.find({ _id: req.params.id }).exec();
-  po.verification = 2;
-  PO.updateOne({ _id: req.params.id }, po)
-    .then(() => {
-      res.status(StatusCodes.CREATED).json({
-        message: "Product Owner approved successfully!",
+  const po = await PO.find({ _id: req.params.id }).select("+verification");
+  if (po.verification == 1) {
+    PO.findOneAndUpdate({ _id: req.params.id }, { verification: 2 })
+      .then((val) => {
+        res.status(StatusCodes.CREATED).json({
+          message: "Product Owner approved successfully!",
+        });
+      })
+      .catch((error) => {
+        throw new BadRequestError(error);
       });
-    })
-    .catch((error) => {
-      throw new BadRequestError(error);
+  } else {
+    res.status(StatusCodes.CREATED).json({
+      message: "Product Owner can't be approved !!",
     });
+  }
 };
 
 // block the product owner account
 const blockPO = async (req, res) => {
-  const po = await PO.find({ _id: req.params.id }).exec();
-  po.verification = 3;
-  PO.updateOne({ _id: req.params.id }, po)
-    .then(() => {
-      res.status(StatusCodes.CREATED).json({
-        message: "Product Owner blocked successfully!",
+  const po = await PO.find({ _id: req.params.id }).select("+verification");
+  if (po.verification == 2) {
+    PO.findOneAndUpdate({ _id: req.params.id }, { verification: 3 })
+      .then(() => {
+        res.status(StatusCodes.CREATED).json({
+          message: "Product Owner blocked successfully!",
+        });
+      })
+      .catch((error) => {
+        throw new BadRequestError(error);
       });
-    })
-    .catch((error) => {
-      throw new BadRequestError(error);
+  } else {
+    res.status(StatusCodes.CREATED).json({
+      message: "Product Owner can't be blocked !!",
     });
+  }
 };
 
 // unblock the product owner account
 const unblockPO = async (req, res) => {
-  const po = await PO.find({ _id: req.params.id }).exec();
+  const po = await PO.find({ _id: req.params.id }).select("+verification");
   if (po.verification == 3) {
-    po.verification = 2;
-    PO.updateOne({ _id: req.params.id }, po)
+    PO.findOneAndUpdate({ _id: req.params.id }, { verification: 2 })
       .then(() => {
         res.status(StatusCodes.CREATED).json({
           message: "Product Owner unblocked successfully!",
@@ -147,9 +197,7 @@ const unblockPO = async (req, res) => {
 
 // delete the product owner account
 const deletePO = async (req, res) => {
-  const po = await PO.find({ _id: req.params.id }).exec();
-  po.verification = 4;
-  PO.updateOne({ _id: req.params.id }, po)
+  PO.findOneAndUpdate({ _id: req.params.id }, { verification: 4 })
     .then(() => {
       res.status(StatusCodes.CREATED).json({
         message: "Product Owner deleted successfully!",
@@ -162,7 +210,8 @@ const deletePO = async (req, res) => {
 
 // Update a po by id
 const updatePO = (req, res) => {
-  const po = PO.findOne({ _id: req.params.id });
+  // const po = await PO.findOne({ _id: req.PO.POId });
+  const po = PO.findOne({ _id: req.params.id }).select("+verification");
   const updatePo = new PO({
     _id: req.params.id,
     company_name: req.body.company_name || po.company_name,
@@ -198,6 +247,8 @@ const updatePO = (req, res) => {
 export {
   getAllPOs,
   getPOById,
+  getNoneApprovedPOs,
+  getFunctionalPOs,
   getBlockedPOs,
   getDeletedPOs,
   verifyPO,

@@ -188,15 +188,19 @@ const deleteCategory = async (req, res) => {
 };
 
 const updateAll = async (req, res) => {
-  let c;
   Category.deleteMany()
     .then(async () => {
       const categoryList = await convertJsonToCategories(req.body.categories);
-      console.log(categoryList);
-
-      await Category.create(categoryList);
-
-      res.status(StatusCodes.OK).json("goood");
+      // console.log(categoryList);
+      Category.insertMany(categoryList)
+        .then((vals) => {
+          res
+            .status(StatusCodes.CREATED)
+            .json("Categories Updated successfully !!");
+        })
+        .catch((err) => {
+          res.status(StatusCodes.BAD_REQUEST).json(err);
+        });
     })
     .catch((err) => {
       res.status(StatusCodes.BAD_REQUEST).json(err);

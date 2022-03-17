@@ -10,7 +10,7 @@ const auth = async (req, res, next) => {
   const token = authHeader.split(" ")[1];
   try {
     const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
-    req.client = { clientId: payload.clientId };
+    req.client = { Client: payload.Client };
     next();
   } catch (error) {
     res.status(StatusCodes.FORBIDDEN).json({ Error: "Authentication Invalid" });
