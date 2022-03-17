@@ -147,6 +147,29 @@ const logout = async (req, res) => {
     res.json({ message: err });
   }
 };
+const forgetPassword = async (req, res) => {
+  const client = await Client.findOne({ email: req.body.email });
+  const verToken = client.createVerJWT();
+  let transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: { user: process.env.GMAIL_EMAIL, pass: process.env.GMAIL_PASSWORD },
+  });
+  const link = `http://localhost:3001/resetPassword/${verToken}`;
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: process.env.GMAIL_EMAIL, // sender address
+    to: client.email, // list of receivers
+    subject: "Forget Password", // Subject line
+    // text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
+    html: verification(client.name, link),
+  });
+  transporter.sendMail(info);
+
+  res.status(StatusCodes.OK).json({
+    client,
+  });
+};
 
 const resetPassword = async (req, res) => {
   try {
@@ -195,4 +218,12 @@ const verifyClient = async (req, res) => {
   }
 };
 
-export { register, login, logout, verifyClient, resetPassword, refreshToken };
+export {
+  register,
+  login,
+  logout,
+  verifyClient,
+  forgetPassword,
+  resetPassword,
+  refreshToken,
+};
