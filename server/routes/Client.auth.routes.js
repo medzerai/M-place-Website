@@ -17,6 +17,6 @@ ClientAuthRouter.route("/Client/logout").post(logout);
 ClientAuthRouter.route("/Client/refreshToken").post(refreshToken);
 // ClientAuthRouter.route("/Client/forgetPassword").post(forgetPassword);
 ClientAuthRouter.route("/Client/resetPassword/:token").post(resetPassword);
-ClientAuthRouter.route("/Client/verify/:token").patch(verifyClient);
+ClientAuthRouter.route("/Client/verify/:token").get(verifyClient);
 
 export default ClientAuthRouter;
