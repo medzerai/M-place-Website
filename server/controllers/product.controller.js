@@ -43,6 +43,14 @@ const addProduct = async (req, res) => {
 // Get all products
 const getAllProducts = async (req, res) => {
   await Product.find({})
+    .populate("categoryId", "-_id")
+    .populate({
+      path: "Filter_list",
+      populate: {
+        path: "Variable_list",
+        model: "Variable",
+      },
+    })
     .then((val) => {
       val.length == 0
         ? res.status(StatusCodes.OK).json("No products to show")

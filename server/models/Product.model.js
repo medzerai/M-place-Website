@@ -30,7 +30,8 @@ const ProductSchema = new mongoose.Schema(
       minlength: 10,
     },
     categoryId: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref: "Category",
       required: [true, "Please provide your category id"],
       trim: true,
       default: "/",
