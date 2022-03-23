@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import RefreshToken from "../models/RefreshToken.model.js";
 import verification from "../templates/validation.js";
+import resetPasswordTempl from "../templates/resetPassword.js";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -163,7 +164,7 @@ const forgetPassword = async (req, res) => {
     to: client.email, // list of receivers
     subject: "Forget Password", // Subject line
     // text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
-    html: verification(client.name, link),
+    html: resetPasswordTempl(client.name, link),
   });
   transporter.sendMail(info);
 
