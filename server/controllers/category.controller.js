@@ -87,12 +87,11 @@ const convertCategoryJson = (val) => {
       }
     }
   };
+
   let j = 0;
   let arr = [];
-  while (true) {
-    if (val.length == 0) {
-      break;
-    }
+
+  while (j < val.length) {
     if (val[j].parent == "/") {
       arr.push({
         id: val[j]._id,
@@ -102,11 +101,28 @@ const convertCategoryJson = (val) => {
       });
       val.splice(j, 1);
     } else {
-      checkSubCategories(j, arr, val);
-      arr.map((v) => {
-        checkSubCategories(j, v.child, val);
-      });
+      j++;
     }
+  }
+  j = 0;
+  while (true) {
+    if (val.length == 0) {
+      break;
+    }
+    // if (val[j].parent == "/") {
+    //   arr.push({
+    //     id: val[j]._id,
+    //     category: val[j].name,
+    //     child: [],
+    //     new: false,
+    //   });
+    //   val.splice(j, 1);
+    // } else {
+    checkSubCategories(j, arr, val);
+    arr.map((v) => {
+      checkSubCategories(j, v.child, val);
+    });
+    // }
   }
   return arr;
 };
