@@ -41,9 +41,9 @@ const addProduct = async (req, res) => {
 };
 
 // Get all products
-const getAllProducts = async (req, res) => {
-  await Product.find({})
-    .populate("categoryId", "-_id")
+const getAllProducts = (req, res) => {
+  Product.find({})
+    .populate("categoryId")
     .populate({
       path: "Filter_list",
       populate: {

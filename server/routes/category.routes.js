@@ -5,6 +5,7 @@ import {
   updateCategory,
   updateAll,
   deleteCategory,
+  getCategoryFilterAndProducts,
 } from "../controllers/category.controller.js";
 
 import express from "express";
@@ -17,5 +18,7 @@ CategoryRouter.route("/categories/:id")
   .get(getCategoryById)
   .patch(updateCategory)
   .delete(deleteCategory);
-
+CategoryRouter.route("/categoriess/:categoryName").get(
+  getCategoryFilterAndProducts
+);
 export default CategoryRouter;

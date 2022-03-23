@@ -1,5 +1,7 @@
 import Category from "../models/Category.model.js";
 import { StatusCodes } from "http-status-codes";
+import Product from "../models/Product.model.js";
+import Rating from "../models/Rating.model.js";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -225,6 +227,129 @@ const updateAll = async (req, res) => {
     });
 };
 
+const getCategoryLink = async (catId) => {
+  let cat = await Category.find({});
+  let ch = "/";
+  for (let x of cat) {
+    if (x._id == catId) {
+      if (x.parent == "/") {
+        return ch + x.name;
+      } else {
+        ch = ch + x.name;
+        return getCategoryLink(x.parent) + ch;
+      }
+    }
+  }
+};
+
+const getRatingForSKU = async (sku) => {
+  let s = 0;
+  let n = 0;
+  let rat = await Rating.find({});
+  for (let x of rat) {
+    if (x.productSKU == sku) {
+      s += x.rate;
+      n++;
+    }
+  }
+  return s / n;
+};
+
+const variable_name_exist = (n, t) => {
+  for (let i of t) {
+    if (i.name == n) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const addOption = (n, o, t) => {
+  for (let i of t) {
+    if (i.name == n) {
+      if (i.option.length == 0) {
+        i.option.push({ name: o, nombreProduct: 1 });
+      } else {
+        let ok = false;
+        for (let j of i.option) {
+          if (j.name == o) {
+            ok = true;
+            j.nombreProduct++;
+          }
+        }
+        if (!ok) {
+          i.option.push({ name: o, nombreProduct: 1 });
+        }
+      }
+    }
+  }
+};
+
+const getFilterAndProducts = (catname, val) => {
+  let arr = [];
+  for (let i of val) {
+    if (i.categoryId.name == catname) {
+      arr.push(i);
+    }
+  }
+  let fils = [];
+  for (let i of arr) {
+    for (let j of i.Filter_list) {
+      for (let k of j.Variable_list) {
+        if (!variable_name_exist(k.name, fils)) {
+          fils.push({
+            name: k.name,
+            option: [],
+          });
+        }
+        addOption(k.name, k.option, fils);
+      }
+    }
+  }
+  let tab = {
+    filter: fils,
+    products: [],
+  };
+  for (let i of arr) {
+    let stars = getRatingForSKU(i.SKU);
+    let link = getCategoryLink(i.categoryId._id);
+    tab.products.push({
+      id: i.SKU,
+      name: i.name,
+      stars: stars,
+      price: i.Filter_list[0].price,
+      reduction_percentage: i.reduction_percentage,
+      picture: i.product_imgs[0],
+      link: link,
+    });
+  }
+  return tab;
+};
+
+const getCategoryFilterAndProducts = (req, res) => {
+  Product.find({})
+    .populate("categoryId")
+    .populate({
+      path: "Filter_list",
+      populate: {
+        path: "Variable_list",
+        model: "Variable",
+      },
+    })
+    .then((val) => {
+      if (val.length == 0)
+        res.status(StatusCodes.OK).json("No products to show");
+      else {
+        res
+          .status(StatusCodes.OK)
+          .json(getFilterAndProducts(req.params.categoryName, val));
+      }
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
 export {
   addCategory,
   getAllCategories,
@@ -232,4 +357,5 @@ export {
   updateCategory,
   updateAll,
   deleteCategory,
+  getCategoryFilterAndProducts,
 };
