@@ -227,25 +227,25 @@ const updateAll = async (req, res) => {
     });
 };
 
-const getCategoryLink = async (catId) => {
-  let cat = await Category.find({});
+const getCategoryLink = async (catId, cat) => {
   let ch = "/";
   for (let x of cat) {
-    if (x._id == catId) {
+    if (String(catId) === String(x._id)) {
       if (x.parent == "/") {
-        return ch + x.name;
+        ch = ch + x.name;
+        return ch;
       } else {
         ch = ch + x.name;
-        return getCategoryLink(x.parent) + ch;
+        return (await getCategoryLink(x.parent, cat)) + ch;
       }
     }
   }
+  return "ch";
 };
 
-const getRatingForSKU = async (sku) => {
+const getRatingForSKU = async (sku, rat) => {
   let s = 0;
   let n = 0;
-  let rat = await Rating.find({});
   for (let x of rat) {
     if (x.productSKU == sku) {
       s += x.rate;
@@ -285,7 +285,7 @@ const addOption = (n, o, t) => {
   }
 };
 
-const getFilterAndProducts = (catname, val) => {
+const getFilterAndProducts = async (catname, val) => {
   let arr = [];
   for (let i of val) {
     if (i.categoryId.name == catname) {
@@ -306,13 +306,17 @@ const getFilterAndProducts = (catname, val) => {
       }
     }
   }
-  let tab = {
+  var tab = {
     filter: fils,
     products: [],
   };
+
+  const rat = await Rating.find({}).exec();
+  const cat = await Category.find({}).exec();
   for (let i of arr) {
-    let stars = getRatingForSKU(i.SKU);
-    let link = getCategoryLink(i.categoryId._id);
+    let stars = await getRatingForSKU(i.SKU, rat);
+    let link = await getCategoryLink(i.categoryId._id, cat);
+
     tab.products.push({
       id: i.SKU,
       name: i.name,
@@ -336,13 +340,12 @@ const getCategoryFilterAndProducts = (req, res) => {
         model: "Variable",
       },
     })
-    .then((val) => {
+    .then(async (val) => {
       if (val.length == 0)
         res.status(StatusCodes.OK).json("No products to show");
       else {
-        res
-          .status(StatusCodes.OK)
-          .json(getFilterAndProducts(req.params.categoryName, val));
+        const tab = await getFilterAndProducts(req.params.categoryName, val);
+        res.status(StatusCodes.OK).json(tab);
       }
     })
     .catch((error) => {
