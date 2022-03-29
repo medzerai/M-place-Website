@@ -1,4 +1,6 @@
 import Client from "../models/Client.model.js";
+import jwt from "jsonwebtoken";
+
 import { StatusCodes } from "http-status-codes";
 
 class CustomAPIError extends Error {
@@ -23,7 +25,7 @@ class NotFoundError extends CustomAPIError {
 
 // Update a Client
 const updateClient = async (req, res) => {
-  const client = await Client.findOne({ _id: req.client.clientId });
+  const client = await Client.findOne({ _id: req.client.Client });
 
   client.email = req.body.email || client.email;
   client.firstname = req.body.firstname || client.firstname;
@@ -40,6 +42,7 @@ const updateClient = async (req, res) => {
 // get all clients
 
 const getAllClient = (req, res) => {
+  console.log(req.client.Client);
   Client.find()
     .then((val) => {
       res.status(200).json(val);
@@ -47,6 +50,44 @@ const getAllClient = (req, res) => {
     .catch((err) => {
       res.status(400).json(err);
     });
+};
+
+const getClientData = async (req, res) => {
+  // {
+  //   firstname: myData.firstname,
+  //   lastname: myData.lastname,
+  //   email: myData.email,
+  //   password: "",
+  //   newPassword: "",
+  //   birthday: myData.birthday,
+  //   address: myData.address,
+  //   codePostal: myData.codePostal,
+  //   ville: myData.ville,
+  //   country: myData.country,
+  //   phone: myData.phone,
+  // }
+  try {
+    let authHeader = req.headers.authorization;
+    authHeader = authHeader || authHeader.startsWith("Bearer");
+    const token = authHeader.split(" ")[1];
+    // console.log("+++++", token);
+    const payload = await jwt.verify(token, process.env.ACCESS_TOKEN);
+    // console.log(payload);
+    const clientId = payload.Client;
+    // console.log(clientId);
+    Client.findById(clientId)
+      .then((val) => {
+        const cli = {
+          firstname: val.firstname,
+        };
+        res.status(StatusCodes.OK).json(cli);
+      })
+      .catch((err) => {
+        throw new BadRequestError(err);
+      });
+  } catch (err) {
+    throw new BadRequestError(err);
+  }
 };
 
 const getClientById = (req, res) => {
@@ -94,6 +135,7 @@ export {
   updateClient,
   deleteClient,
   getAllClient,
+  getClientData,
   getClientById,
   getVerifiedClients,
   getNoneVerifiedClients,

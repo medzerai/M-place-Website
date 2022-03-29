@@ -98,7 +98,7 @@ const login = async (req, res) => {
       "Account not verified yet, Please check your mail !!"
     );
   }
-  console.log(client);
+  // console.log(client);
   const isPasswordCorrect = await client.comparePassword(password);
   if (!isPasswordCorrect) {
     throw new BadRequestError("Invalid Credentials");
@@ -139,7 +139,7 @@ const refreshToken = async (req, res) => {
   if (!savedToken) res.sendStatus(403);
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, client) => {
     if (err) return res.sendStatus(403);
-    const token = generateAccessToken({ id: client._id });
+    const token = generateAccessToken(client.Client);
     res.json({ accesToken: token });
   });
 };
@@ -184,7 +184,7 @@ const resetPassword = async (req, res) => {
   try {
     const verified = jwt.verify(req.params.token, process.env.ACCESS_TOKEN);
     if (!verified) return res.send("Acces denied");
-    console.log(verified);
+    // console.log(verified);
     if (!(req.body.password == req.body.confirmPassword))
       return res.send("please confirm with the right password");
     ///// Hash passwords/////
@@ -192,7 +192,7 @@ const resetPassword = async (req, res) => {
 
     const hash = await bcrypt.hash(req.body.password, salt);
 
-    console.log(hash);
+    // console.log(hash);
     const client = await Client.findOneAndUpdate(
       { _id: verified.Client },
       {
@@ -202,7 +202,7 @@ const resetPassword = async (req, res) => {
       }
     );
     if (!client) return res.send("Invalid Id...");
-    console.log(client);
+    // console.log(client);
 
     res.json(client);
   } catch (err) {
@@ -210,18 +210,24 @@ const resetPassword = async (req, res) => {
   }
 };
 
-const verifyClient = async (req, res) => {
+const verifyClient = (req, res) => {
   try {
     const payload = jwt.verify(req.params.token, process.env.VER_JWT_SECRET);
-    await Client.findOneAndUpdate(
+    // console.log(payload);
+    Client.findOneAndUpdate(
       { _id: payload.Client },
       {
         $set: {
           verified: true,
         },
       }
-    );
-    res.status(StatusCodes.OK).json("Account Verified !");
+    )
+      .then((val) => {
+        res.status(StatusCodes.OK).json("Account Verified !");
+      })
+      .catch((err) => {
+        throw new BadRequestError(err);
+      });
   } catch (error) {
     throw new BadRequestError(error);
   }

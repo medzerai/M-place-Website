@@ -56,7 +56,7 @@ const ClientSchema = new mongoose.Schema(
       default: "22666333",
       // unique: true,
     },
-    verified: { type: Boolean, default: false },
+    verified: { type: Boolean, default: false, select: false },
   },
   { timestamps: true }
 );
@@ -68,13 +68,13 @@ ClientSchema.pre("save", async function () {
 });
 
 ClientSchema.methods.createJWT = function () {
-  return jwt.sign({ clientId: this._id }, process.env.JWT_SECRET, {
+  return jwt.sign({ Client: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   });
 };
 
 ClientSchema.methods.createVerJWT = function () {
-  return jwt.sign({ clientId: this._id }, process.env.VER_JWT_SECRET, {
+  return jwt.sign({ Client: this._id }, process.env.VER_JWT_SECRET, {
     expiresIn: process.env.VER_JWT_LIFETIME,
   });
 };
