@@ -5,9 +5,16 @@ import jwt from "jsonwebtoken";
 
 const ClientSchema = new mongoose.Schema(
   {
-    name: {
+    firstname: {
       type: String,
-      required: [true, "Please provide your name"],
+      required: [true, "Please provide your firstname"],
+      minlength: 3,
+      maxlength: 20,
+      trim: true,
+    },
+    lastname: {
+      type: String,
+      required: [true, "Please provide your lastname"],
       minlength: 3,
       maxlength: 20,
       trim: true,
