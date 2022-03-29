@@ -315,7 +315,7 @@ const getFilterAndProducts = async (catname, val) => {
   const cat = await Category.find({}).exec();
   for (let i of arr) {
     let stars = await getRatingForSKU(i.SKU, rat);
-    let link = await getCategoryLink(i.categoryId._id, cat);
+    // let link = await getCategoryLink(i.categoryId._id, cat);
 
     tab.products.push({
       id: i.SKU,
@@ -324,7 +324,7 @@ const getFilterAndProducts = async (catname, val) => {
       price: i.Filter_list[0].price,
       reduction_percentage: i.reduction_percentage,
       picture: i.product_imgs[0],
-      link: link,
+      // link: link,
     });
   }
   return tab;
