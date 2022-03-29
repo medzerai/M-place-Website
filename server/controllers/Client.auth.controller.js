@@ -29,10 +29,17 @@ class NotFoundError extends CustomAPIError {
 
 //  Sign in a Client
 const register = async (req, res) => {
-  const { name, email, password, numTel, profile_img, lastName, location } =
-    req.body;
+  const {
+    firstname,
+    lastname,
+    email,
+    password,
+    numTel,
+    profile_img,
+    location,
+  } = req.body;
 
-  if (!name || !email || !password || !numTel) {
+  if (!firstname || !lastname || !email || !password || !numTel) {
     throw new BadRequestError("please provide all values");
   }
 
@@ -41,12 +48,12 @@ const register = async (req, res) => {
     throw new BadRequestError("Client already exists");
   }
   const newClient = new Client({
-    name,
+    firstname,
+    lastname,
     email,
     password,
     numTel,
     profile_img,
-    lastName,
     location,
   });
 
@@ -66,7 +73,7 @@ const register = async (req, res) => {
     to: client.email, // list of receivers
     subject: "Email Verification", // Subject line
     // text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
-    html: verification(client.name, verToken),
+    html: verification(client.firstname + " " + client.lastname, verToken),
   });
   transporter.sendMail(info);
 
@@ -164,7 +171,7 @@ const forgetPassword = async (req, res) => {
     to: client.email, // list of receivers
     subject: "Forget Password", // Subject line
     // text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
-    html: resetPasswordTempl(client.name, link),
+    html: resetPasswordTempl(client.firstname, link),
   });
   transporter.sendMail(info);
 

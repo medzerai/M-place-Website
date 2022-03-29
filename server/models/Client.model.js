@@ -40,12 +40,6 @@ const ClientSchema = new mongoose.Schema(
       minlength: 6,
       select: false,
     },
-    lastName: {
-      type: String,
-      maxlength: 20,
-      trim: true,
-      default: "lastName",
-    },
     location: {
       type: String,
       maxlength: 20,

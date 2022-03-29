@@ -26,8 +26,8 @@ const updateClient = async (req, res) => {
   const client = await Client.findOne({ _id: req.client.clientId });
 
   client.email = req.body.email || client.email;
-  client.name = req.body.name || client.name;
-  client.lastName = req.body.lastName || client.lastName;
+  client.firstname = req.body.firstname || client.firstname;
+  client.lastname = req.body.lastname || client.lastname;
   client.location = req.body.location || client.location;
   client.numTel = req.body.numTel || client.numTel;
   client.verified = req.body.verified || client.verified;
