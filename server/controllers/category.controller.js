@@ -308,7 +308,7 @@ const checkVariables = (vlist, f) => {
   }
 };
 
-const getFilterAndProducts = async (catname, sf, val) => {
+const getFilterAndProducts = async (catname, sf, filterby, page, val) => {
   let arr = [];
   for (let i of val) {
     if (i.categoryId.name == catname) {
@@ -359,6 +359,20 @@ const getFilterAndProducts = async (catname, sf, val) => {
     });
   }
   tab.number_of_products = tab.products.length;
+  if (filterby == "pc") {
+    tab.products.sort((a, b) =>
+      a.price > b.price ? 1 : b.price > a.price ? -1 : 0
+    );
+  } else if (filterby == "pd") {
+    tab.products.sort((a, b) =>
+      a.price < b.price ? 1 : b.price < a.price ? -1 : 0
+    );
+  } else if (filterby == "r") {
+    tab.products.sort((a, b) =>
+      a.stars < b.stars ? 1 : b.stars < a.stars ? -1 : 0
+    );
+  }
+  tab.products = tab.products.splice((page - 1) * 48, 48);
   return tab;
 };
 
@@ -379,6 +393,8 @@ const getCategoryFilterAndProducts = (req, res) => {
         const tab = await getFilterAndProducts(
           req.params.categoryName,
           req.body.filters || [],
+          req.body.filterBy || "",
+          req.body.page || 1,
           val
         );
         res.status(StatusCodes.OK).json(tab);
