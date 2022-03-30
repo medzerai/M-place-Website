@@ -1,4 +1,5 @@
 import {
+  getRatingBySKU,
   addRating,
   getAllRatings,
   getRatingById,
@@ -9,7 +10,7 @@ import {
 
 import express from "express";
 const RatingRouter = express.Router();
-
+RatingRouter.route("/ratings/SKU/:SKU").get(getRatingBySKU);
 RatingRouter.route("/addRating").post(addRating);
 RatingRouter.route("/ratings").get(getAllRatings);
 RatingRouter.route("/ratings/:id")
