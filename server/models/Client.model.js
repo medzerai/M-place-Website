@@ -40,11 +40,41 @@ const ClientSchema = new mongoose.Schema(
       minlength: 6,
       select: false,
     },
-    location: {
+    birth_date: {
+      type: Date,
+      default: Date.now(),
+    },
+    country: {
       type: String,
       maxlength: 20,
       trim: true,
-      default: "my city",
+      default: "country",
+    },
+    city: {
+      type: String,
+      maxlength: 20,
+      trim: true,
+      default: "city",
+    },
+    state: {
+      type: String,
+      maxlength: 20,
+      trim: true,
+      default: "state",
+    },
+    zip_code: {
+      type: String,
+      validate: {
+        validator: (val) => validator.isLength(val, 4, 4),
+        message: "zip code has to be 4 digits",
+      },
+      default: "0000",
+    },
+    address: {
+      type: String,
+      maxlength: 30,
+      trim: true,
+      default: "address",
     },
     numTel: {
       type: Number,

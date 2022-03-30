@@ -30,7 +30,14 @@ const updateClient = async (req, res) => {
   client.email = req.body.email || client.email;
   client.firstname = req.body.firstname || client.firstname;
   client.lastname = req.body.lastname || client.lastname;
-  client.location = req.body.location || client.location;
+
+  client.birth_date = req.body.birth_date || client.birth_date;
+  client.country = req.body.country || client.country;
+  client.state = req.body.state || client.state;
+  client.city = req.body.city || client.city;
+  client.zip_code = req.body.zip_code || client.zip_code;
+  client.address = req.body.address || client.address;
+
   client.numTel = req.body.numTel || client.numTel;
   client.verified = req.body.verified || client.verified;
 
@@ -76,9 +83,21 @@ const getClientData = async (req, res) => {
     const clientId = payload.Client;
     // console.log(clientId);
     Client.findById(clientId)
+      .select("+password")
       .then((val) => {
         const cli = {
           firstname: val.firstname,
+          lastname: val.lastname,
+          email: val.email,
+          password: "",
+          newPassword: "",
+          birthday: val.birth_date,
+          address: val.address,
+          codePostal: val.zip_code,
+          country: val.country,
+          state: val.state,
+          ville: val.ville,
+          phone: val.numTel,
         };
         res.status(StatusCodes.OK).json(cli);
       })

@@ -29,15 +29,8 @@ class NotFoundError extends CustomAPIError {
 
 //  Sign in a Client
 const register = async (req, res) => {
-  const {
-    firstname,
-    lastname,
-    email,
-    password,
-    numTel,
-    profile_img,
-    location,
-  } = req.body;
+  const { firstname, lastname, email, password, numTel, profile_img } =
+    req.body;
 
   if (!firstname || !lastname || !email || !password || !numTel) {
     throw new BadRequestError("please provide all values");
@@ -54,7 +47,6 @@ const register = async (req, res) => {
     password,
     numTel,
     profile_img,
-    location,
   });
 
   const client = await Client.create(newClient);
