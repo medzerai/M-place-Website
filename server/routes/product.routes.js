@@ -1,6 +1,7 @@
 import {
   addProduct,
   getAllProducts,
+  getMyProducts,
   getProductById,
   updateProduct,
   deleteProduct,
@@ -9,6 +10,7 @@ import {
   addFiltersToProduct,
   deleteFiltersFromProduct,
   getProductFilters,
+  getProductBySKU,
 } from "../controllers/product.controller.js";
 
 import express from "express";
@@ -16,10 +18,12 @@ const ProductRouter = express.Router();
 
 ProductRouter.route("/addProduct").post(addProduct);
 ProductRouter.route("/products").get(getAllProducts);
+ProductRouter.route("/myProducts").get(getAllProducts);
 ProductRouter.route("/products/:id")
   .get(getProductById)
   .patch(updateProduct)
   .delete(deleteProduct);
+ProductRouter.route("/products/SKU/:SKU").get(getProductBySKU);
 ProductRouter.route("/products/getProductByCategory/:category").get(
   getProductByCategory
 );

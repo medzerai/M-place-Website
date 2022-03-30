@@ -200,18 +200,55 @@ const getProductFilters = (req, res) => {
     });
 };
 
-const getFilteredProducts = (req, res) => {
-  const searchFilters = req.body.filters;
-  const sf = [
-    { value: "XL", variable: "Size" },
-    { value: "Pink", variable: "Colors" },
-  ];
-  
+const getProductBySKU = (req, res) => {
+  Product.findOne({ SKU: req.params.SKU })
+    .populate("categoryId")
+    .populate({
+      path: "Filter_list",
+      populate: {
+        path: "Variable_list",
+        model: "Variable",
+      },
+    })
+    .then((val) => {
+      val.length == 0
+        ? res.status(StatusCodes.OK).json("The product does not exist")
+        : res.status(StatusCodes.OK).json(val);
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
 };
 
+const getMyProducts = async (req, res) => {
+  let authHeader = req.headers.authorization;
+  authHeader = authHeader || authHeader.startsWith("Bearer");
+  const token = authHeader.split(" ")[1];
+  const payload = await jwt.verify(token, process.env.ACCESS_TOKEN);
+  const poId = payload.PO;
+
+  Product.find({ PostedBy: poId })
+    .populate("categoryId")
+    .populate({
+      path: "Filter_list",
+      populate: {
+        path: "Variable_list",
+        model: "Variable",
+      },
+    })
+    .then((val) => {
+      val.length == 0
+        ? res.status(StatusCodes.OK).json("The product does not exist")
+        : res.status(StatusCodes.OK).json(val);
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
 export {
   addProduct,
   getAllProducts,
+  getMyProducts,
   getProductById,
   updateProduct,
   deleteProduct,
@@ -220,4 +257,5 @@ export {
   addFiltersToProduct,
   deleteFiltersFromProduct,
   getProductFilters,
+  getProductBySKU,
 };

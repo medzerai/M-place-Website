@@ -51,6 +51,13 @@ const ProductSchema = new mongoose.Schema(
       default: "/",
     },
     Filter_list: [{ type: mongoose.Types.ObjectId, ref: "Filter" }],
+    PostedBy: {
+      type: mongoose.Types.ObjectId,
+      ref: "PO",
+      required: [true, "Please provide your id"],
+      trim: true,
+      default: "",
+    },
   },
   { timestamps: true }
 );
