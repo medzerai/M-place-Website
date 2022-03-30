@@ -285,11 +285,41 @@ const addOption = (n, o, t) => {
   }
 };
 
-const getFilterAndProducts = async (catname, val) => {
+const checkVariables = (vlist, f) => {
+  let t = [...f];
+  console.log("vlist", vlist);
+  console.log("before", t);
+  for (let x of vlist) {
+    let j = 0;
+    while (j < t.length) {
+      if (x.name == t[j].variable && x.option == t[j].value) {
+        t.splice(j, 1);
+        break;
+      }
+      j++;
+    }
+  }
+  console.log("after", t, t.length == 0);
+
+  if (t.length == 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const getFilterAndProducts = async (catname, sf, val) => {
   let arr = [];
   for (let i of val) {
     if (i.categoryId.name == catname) {
-      arr.push(i);
+      let g = false;
+      for (let j of i.Filter_list) {
+        if (checkVariables(j.Variable_list, sf)) {
+          g = true;
+          break;
+        }
+      }
+      if (g) arr.push(i);
     }
   }
   let fils = [];
@@ -309,6 +339,7 @@ const getFilterAndProducts = async (catname, val) => {
   var tab = {
     filter: fils,
     products: [],
+    number_of_products: 0,
   };
 
   const rat = await Rating.find({}).exec();
@@ -327,6 +358,7 @@ const getFilterAndProducts = async (catname, val) => {
       // link: link,
     });
   }
+  tab.number_of_products = tab.products.length;
   return tab;
 };
 
@@ -344,7 +376,11 @@ const getCategoryFilterAndProducts = (req, res) => {
       if (val.length == 0)
         res.status(StatusCodes.OK).json("No products to show");
       else {
-        const tab = await getFilterAndProducts(req.params.categoryName, val);
+        const tab = await getFilterAndProducts(
+          req.params.categoryName,
+          req.body.filters || [],
+          val
+        );
         res.status(StatusCodes.OK).json(tab);
       }
     })

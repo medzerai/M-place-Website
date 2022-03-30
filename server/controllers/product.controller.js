@@ -200,6 +200,15 @@ const getProductFilters = (req, res) => {
     });
 };
 
+const getFilteredProducts = (req, res) => {
+  const searchFilters = req.body.filters;
+  const sf = [
+    { value: "XL", variable: "Size" },
+    { value: "Pink", variable: "Colors" },
+  ];
+  
+};
+
 export {
   addProduct,
   getAllProducts,
