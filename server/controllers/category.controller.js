@@ -343,7 +343,7 @@ const getFilterAndProducts = async (catname, sf, filterby, page, val) => {
   };
 
   const rat = await Rating.find({}).exec();
-  const cat = await Category.find({}).exec();
+  // const cat = await Category.find({}).exec();
   for (let i of arr) {
     let stars = await getRatingForSKU(i.SKU, rat);
     // let link = await getCategoryLink(i.categoryId._id, cat);
