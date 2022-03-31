@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import RefreshToken from "../models/RefreshToken.model.js";
 import verification from "../templates/validation.js";
+import resetPasswordTempl from "../templates/resetPassword.js";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -28,10 +29,10 @@ class NotFoundError extends CustomAPIError {
 
 //  Sign in a Client
 const register = async (req, res) => {
-  const { name, email, password, numTel, profile_img, lastName, location } =
+  const { firstname, lastname, email, password, numTel, profile_img } =
     req.body;
 
-  if (!name || !email || !password || !numTel) {
+  if (!firstname || !lastname || !email || !password || !numTel) {
     throw new BadRequestError("please provide all values");
   }
 
@@ -40,13 +41,12 @@ const register = async (req, res) => {
     throw new BadRequestError("Client already exists");
   }
   const newClient = new Client({
-    name,
+    firstname,
+    lastname,
     email,
     password,
     numTel,
     profile_img,
-    lastName,
-    location,
   });
 
   const client = await Client.create(newClient);
@@ -65,7 +65,7 @@ const register = async (req, res) => {
     to: client.email, // list of receivers
     subject: "Email Verification", // Subject line
     // text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
-    html: verification(client.name, verToken),
+    html: verification(client.firstname + " " + client.lastname, verToken),
   });
   transporter.sendMail(info);
 
@@ -90,7 +90,7 @@ const login = async (req, res) => {
       "Account not verified yet, Please check your mail !!"
     );
   }
-  console.log(client);
+  // console.log(client);
   const isPasswordCorrect = await client.comparePassword(password);
   if (!isPasswordCorrect) {
     throw new BadRequestError("Invalid Credentials");
@@ -131,7 +131,7 @@ const refreshToken = async (req, res) => {
   if (!savedToken) res.sendStatus(403);
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, client) => {
     if (err) return res.sendStatus(403);
-    const token = generateAccessToken({ id: client._id });
+    const token = generateAccessToken(client.Client);
     res.json({ accesToken: token });
   });
 };
@@ -148,11 +148,35 @@ const logout = async (req, res) => {
   }
 };
 
+const forgetPassword = async (req, res) => {
+  const client = await Client.findOne({ email: req.body.email });
+  const verToken = client.createVerJWT();
+  let transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: { user: process.env.GMAIL_EMAIL, pass: process.env.GMAIL_PASSWORD },
+  });
+  const link = `http://localhost:3001/resetPassword/${verToken}`;
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: process.env.GMAIL_EMAIL, // sender address
+    to: client.email, // list of receivers
+    subject: "Forget Password", // Subject line
+    // text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
+    html: resetPasswordTempl(client.firstname, link),
+  });
+  transporter.sendMail(info);
+
+  res.status(StatusCodes.OK).json({
+    client,
+  });
+};
+
 const resetPassword = async (req, res) => {
   try {
     const verified = jwt.verify(req.params.token, process.env.ACCESS_TOKEN);
     if (!verified) return res.send("Acces denied");
-    console.log(verified);
+    // console.log(verified);
     if (!(req.body.password == req.body.confirmPassword))
       return res.send("please confirm with the right password");
     ///// Hash passwords/////
@@ -160,7 +184,7 @@ const resetPassword = async (req, res) => {
 
     const hash = await bcrypt.hash(req.body.password, salt);
 
-    console.log(hash);
+    // console.log(hash);
     const client = await Client.findOneAndUpdate(
       { _id: verified.Client },
       {
@@ -170,7 +194,7 @@ const resetPassword = async (req, res) => {
       }
     );
     if (!client) return res.send("Invalid Id...");
-    console.log(client);
+    // console.log(client);
 
     res.json(client);
   } catch (err) {
@@ -178,21 +202,35 @@ const resetPassword = async (req, res) => {
   }
 };
 
-const verifyClient = async (req, res) => {
+const verifyClient = (req, res) => {
   try {
     const payload = jwt.verify(req.params.token, process.env.VER_JWT_SECRET);
-    await Client.findOneAndUpdate(
+    // console.log(payload);
+    Client.findOneAndUpdate(
       { _id: payload.Client },
       {
         $set: {
           verified: true,
         },
       }
-    );
-    res.status(StatusCodes.OK).json("Account Verified !");
+    )
+      .then((val) => {
+        res.status(StatusCodes.OK).json("Account Verified !");
+      })
+      .catch((err) => {
+        throw new BadRequestError(err);
+      });
   } catch (error) {
     throw new BadRequestError(error);
   }
 };
 
-export { register, login, logout, verifyClient, resetPassword, refreshToken };
+export {
+  register,
+  login,
+  logout,
+  verifyClient,
+  forgetPassword,
+  resetPassword,
+  refreshToken,
+};

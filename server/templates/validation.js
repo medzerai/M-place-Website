@@ -222,7 +222,8 @@ const verification = (name, hash) => {
                             style="
                               display: inline-block;
                               padding: 16px 36px;
-                              font-family: 'Source Sans Pro', Helvetica, Arial,
+                              font-family: 'Source
+                               Sans Pro', Helvetica, Arial,
                                 sans-serif;
                               font-size: 16px;
                               color: #ffffff;
@@ -303,4 +304,4 @@ const verification = (name, hash) => {
 `;
 };
 
-export default verification
+export default verification;

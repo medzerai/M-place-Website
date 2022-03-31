@@ -1,14 +1,34 @@
 //------------------------------------ Client
-
+// register Client
 POST http://localhost:3000/api/v1/auth/Client/register
-# registe  body={ name, email, password, numTel }
+#  body={ name, email, password, numTel }
 
 ###
+// login Client
 POST http://localhost:3000/api/v1/auth/Client/login
-# login body={ email, password } 
+# body={ email, password } 
 
 ###
+// logout Client
+POST http://localhost:3000/api/v1/auth/Client/logout
+#  body={ token } 
 
+###
+// refresh client token
+POST http://localhost:3000/api/v1/auth/Client/refreshToken
+#  body={ token } 
+
+###
+// reset password client 
+POST http://localhost:3000/api/v1/auth/Client/resetPassword/:token
+#  body={ password, confirmPassword } 
+
+###
+// verify client 
+PATCH http://localhost:3000/api/v1/auth/Client/verify/:token
+#  body={} 
+
+###
 // update client
 PATCH  http://localhost:3000/Client/update
 # update user body={ email, name, lastName, location, numTel }

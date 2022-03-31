@@ -117,7 +117,7 @@ const verifyPO = async (req, res) => {
   // } catch (error) {
   //   throw new BadRequestError(error);
   // }
-  const po = await PO.find({ _id: req.params.id }).select("+verification");
+  const po = await PO.findOne({ _id: req.params.id }).select("+verification");
   if (po.verification == 0) {
     PO.findOneAndUpdate({ _id: req.params.id }, { verification: 1 })
       .then(() => {
@@ -137,7 +137,7 @@ const verifyPO = async (req, res) => {
 
 // approve the product owner account (made by the admin)
 const approvePO = async (req, res) => {
-  const po = await PO.find({ _id: req.params.id }).select("+verification");
+  const po = await PO.findOne({ _id: req.params.id }).select("+verification");
   if (po.verification == 1) {
     PO.findOneAndUpdate({ _id: req.params.id }, { verification: 2 })
       .then((val) => {
@@ -157,7 +157,8 @@ const approvePO = async (req, res) => {
 
 // block the product owner account
 const blockPO = async (req, res) => {
-  const po = await PO.find({ _id: req.params.id }).select("+verification");
+  const po = await PO.findOne({ _id: req.params.id }).select("+verification");
+  console.log(po.verification);
   if (po.verification == 2) {
     PO.findOneAndUpdate({ _id: req.params.id }, { verification: 3 })
       .then(() => {
@@ -177,7 +178,7 @@ const blockPO = async (req, res) => {
 
 // unblock the product owner account
 const unblockPO = async (req, res) => {
-  const po = await PO.find({ _id: req.params.id }).select("+verification");
+  const po = await PO.findOne({ _id: req.params.id }).select("+verification");
   if (po.verification == 3) {
     PO.findOneAndUpdate({ _id: req.params.id }, { verification: 2 })
       .then(() => {

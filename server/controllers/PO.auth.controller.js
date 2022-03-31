@@ -1,5 +1,8 @@
 import PO from "../models/PO.model.js";
 import { StatusCodes } from "http-status-codes";
+import RefreshToken from "../models/RefreshToken.model.js";
+
+import jwt from "jsonwebtoken";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -115,10 +118,13 @@ const login = async (req, res) => {
   if (!company_email || !password) {
     throw new BadRequestError("Please provide all values");
   }
-  const po = await PO.findOne({ company_email }).select("+password");
+  const po = await PO.findOne({ company_email }).select(
+    "+password +verification"
+  );
   if (!po) {
     throw new BadRequestError("Invalid Credentials");
   }
+  console.log(po);
   if (po.verification != 2) {
     if (po.verification == 3) {
       throw new BadRequestError("Account Blocked");
@@ -150,7 +156,7 @@ const login = async (req, res) => {
 
 function generateAccessToken(id) {
   return jwt.sign({ PO: id }, process.env.ACCESS_TOKEN, {
-    expiresIn: "60s",
+    expiresIn: "1d",
   });
 }
 
@@ -159,9 +165,9 @@ const refreshToken = async (req, res) => {
   if (refreshToken == null) return res.sendStatus(401);
   const savedToken = await RefreshToken.findOne({ token: refreshToken });
   if (!savedToken) res.sendStatus(403);
-  jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, admin) => {
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, po) => {
     if (err) return res.sendStatus(403);
-    const token = generateAccessToken({ id: po._id });
+    const token = generateAccessToken(po.PO);
     res.json({ accesToken: token });
   });
 };

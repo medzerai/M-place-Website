@@ -5,9 +5,16 @@ import jwt from "jsonwebtoken";
 
 const ClientSchema = new mongoose.Schema(
   {
-    name: {
+    firstname: {
       type: String,
-      required: [true, "Please provide your name"],
+      required: [true, "Please provide your firstname"],
+      minlength: 3,
+      maxlength: 20,
+      trim: true,
+    },
+    lastname: {
+      type: String,
+      required: [true, "Please provide your lastname"],
       minlength: 3,
       maxlength: 20,
       trim: true,
@@ -33,17 +40,41 @@ const ClientSchema = new mongoose.Schema(
       minlength: 6,
       select: false,
     },
-    lastName: {
-      type: String,
-      maxlength: 20,
-      trim: true,
-      default: "lastName",
+    birth_date: {
+      type: Date,
+      default: Date.now(),
     },
-    location: {
+    country: {
       type: String,
       maxlength: 20,
       trim: true,
-      default: "my city",
+      default: "country",
+    },
+    city: {
+      type: String,
+      maxlength: 20,
+      trim: true,
+      default: "city",
+    },
+    state: {
+      type: String,
+      maxlength: 20,
+      trim: true,
+      default: "state",
+    },
+    zip_code: {
+      type: String,
+      validate: {
+        validator: (val) => validator.isLength(val, 4, 4),
+        message: "zip code has to be 4 digits",
+      },
+      default: "0000",
+    },
+    address: {
+      type: String,
+      maxlength: 30,
+      trim: true,
+      default: "address",
     },
     numTel: {
       type: Number,
@@ -55,7 +86,7 @@ const ClientSchema = new mongoose.Schema(
       default: "22666333",
       // unique: true,
     },
-    verified: { type: Boolean, default: false },
+    verified: { type: Boolean, default: false, select: false },
   },
   { timestamps: true }
 );
@@ -67,13 +98,13 @@ ClientSchema.pre("save", async function () {
 });
 
 ClientSchema.methods.createJWT = function () {
-  return jwt.sign({ clientId: this._id }, process.env.JWT_SECRET, {
+  return jwt.sign({ Client: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   });
 };
 
 ClientSchema.methods.createVerJWT = function () {
-  return jwt.sign({ clientId: this._id }, process.env.VER_JWT_SECRET, {
+  return jwt.sign({ Client: this._id }, process.env.VER_JWT_SECRET, {
     expiresIn: process.env.VER_JWT_LIFETIME,
   });
 };
