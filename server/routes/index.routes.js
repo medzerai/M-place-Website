@@ -16,6 +16,8 @@ import VariableRouter from "./variable.routes.js";
 import ProductRouter from "./product.routes.js";
 import RatingRouter from "./rating.routes.js";
 import RdvRouter from "./Rdv.routes.js";
+import messageRouter from "./Message.routes.js";
+import roomRouter from "./Room.routes.js";
 
 const router = express.Router();
 
@@ -23,6 +25,8 @@ router.use("/api/v1/auth", ClientAuthRouter, POAuthRouter, AdminRouter);
 
 router.use(
   "/",
+  roomRouter,
+  messageRouter,
   imageRouter,
   pdfFileRouter,
   ClientRouter,
