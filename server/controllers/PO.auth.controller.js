@@ -33,6 +33,8 @@ const register = async (req, res) => {
     verification,
     creation_date,
     tax_ID_number,
+    owner_firstname,
+    owner_lastname,
     tax_ID_card,
     owner_ID_type,
     owner_ID,
@@ -52,6 +54,8 @@ const register = async (req, res) => {
     verification,
     creation_date,
     tax_ID_number,
+    owner_firstname,
+    owner_lastname,
     tax_ID_card,
     owner_ID_type,
     owner_ID,
@@ -70,6 +74,8 @@ const register = async (req, res) => {
     !professional_phone_number ||
     !creation_date ||
     !tax_ID_number ||
+    !owner_firstname ||
+    !owner_lastname ||
     !tax_ID_card ||
     !owner_ID_type ||
     !owner_ID ||
@@ -102,6 +108,8 @@ const register = async (req, res) => {
       verification,
       creation_date,
       tax_ID_number,
+      owner_firstname,
+      owner_lastname,
       tax_ID_card,
       owner_ID_type,
       owner_ID,
