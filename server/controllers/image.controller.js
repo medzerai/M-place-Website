@@ -32,9 +32,8 @@ const createImage = async (req, res) => {
         imageModel
           .create(imageDetails)
           .then((image) => {
-            res.json({
-              success: true,
-              data: image,
+            res.status(StatusCodes.OK).json({
+              Url: image.imageUrl,
             });
           })
           .catch((error) => {

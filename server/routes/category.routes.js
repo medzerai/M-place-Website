@@ -18,7 +18,7 @@ CategoryRouter.route("/categories/:id")
   .get(getCategoryById)
   .patch(updateCategory)
   .delete(deleteCategory);
-CategoryRouter.route("/categoriess/:categoryName").get(
+CategoryRouter.route("/categoryProducts/:categoryName").post(
   getCategoryFilterAndProducts
 );
 export default CategoryRouter;

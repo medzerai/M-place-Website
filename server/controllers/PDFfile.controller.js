@@ -31,9 +31,8 @@ const createPdfFile = async (req, res) => {
 
         PDFfileModel.create(fileDetails)
           .then((file) => {
-            res.json({
-              success: true,
-              data: file,
+            res.status(StatusCodes.OK).json({
+              Url: file.pdfFileUrl,
             });
           })
           .catch((error) => {

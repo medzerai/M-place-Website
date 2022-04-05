@@ -11,13 +11,14 @@ import {
   deleteFiltersFromProduct,
   getProductFilters,
   getProductBySKU,
+  searchProduct,
 } from "../controllers/product.controller.js";
 
 import express from "express";
 const ProductRouter = express.Router();
 
 ProductRouter.route("/addProduct").post(addProduct);
-ProductRouter.route("/products").get(getAllProducts);
+ProductRouter.route("/products").get(getAllProducts).post(searchProduct);
 ProductRouter.route("/myProducts").get(getMyProducts);
 ProductRouter.route("/products/:id")
   .get(getProductById)

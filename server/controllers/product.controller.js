@@ -295,79 +295,6 @@ const getRatingForSKU = async (sku, rat) => {
   return s / n;
 };
 
-const getFilterAndProducts = async (sf, filterby, page, val) => {
-  let arr = [];
-  for (let i of val) {
-    if (sf.length != 0) {
-      let g = false;
-      for (let j of i.Filter_list) {
-        if (checkVariables(j.Variable_list, sf)) {
-          g = true;
-          break;
-        }
-      }
-      if (g) arr.push(i);
-    } else {
-      arr.push(i);
-    }
-  }
-  let fils = [];
-  for (let i of arr) {
-    for (let j of i.Filter_list) {
-      for (let k of j.Variable_list) {
-        if (!variable_name_exist(k.name, fils)) {
-          fils.push({
-            name: k.name,
-            option: [],
-          });
-        }
-        addOption(k.name, k.option, fils);
-      }
-    }
-  }
-  var tab = {
-    filter: fils,
-    products: [],
-    number_of_products: 0,
-  };
-
-  const rat = await Rating.find({}).exec();
-  const cat = await Category.find({}).exec();
-  for (let i of arr) {
-    let stars = await getRatingForSKU(i.SKU, rat);
-    // let link = await getCategoryLink(i.categoryId._id, cat);
-
-    tab.products.push({
-      id: i._id,
-      name: i.name,
-      SKU: i.SKU,
-      stars: stars,
-      description: i.description,
-      price: i.Filter_list[0].price,
-      reduction_percentage: i.reduction_percentage,
-      product_imgs: i.product_imgs,
-      variables: i.Filter_list,
-      // link: link,
-    });
-  }
-  tab.number_of_products = tab.products.length;
-  if (filterby == "pc") {
-    tab.products.sort((a, b) =>
-      a.price > b.price ? 1 : b.price > a.price ? -1 : 0
-    );
-  } else if (filterby == "pd") {
-    tab.products.sort((a, b) =>
-      a.price < b.price ? 1 : b.price < a.price ? -1 : 0
-    );
-  } else if (filterby == "r") {
-    tab.products.sort((a, b) =>
-      a.stars < b.stars ? 1 : b.stars < a.stars ? -1 : 0
-    );
-  }
-  tab.products = tab.products.splice((page - 1) * 48, 48);
-  return tab;
-};
-
 const getMyProducts = async (req, res) => {
   let authHeader = req.headers.authorization;
   authHeader = authHeader || authHeader.startsWith("Bearer");
@@ -405,6 +332,88 @@ const getMyProducts = async (req, res) => {
       throw new BadRequestError(error);
     });
 };
+
+const getFilterAndProducts = async (sf, filterby, page, val) => {
+  let arr = [...val];
+
+  let fils = [];
+  for (let i of arr) {
+    for (let j of i.Filter_list) {
+      for (let k of j.Variable_list) {
+        if (!variable_name_exist(k.name, fils)) {
+          fils.push({
+            name: k.name,
+            option: [],
+          });
+        }
+        addOption(k.name, k.option, fils);
+      }
+    }
+  }
+  var tab = {
+    filter: fils,
+    products: [],
+    number_of_products: 0,
+  };
+
+  const rat = await Rating.find({}).exec();
+  for (let i of arr) {
+    let stars = await getRatingForSKU(i.SKU, rat);
+
+    tab.products.push({
+      id: i.SKU,
+      name: i.name,
+      stars: stars,
+      price: i.Filter_list[0].price,
+      reduction_percentage: i.reduction_percentage,
+      picture: i.product_imgs[0],
+      // link: link,
+    });
+  }
+  tab.number_of_products = tab.products.length;
+  if (filterby == "pc") {
+    tab.products.sort((a, b) =>
+      a.price > b.price ? 1 : b.price > a.price ? -1 : 0
+    );
+  } else if (filterby == "pd") {
+    tab.products.sort((a, b) =>
+      a.price < b.price ? 1 : b.price < a.price ? -1 : 0
+    );
+  } else if (filterby == "r") {
+    tab.products.sort((a, b) =>
+      a.stars < b.stars ? 1 : b.stars < a.stars ? -1 : 0
+    );
+  }
+  tab.products = tab.products.splice((page - 1) * 48, 48);
+  return tab;
+};
+
+const searchProduct = (req, res) => {
+  const reg = new RegExp(req.body.string);
+  Product.find({
+    name: { $regex: reg, $options: "i" },
+  })
+    .populate({
+      path: "Filter_list",
+      populate: {
+        path: "Variable_list",
+        model: "Variable",
+      },
+    })
+    .then(async (val) => {
+      const tab = await getFilterAndProducts(
+        req.body.filters || [],
+        req.body.filterBy || "",
+        req.body.page || 1,
+        val
+      );
+      res.status(StatusCodes.OK).json(tab);
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
 export {
   addProduct,
   getAllProducts,
@@ -418,4 +427,5 @@ export {
   deleteFiltersFromProduct,
   getProductFilters,
   getProductBySKU,
+  searchProduct,
 };

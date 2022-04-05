@@ -60,19 +60,6 @@ const getAllClient = (req, res) => {
 };
 
 const getClientData = async (req, res) => {
-  // {
-  //   firstname: myData.firstname,
-  //   lastname: myData.lastname,
-  //   email: myData.email,
-  //   password: "",
-  //   newPassword: "",
-  //   birthday: myData.birthday,
-  //   address: myData.address,
-  //   codePostal: myData.codePostal,
-  //   ville: myData.ville,
-  //   country: myData.country,
-  //   phone: myData.phone,
-  // }
   try {
     let authHeader = req.headers.authorization;
     authHeader = authHeader || authHeader.startsWith("Bearer");

@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import RefreshToken from "../models/RefreshToken.model.js";
 import verification from "../templates/validation.js";
 import resetPasswordTempl from "../templates/resetPassword.js";
+import bcrypt from "bcryptjs";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -150,12 +151,14 @@ const logout = async (req, res) => {
 
 const forgetPassword = async (req, res) => {
   const client = await Client.findOne({ email: req.body.email });
+  if (!client) res.send("no client found");
   const verToken = client.createVerJWT();
+  console.log(verToken);
   let transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: { user: process.env.GMAIL_EMAIL, pass: process.env.GMAIL_PASSWORD },
   });
-  const link = `http://localhost:3001/resetPassword/${verToken}`;
+  const link = `http://localhost:3000/api/v1/auth/Client/resetPassword/${verToken}`;
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
@@ -171,20 +174,25 @@ const forgetPassword = async (req, res) => {
     client,
   });
 };
+const getHash = async (pass) => {
+  const salt = await bcrypt.genSalt(10);
+  console.log("salt", salt);
+  const hash = await bcrypt.hash(pass, salt);
+
+  console.log("hash", hash);
+  return hash;
+};
 
 const resetPassword = async (req, res) => {
   try {
-    const verified = jwt.verify(req.params.token, process.env.ACCESS_TOKEN);
+    const verified = jwt.verify(req.params.token, process.env.VER_JWT_SECRET);
     if (!verified) return res.send("Acces denied");
-    // console.log(verified);
     if (!(req.body.password == req.body.confirmPassword))
       return res.send("please confirm with the right password");
-    ///// Hash passwords/////
-    const salt = await bcrypt.genSalt(10);
 
-    const hash = await bcrypt.hash(req.body.password, salt);
+    const hash = await getHash(req.body.password);
 
-    // console.log(hash);
+    console.log("hash", hash);
     const client = await Client.findOneAndUpdate(
       { _id: verified.Client },
       {
@@ -193,10 +201,10 @@ const resetPassword = async (req, res) => {
         },
       }
     );
+    console.log(client);
     if (!client) return res.send("Invalid Id...");
-    // console.log(client);
 
-    res.json(client);
+    res.status(StatusCodes.OK).json("password updated successfully !!!");
   } catch (err) {
     res.json({ message: err });
   }
