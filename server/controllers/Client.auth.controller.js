@@ -176,10 +176,8 @@ const forgetPassword = async (req, res) => {
 };
 const getHash = async (pass) => {
   const salt = await bcrypt.genSalt(10);
-  console.log("salt", salt);
   const hash = await bcrypt.hash(pass, salt);
 
-  console.log("hash", hash);
   return hash;
 };
 

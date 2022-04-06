@@ -31,11 +31,22 @@ const getUser = async (id) => {
   return u;
 };
 
+const getIdFromToken = (tok) => {
+  if (tok.PO) return tok.PO;
+  else if (tok.Client) return tok.Client;
+  else return tok.Admin;
+};
 // Add a new Message
 const addMessage = async (req, res) => {
-  const { content, fromId, roomId } = req.body;
+  let authHeader = req.headers.authorization;
+  authHeader = authHeader || authHeader.startsWith("Bearer");
+  const token = authHeader.split(" ")[1];
+  const payload = await jwt.verify(token, process.env.ACCESS_TOKEN);
+  const idd = getIdFromToken(payload);
+  const Userid = mongoose.Types.ObjectId(idd);
+  const { content, roomId } = req.body;
 
-  const fromUser = await getUser(fromId);
+  const fromUser = await getUser(idd);
 
   if (!fromUser) {
     throw new BadRequestError("there is a problem in the sender/receiver ID");

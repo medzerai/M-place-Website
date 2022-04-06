@@ -142,6 +142,11 @@ POSchema.methods.createJWT = function () {
     expiresIn: process.env.JWT_LIFETIME,
   });
 };
+POSchema.methods.createVerJWT = function () {
+  return jwt.sign({ PO: this._id }, process.env.VER_JWT_SECRET, {
+    expiresIn: process.env.VER_JWT_LIFETIME,
+  });
+};
 
 POSchema.methods.comparePassword = async function (candidatePassword) {
   const isMatch = await bcrypt.compare(candidatePassword, this.password);

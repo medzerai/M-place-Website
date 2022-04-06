@@ -153,3 +153,4 @@ const getMyRooms = async (req, res) => {
 };
 
 export { addRoom, getAllRooms, getMyRooms };
+
