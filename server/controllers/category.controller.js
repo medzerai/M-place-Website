@@ -377,7 +377,7 @@ const getFilterAndProducts = async (catname, sf, filterby, page, val) => {
 };
 
 const getCategoryFilterAndProducts = (req, res) => {
-  Product.find({})
+  Product.find({ visibility: true })
     .populate("categoryId")
     .populate({
       path: "Filter_list",

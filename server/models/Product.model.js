@@ -29,6 +29,11 @@ const ProductSchema = new mongoose.Schema(
       required: [true, "Please provide your Product description"],
       minlength: 10,
     },
+    short_description: {
+      type: String,
+      required: [true, "Please provide your Product short description"],
+      minlength: 10,
+    },
     product_imgs: {
       type: [String],
       minlength: 5,
@@ -57,6 +62,10 @@ const ProductSchema = new mongoose.Schema(
       required: [true, "Please provide your id"],
       trim: true,
       default: "",
+    },
+    visibility: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

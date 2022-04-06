@@ -20,18 +20,28 @@ class BadRequestError extends CustomAPIError {
 
 // Add a new product
 const addProduct = async (req, res) => {
-  const { name, SKU, marque, description, category, filters } = req.body;
-
-  const product = new Product({
+  const {
     name,
     SKU,
     marque,
+    short_description,
     description,
-    categoryId: category,
-    Filter_list: filters,
-  });
+    category,
+    filters,
+    product_imgs,
+    reduction_percentage,
+    visibility,
+  } = req.body;
 
-  if (!name || !SKU || !marque || !description || !category) {
+  if (
+    !name ||
+    !SKU ||
+    !marque ||
+    !product_imgs ||
+    !description ||
+    !short_description ||
+    !category
+  ) {
     throw new BadRequestError("please provide all values");
   }
   const isCategoryExist = await Category.find({ _id: category });
@@ -39,6 +49,25 @@ const addProduct = async (req, res) => {
     throw new BadRequestError("Category id does not exist !!");
   }
 
+  let authHeader = req.headers.authorization;
+  authHeader = authHeader || authHeader.startsWith("Bearer");
+  const token = authHeader.split(" ")[1];
+  const payload = await jwt.verify(token, process.env.ACCESS_TOKEN);
+  // const poId = mongoose.Types.ObjectId(payload.PO);
+
+  const product = new Product({
+    name,
+    SKU,
+    marque,
+    short_description,
+    description,
+    product_imgs,
+    categoryId: category,
+    Filter_list: filters,
+    visibility: visibility || false,
+    reduction_percentage: reduction_percentage || 0,
+    PostedBy: payload.PO,
+  });
   const prod = await Product.create(product);
   res.status(StatusCodes.OK).json({ prod });
 };
@@ -118,7 +147,7 @@ const deleteProduct = async (req, res) => {
 const getProductByCategory = async (req, res) => {
   await Category.find({ name: req.params.category })
     .then(async (cat) => {
-      await Product.find({ categoryId: cat[0]._id })
+      await Product.find({ categoryId: cat[0]._id, visibility: true })
         .then((val) => {
           val.length == 0
             ? res.status(StatusCodes.OK).json("No products to show")
@@ -135,7 +164,7 @@ const getProductByCategory = async (req, res) => {
 
 // Get product by marque name
 const getProductByMarque = async (req, res) => {
-  await Product.find({ marque: req.params.marque })
+  await Product.find({ marque: req.params.marque, visibility: true })
     .then((val) => {
       val.length == 0
         ? res.status(StatusCodes.OK).json("No products to show")
@@ -392,6 +421,7 @@ const searchProduct = (req, res) => {
   const reg = new RegExp(req.body.string);
   Product.find({
     name: { $regex: reg, $options: "i" },
+    visibility: true,
   })
     .populate({
       path: "Filter_list",
