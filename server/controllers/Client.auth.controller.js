@@ -59,6 +59,7 @@ const register = async (req, res) => {
     service: "Gmail",
     auth: { user: process.env.GMAIL_EMAIL, pass: process.env.GMAIL_PASSWORD },
   });
+  const link = `http://localhost:3000/api/v1/auth/Client/verify/${verToken}`;
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
@@ -66,7 +67,7 @@ const register = async (req, res) => {
     to: client.email, // list of receivers
     subject: "Email Verification", // Subject line
     // text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
-    html: verification(client.firstname + " " + client.lastname, verToken),
+    html: verification(client.firstname + " " + client.lastname, link),
   });
   transporter.sendMail(info);
 

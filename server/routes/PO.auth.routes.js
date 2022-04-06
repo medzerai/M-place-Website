@@ -3,6 +3,7 @@ import {
   login,
   logout,
   refreshToken,
+  forgetPassword,
   resetPassword,
   verifyPO,
 } from "../controllers/PO.auth.controller.js";
@@ -14,8 +15,8 @@ POAuthRouter.route("/PO/register").post(register);
 POAuthRouter.route("/PO/login").post(login);
 POAuthRouter.route("/PO/logout").post(logout);
 POAuthRouter.route("/PO/refreshToken").post(refreshToken);
-
+POAuthRouter.route("/PO/forgetPassword").post(forgetPassword);
 POAuthRouter.route("/PO/resetPassword/:token").post(resetPassword);
 
-POAuthRouter.route("/PO/verify/:token").patch(verifyPO);
+POAuthRouter.route("/PO/verify/:token").get(verifyPO);
 export default POAuthRouter;

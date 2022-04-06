@@ -116,7 +116,7 @@ const getDisc = async (val, id) => {
       const message = await Message.find({ roomId: x._id })
         .sort({ createdAt: -1 })
         .limit(1);
-      tab.push({ user: user, message: message[0] });
+      tab.push({ user: user, message: message[0] || "" });
     }
   }
   return tab;
@@ -153,4 +153,3 @@ const getMyRooms = async (req, res) => {
 };
 
 export { addRoom, getAllRooms, getMyRooms };
-

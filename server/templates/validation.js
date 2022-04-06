@@ -1,4 +1,4 @@
-const verification = (name, hash) => {
+const verification = (name, link) => {
   return `<style
   type="text/css"
 >
@@ -217,7 +217,7 @@ const verification = (name, hash) => {
                           style="border-radius: 6px"
                         >
                           <a
-                            href="${process.env.DOMAIN}/api/v1/auth/Client/verify/${hash}"
+                            href="${link}"
                             target="_blank"
                             style="
                               display: inline-block;

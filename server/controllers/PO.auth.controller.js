@@ -99,14 +99,14 @@ const register = async (req, res) => {
     service: "Gmail",
     auth: { user: process.env.GMAIL_EMAIL, pass: process.env.GMAIL_PASSWORD },
   });
-
+  const link = `http://localhost:3000/api/v1/auth/PO/verify/${verToken}`;
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: process.env.GMAIL_EMAIL, // sender address
     to: po.company_email, // list of receivers
     subject: "Email Verification For Product Owner", // Subject line
     // text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
-    html: verificationTempl(po.company_name, verToken),
+    html: verificationTempl(po.company_name, link),
   });
   transporter.sendMail(info);
 
@@ -202,7 +202,7 @@ const forgetPassword = async (req, res) => {
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: process.env.GMAIL_EMAIL, // sender address
-    to: client.email, // list of receivers
+    to: po.company_email, // list of receivers
     subject: "Forget Password For Product Owner", // Subject line
     // text: `Dear ${client.name} please confirm your account using this link: 172.16.134.111:3000/api/v1/auth/Client/verify/${verToken}`,
     html: resetPasswordTempl(po.company_name, link),
@@ -250,7 +250,11 @@ const resetPassword = async (req, res) => {
 const verifyPO = async (req, res) => {
   try {
     const payload = jwt.verify(req.params.token, process.env.VER_JWT_SECRET);
-    await PO.findOneAndUpdate(
+    const po = await PO.findById(payload.PO);
+    if (!po) {
+      throw new BadRequestError("Product Owner does not exist !!!");
+    }
+    PO.findOneAndUpdate(
       { _id: payload.PO },
       {
         $set: {
@@ -258,10 +262,42 @@ const verifyPO = async (req, res) => {
         },
       }
     );
-    res.status(StatusCodes.OK).json("Account Verified !");
+    const rdv = await Rdv.find({ for_PO: po._id });
+    if (rdv) {
+      throw new BadRequestError("Product Owner already had a Rendez-vous !!!");
+    }
+    // const d = new Date();
+
+    const v = new Rdv({
+      for_PO: po._id,
+      date:
+        date ||
+        randomDate(
+          new Date(),
+          new Date(new Date().setDate(new Date().getDate() + 7))
+        ),
+    });
+
+    Rdv.create(v)
+      .then((rdv) => {
+        res
+          .status(StatusCodes.OK)
+          .json("Account Verified and Rendez-vous set :", rdv);
+      })
+      .catch((err) => {
+        throw new BadRequestError(err);
+      });
   } catch (error) {
     throw new BadRequestError(error);
   }
 };
 
-export { register, login, logout, refreshToken, resetPassword, verifyPO };
+export {
+  register,
+  login,
+  logout,
+  refreshToken,
+  forgetPassword,
+  resetPassword,
+  verifyPO,
+};
