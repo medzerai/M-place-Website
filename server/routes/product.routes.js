@@ -1,5 +1,6 @@
 import {
   addProduct,
+  addProductWithJson,
   getAllProducts,
   getMyProducts,
   getProductById,
@@ -17,6 +18,7 @@ import {
 import express from "express";
 const ProductRouter = express.Router();
 
+ProductRouter.route("/addCustomProduct").post(addProductWithJson);
 ProductRouter.route("/addProduct").post(addProduct);
 ProductRouter.route("/products").get(getAllProducts).post(searchProduct);
 ProductRouter.route("/myProducts").get(getMyProducts);

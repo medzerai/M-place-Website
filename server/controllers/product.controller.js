@@ -79,9 +79,9 @@ const addProductWithJson = async (req, res) => {
   try {
     const { data } = req.body;
     let f_list = [];
-    for (x of data.filters) {
+    for (let x of data.filters) {
       let v_list = [];
-      for (y of x.Variable_list) {
+      for (let y of x.Variable_list) {
         const v = new Variable({
           name: y.name,
           option: y.option,
@@ -503,6 +503,7 @@ const searchProduct = (req, res) => {
 
 export {
   addProduct,
+  addProductWithJson,
   getAllProducts,
   getMyProducts,
   getProductById,
