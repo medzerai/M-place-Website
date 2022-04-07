@@ -9,7 +9,7 @@ import Responsive from "./carousel.js";
 var categDisplay =
   '[{"id":1,"title":"Categ 1","min price":120,"pictures":["https://picsum.photos/id/249/500/500","https://picsum.photos/id/299/500/500","https://picsum.photos/id/322/500/500"]},{"id":2,"title":"Categ 2","min price":120,"pictures":["https://picsum.photos/id/252/500/500","https://picsum.photos/id/382/500/500","https://picsum.photos/id/256/500/500"]},{"id":3,"title":"Categ 3","min price":1000,"pictures":["https://picsum.photos/id/282/500/500","https://picsum.photos/id/218/500/500","https://picsum.photos/id/221/500/500"]},{"id":4,"title":"Categ 4","min price":80,"pictures":["https://picsum.photos/id/272/500/500","https://picsum.photos/id/252/500/500","https://picsum.photos/id/292/500/500"]}]';
 var tendProduct = JSON.parse(
-  '[{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"}]'
+  '[{"id": 1254,"name": "Iphone 13","stars": 3.5,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 4,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 5,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 2.5,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"},{"id": 1254,"name": "Iphone 13","stars": 3,"lastPrise": 4300.0,"newPrise": 3980.0, "picture":"https://picsum.photos/id/365/500/500","link":"/electronique/smartphone/smartphone/Iphone"}]'
 );
 categDisplay = JSON.parse(categDisplay);
 
@@ -86,12 +86,12 @@ const Presentation = () => {
         <Responsive data={tendProduct} />
       </div>
       <div className="brands">
-        <a href="#">
-          <img src="//logo.clearbit.com/google.com?greyscale=true" />
-          <img src="//logo.clearbit.com/shopify.com?greyscale=true" />
-          <img src="//logo.clearbit.com/ethereum.org?greyscale=true" />
-          <img src="//logo.clearbit.com/tunisair.com?greyscale=true" />
-          <img src="//logo.clearbit.com/topnet.tn?greyscale=true" />
+        <a href="/">
+          <img alt="" src="//logo.clearbit.com/google.com?greyscale=true" />
+          <img alt="" src="//logo.clearbit.com/shopify.com?greyscale=true" />
+          <img alt="" src="//logo.clearbit.com/ethereum.org?greyscale=true" />
+          <img alt="" src="//logo.clearbit.com/tunisair.com?greyscale=true" />
+          <img alt="" src="//logo.clearbit.com/topnet.tn?greyscale=true" />
         </a>
       </div>
     </div>

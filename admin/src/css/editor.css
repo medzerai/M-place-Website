@@ -1,0 +1,8 @@
+.editor {
+  background: #fff;
+}
+.rdw-editor-main {
+  border: 1px solid #f1f1f1;
+  padding: 0 0.5em;
+  min-height: 150px;
+}
