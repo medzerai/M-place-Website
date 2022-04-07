@@ -2,6 +2,9 @@ import { StatusCodes } from "http-status-codes";
 import Category from "../models/Category.model.js";
 import Product from "../models/Product.model.js";
 import Rating from "../models/Rating.model.js";
+import Variable from "../models/Variable.model.js";
+import Filter from "../models/Filter.model.js";
+
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
@@ -70,6 +73,60 @@ const addProduct = async (req, res) => {
   });
   const prod = await Product.create(product);
   res.status(StatusCodes.OK).json({ prod });
+};
+
+const addProductWithJson = async (req, res) => {
+  try {
+    const { data } = req.body;
+    let f_list = [];
+    for (x of data.filters) {
+      let v_list = [];
+      for (y of x.Variable_list) {
+        const v = new Variable({
+          name: y.name,
+          option: y.option,
+        });
+        const variable = await Variable.create(v);
+        v_list.push(variable._id);
+      }
+      const f = new Filter({
+        name: x.name,
+        Variable_list: v_list,
+        quantity: x.quantity,
+        price: x.price,
+      });
+      const filter = await Filter.create(f);
+      f_list.push(filter._id);
+    }
+    const isCategoryExist = await Category.find({ _id: data.category });
+    if (!isCategoryExist) {
+      throw new BadRequestError("Category id does not exist !!");
+    }
+
+    let authHeader = req.headers.authorization;
+    authHeader = authHeader || authHeader.startsWith("Bearer");
+    const token = authHeader.split(" ")[1];
+    const payload = await jwt.verify(token, process.env.ACCESS_TOKEN);
+    // const poId = mongoose.Types.ObjectId(payload.PO);
+
+    const p = new Product({
+      name: data.name,
+      SKU: data.SKU,
+      marque: data.marque,
+      short_description: data.short_description,
+      description: data.description,
+      product_imgs: data.product_imgs,
+      categoryId: data.category,
+      Filter_list: f_list,
+      visibility: data.visibility || false,
+      reduction_percentage: data.reduction_percentage || 0,
+      PostedBy: payload.PO,
+    });
+    const product = await Product.create(p);
+    res.status(StatusCodes.OK).json({ product });
+  } catch (error) {
+    throw new BadRequestError(error);
+  }
 };
 
 // Get all products
