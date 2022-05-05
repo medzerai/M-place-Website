@@ -6,6 +6,7 @@ import {
   getVerifiedClients,
   getNoneVerifiedClients,
   deleteClient,
+  contactUsByMail,
 } from "../controllers/Client.controller.js";
 import express from "express";
 import auth from "../middleware/authenticateClient.js";
@@ -23,4 +24,5 @@ ClientRouter.route("/Client/Verified").get(getVerifiedClients);
 
 ClientRouter.route("/Client/NoneVerified").get(getNoneVerifiedClients);
 
+ClientRouter.route("/Client/contactUs").post(contactUsByMail);
 export default ClientRouter;

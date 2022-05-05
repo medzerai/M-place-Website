@@ -1,5 +1,7 @@
 import Client from "../models/Client.model.js";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
+import AdminModel from "../models/Admin.model.js";
 
 import { StatusCodes } from "http-status-codes";
 
@@ -137,6 +139,37 @@ const deleteClient = (req, res) => {
     });
 };
 
+const contactUsByMail = async (req, res) => {
+  const { firstname, lastname, phone, email, message } = req.body;
+  if (!firstname || !lastname || !phone || !email || !message) {
+    res.status(StatusCodes.OK).json(null);
+  }
+  let transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: { user: process.env.GMAIL_EMAIL, pass: process.env.GMAIL_PASSWORD },
+  });
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: process.env.GMAIL_EMAIL, // sender address
+    to: process.env.GMAIL_EMAIL, // list of receivers
+    subject: "Contact Us", // Subject line
+    text: `Dear Admin ,
+    From: ${firstname} ${lastname} 
+    Email: ${email}
+    Phone: ${phone}
+    Message: ${message}`,
+  });
+  transporter.sendMail(info);
+
+  res.status(StatusCodes.OK).json({
+    firstname: firstname,
+    lastname: lastname,
+    phone: phone,
+    email: email,
+    message: message,
+  });
+};
+
 export {
   updateClient,
   deleteClient,
@@ -145,4 +178,5 @@ export {
   getClientById,
   getVerifiedClients,
   getNoneVerifiedClients,
+  contactUsByMail,
 };
