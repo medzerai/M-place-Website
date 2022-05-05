@@ -205,8 +205,27 @@ const getSettings = (req, res) => {
     });
 };
 
-const updateSettings=(req,res)=>{
+const updateSettings = async (req, res) => {
+  const s = await Settings.findOne({});
+  const newSettings = {
+    carousel: req.body.carousel || s.carousel,
+    categories: req.body.categories || s.categories,
+    featuredProduct: req.body.featuredProduct || s.featuredProduct,
+    recommendedProduct: req.body.recommendedProduct || s.recommendedProduct,
+    partner: req.body.partner || s.partner,
+    terms_conditions: req.body.terms_conditions || s.terms_conditions,
+    Privacy_Policy: req.body.Privacy_Policy || s.Privacy_Policy,
+    AboutUs: req.body.AboutUs || s.AboutUs,
+  };
+  Settings.updateOne({}, { $set: newSettings })
+    .then(() => {
+      res.status(StatusCodes.CREATED).json({
+        message: "Settings updated successfully!",
+      });
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
 
-}
-
-export { CreateSettings, getSettings, };
+export { CreateSettings, getSettings, updateSettings };
