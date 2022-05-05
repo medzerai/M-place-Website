@@ -205,4 +205,8 @@ const getSettings = (req, res) => {
     });
 };
 
-export { CreateSettings, getSettings };
+const updateSettings=(req,res)=>{
+
+}
+
+export { CreateSettings, getSettings, };

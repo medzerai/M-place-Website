@@ -2,6 +2,7 @@ import Category from "../models/Category.model.js";
 import { StatusCodes } from "http-status-codes";
 import Product from "../models/Product.model.js";
 import Rating from "../models/Rating.model.js";
+import PO from "../models/PO.model.js";
 
 class CustomAPIError extends Error {
   constructor(message) {
@@ -347,6 +348,7 @@ const getFilterAndProducts = async (catname, sf, filterby, page, val) => {
   for (let i of arr) {
     let stars = await getRatingForSKU(i.SKU, rat);
     // let link = await getCategoryLink(i.categoryId._id, cat);
+    const po = await PO.findById(i.PostedBy);
 
     tab.products.push({
       id: i.SKU,
@@ -358,6 +360,11 @@ const getFilterAndProducts = async (catname, sf, filterby, page, val) => {
       price: i.Filter_list[0].price,
       reduction_percentage: i.reduction_percentage,
       picture: i.product_imgs,
+      filters: i.Filter_list,
+      PostedBy: {
+        name: po.company_name,
+        logo: po.logo_url,
+      },
       // link: link,
     });
   }

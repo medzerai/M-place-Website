@@ -4,6 +4,7 @@ import Product from "../models/Product.model.js";
 import Rating from "../models/Rating.model.js";
 import Variable from "../models/Variable.model.js";
 import Filter from "../models/Filter.model.js";
+import PO from "../models/PO.model.js";
 
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
@@ -445,7 +446,7 @@ const getFilterAndProducts = async (sf, filterby, page, val) => {
   const rat = await Rating.find({}).exec();
   for (let i of arr) {
     let stars = await getRatingForSKU(i.SKU, rat);
-
+    const po = await PO.findById(i.PostedBy);
     tab.products.push({
       id: i.SKU,
       name: i.name,
@@ -456,6 +457,11 @@ const getFilterAndProducts = async (sf, filterby, page, val) => {
       price: i.Filter_list[0].price,
       reduction_percentage: i.reduction_percentage,
       picture: i.product_imgs,
+      filters: i.Filter_list,
+      PostedBy: {
+        name: po.company_name,
+        logo: po.logo_url,
+      },
       // link: link,
     });
   }
