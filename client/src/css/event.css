@@ -1,0 +1,48 @@
+.Event {
+  min-width: 300px;
+  margin: auto;
+  max-width: 400px;
+  margin: 5px;
+  padding: 10px;
+}
+.Event .background {
+  height: 100%;
+  width: 100%;
+  background-image: url(https://picsum.photos/id/249/500/2000);
+  border-radius: 2px;
+  background-size: cover;
+  background-position: center;
+  transition: 0.3s;
+  opacity: 0.8;
+}
+.Event .details {
+  height: 200px;
+  background: #000;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.Event .background:hover {
+  transform: scale(1.2);
+  opacity: 0.4;
+}
+.Event .details p {
+  margin: 0;
+}
+.Event .btn-primary {
+  margin: 0;
+  width: 100%;
+  padding: 10px;
+}
+.Event .btn-primary:hover {
+  background: #e9af00;
+}
+.dataEvent {
+  background: linear-gradient(0deg, #000000, #00000026);
+  bottom: 0;
+  padding: 10px;
+  color: white;
+  border-radius: 0 0 2px 2px;
+}
+.Event .titleEvent {
+  font-weight: 300;
+}
