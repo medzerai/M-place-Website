@@ -18,6 +18,7 @@ import RatingRouter from "./rating.routes.js";
 import RdvRouter from "./Rdv.routes.js";
 import messageRouter from "./Message.routes.js";
 import roomRouter from "./Room.routes.js";
+import SettingsRouter from "./Settings.routes.js";
 
 const router = express.Router();
 
@@ -36,7 +37,8 @@ router.use(
   FilterRouter,
   VariableRouter,
   RatingRouter,
-  RdvRouter
+  RdvRouter,
+  SettingsRouter
 );
 
 export default router;

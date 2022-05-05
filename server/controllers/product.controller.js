@@ -449,10 +449,13 @@ const getFilterAndProducts = async (sf, filterby, page, val) => {
     tab.products.push({
       id: i.SKU,
       name: i.name,
+      SKU: i.SKU,
+      description: i.description,
+      short_description: i.short_description,
       stars: stars,
       price: i.Filter_list[0].price,
       reduction_percentage: i.reduction_percentage,
-      picture: i.product_imgs[0],
+      picture: i.product_imgs,
       // link: link,
     });
   }
