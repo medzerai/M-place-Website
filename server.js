@@ -28,7 +28,12 @@ app.get("/", (req, res) => {
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    credentials: true,
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "http://localhost:3002",
+    ],
     methods: ["GET", "POST"],
   },
 });
@@ -49,7 +54,6 @@ io.on("connection", (socket) => {
   socket.on("send_message", (data) => {
     console.log("send message", data);
 
-    
     //here just put the function that add the message to database
     //get id of user from the token and send id in the data
     data.author = "6229e096223ecaaf508f186c";
@@ -79,6 +83,9 @@ const start = async () => {
     await db(process.env.MONGO_URL);
     app.listen(port, () => {
       console.log(`Server is listening on port ${port}`);
+      server.listen(4100, () => {
+        console.log("Socket.io SERVER RUNNING");
+      });
     });
   } catch (error) {
     console.log(error);
