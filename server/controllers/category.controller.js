@@ -311,7 +311,7 @@ const checkVariables = (vlist, f) => {
 const getFilterAndProducts = async (catname, sf, filterby, page, val) => {
   let arr = [];
   for (let i of val) {
-    if (i.categoryId.name == catname) {
+    if (i.categoryId.name.toLowerCase() == catname.toLowerCase()) {
       let g = false;
       for (let j of i.Filter_list) {
         if (checkVariables(j.Variable_list, sf)) {
@@ -405,6 +405,16 @@ const getCategoryFilterAndProducts = (req, res) => {
     });
 };
 
+const getCategoryId = (req, res) => {
+  Category.findOne({ name: { $regex: new RegExp(req.params.cat, "i") } })
+    .then((val) => {
+      res.status(StatusCodes.OK).json(val._id);
+    })
+    .catch((error) => {
+      throw new BadRequestError(error);
+    });
+};
+
 export {
   addCategory,
   getAllCategories,
@@ -413,4 +423,5 @@ export {
   updateAll,
   deleteCategory,
   getCategoryFilterAndProducts,
+  getCategoryId,
 };

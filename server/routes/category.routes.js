@@ -6,6 +6,7 @@ import {
   updateAll,
   deleteCategory,
   getCategoryFilterAndProducts,
+  getCategoryId
 } from "../controllers/category.controller.js";
 
 import express from "express";
@@ -21,4 +22,6 @@ CategoryRouter.route("/categories/:id")
 CategoryRouter.route("/categoryProducts/:categoryName").post(
   getCategoryFilterAndProducts
 );
+CategoryRouter.route("/categoryId/:cat").get(getCategoryId);
+
 export default CategoryRouter;
