@@ -253,7 +253,7 @@ const getRatingForSKU = async (sku, rat) => {
       n++;
     }
   }
-  return s / n;
+  return s / n || 0;
 };
 
 const variable_name_exist = (n, t) => {

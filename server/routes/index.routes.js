@@ -19,6 +19,7 @@ import RdvRouter from "./Rdv.routes.js";
 import messageRouter from "./Message.routes.js";
 import roomRouter from "./Room.routes.js";
 import SettingsRouter from "./Settings.routes.js";
+import PaymentRouter from "./Payment.routes.js";
 
 const router = express.Router();
 
@@ -38,7 +39,8 @@ router.use(
   VariableRouter,
   RatingRouter,
   RdvRouter,
-  SettingsRouter
+  SettingsRouter,
+  PaymentRouter
 );
 
 export default router;

@@ -78,14 +78,22 @@ const getRatingForSKU = async (sku, rat) => {
       n++;
     }
   }
-  return s / n;
+  return s / n || 0;
 };
 
 const getProducts = async (products) => {
   let prodlist = [];
 
   for (let i of products) {
-    const p = await Product.findById(i);
+    const p = await Product.findById(i)
+      .populate("categoryId")
+      .populate({
+        path: "Filter_list",
+        populate: {
+          path: "Variable_list",
+          model: "Variable",
+        },
+      });
     const rat = await Rating.find({}).exec();
     // const cat = await Category.find({}).exec();
 
@@ -105,7 +113,7 @@ const getProducts = async (products) => {
       // link: link,
     });
   }
-
+  console.log(prodlist);
   return prodlist;
 };
 
