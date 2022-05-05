@@ -47,8 +47,8 @@ const checkoutSession = async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: `https://yoursite.com/order/success`,
-      cancel_url: `https://yoursite.com/order/error`,
+      success_url: `http://localhost:3000/`,
+      cancel_url: `http://localhost:3000/panier`,
     });
     res.json({ url: session.url });
   } catch (error) {
