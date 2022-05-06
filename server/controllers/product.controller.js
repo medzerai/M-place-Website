@@ -421,8 +421,17 @@ const getMyProducts = async (req, res) => {
 };
 
 const getFilterAndProducts = async (sf, filterby, page, val) => {
-  let arr = [...val];
-
+  let arr = [];
+  for (let i of val) {
+    let g = false;
+    for (let j of i.Filter_list) {
+      if (checkVariables(j.Variable_list, sf)) {
+        g = true;
+        break;
+      }
+    }
+    if (g) arr.push(i);
+  }
   let fils = [];
   for (let i of arr) {
     for (let j of i.Filter_list) {
