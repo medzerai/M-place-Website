@@ -124,25 +124,26 @@ const getRatingBySKU = (req, res) => {
     .then(async (val) => {
       if (val.length == 0) {
         res.status(StatusCodes.OK).json("No reviews");
-      }
-      let arr = [];
-      console.log(val);
-      for (let x of val) {
-        let cli = await Client.findOne({ _id: x.userId });
-        console.log(cli);
-        let rat = {
-          id: x._id,
-          client: cli.firstname + " " + cli.lastname,
-          stars: x.rate,
-          date: x.createdAt,
-          pictture: cli.profile_img,
-          comment: x.comment,
-        };
-        console.log(rat);
+      } else {
+        let arr = [];
+        console.log(val);
+        for (let x of val) {
+          let cli = await Client.findOne({ _id: x.userId });
+          console.log(cli);
+          let rat = {
+            id: x._id,
+            client: cli.firstname + " " + cli.lastname,
+            stars: x.rate,
+            date: x.createdAt,
+            pictture: cli.profile_img,
+            comment: x.comment,
+          };
+          console.log(rat);
 
-        arr.push(rat);
+          arr.push(rat);
+        }
+        res.status(StatusCodes.OK).json(arr);
       }
-      res.status(StatusCodes.OK).json(arr);
     })
     .catch((error) => {
       throw new BadRequestError(error);

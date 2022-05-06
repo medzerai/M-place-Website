@@ -110,9 +110,11 @@ const login = async (req, res) => {
   console.log("refresh_token", savedToken.token);
   console.log("access_token", access_token);
   console.log("logged in");
-  res
-    .header("Authorization", access_token)
-    .json({ access_token: access_token, refresh_token: savedToken.token });
+  res.header("Authorization", access_token).json({
+    access_token: access_token,
+    refresh_token: savedToken.token,
+    name: client.firstname,
+  });
 };
 
 function generateAccessToken(id) {
