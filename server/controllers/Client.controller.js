@@ -154,9 +154,9 @@ const contactUsByMail = async (req, res) => {
     to: process.env.GMAIL_EMAIL, // list of receivers
     subject: "Contact Us", // Subject line
     text: ` From: ${firstname} ${lastname} 
-            Email: ${email}
-            Phone: ${phone}
-            Message: ${message}`,
+  Email: ${email}
+  Phone: ${phone}
+  Message: ${message}`,
   });
   transporter.sendMail(info);
 

@@ -7,8 +7,8 @@ import {
 import express from "express";
 const roomRouter = express.Router();
 
-roomRouter.post("/room", addRoom);
-roomRouter.get("/rooms", getAllRooms);
-roomRouter.get("/myRooms", getMyRooms);
+roomRouter.post("/room", addRoom).get("/room", getAllRooms);
+
+roomRouter.get("/room/disc", getMyRooms);
 
 export default roomRouter;

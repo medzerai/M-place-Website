@@ -448,7 +448,7 @@ const getFilterAndProducts = async (sf, filterby, page, val) => {
     let stars = await getRatingForSKU(i.SKU, rat);
     const po = await PO.findById(i.PostedBy);
     tab.products.push({
-      id: i.SKU,
+      id: i._id,
       name: i.name,
       SKU: i.SKU,
       description: i.description,

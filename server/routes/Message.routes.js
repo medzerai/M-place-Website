@@ -7,7 +7,7 @@ import {
 import express from "express";
 const messageRouter = express.Router();
 
-messageRouter.post("/Chat", addMessage);
+messageRouter.post("/AddChat", addMessage);
 messageRouter.get("/Chat", getAllRoomMessages);
 messageRouter.get("/Chat/disc", getMyDisc);
 

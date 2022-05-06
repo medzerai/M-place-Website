@@ -6,7 +6,16 @@ import http from "http";
 import { Server } from "socket.io";
 
 import cors from "cors";
-app.use(cors({ credentials: true, origin: "*" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: [
+      "http://localhost:3000/",
+      "http://localhost:3001/",
+      "http://localhost:3002/",
+    ],
+  })
+);
 
 import dotenv from "dotenv";
 dotenv.config();

@@ -351,7 +351,7 @@ const getFilterAndProducts = async (catname, sf, filterby, page, val) => {
     const po = await PO.findById(i.PostedBy);
 
     tab.products.push({
-      id: i.SKU,
+      id: i._id,
       name: i.name,
       SKU: i.SKU,
       description: i.description,
@@ -418,7 +418,9 @@ const getCategoryFilterAndProducts = (req, res) => {
 const getCategoryId = (req, res) => {
   Category.findOne({ name: { $regex: new RegExp(req.params.cat, "i") } })
     .then((val) => {
-      res.status(StatusCodes.OK).json(val._id);
+      val
+        ? res.status(StatusCodes.OK).json(val._id)
+        : res.status(StatusCodes.OK).json(null);
     })
     .catch((error) => {
       throw new BadRequestError(error);

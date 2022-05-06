@@ -24,25 +24,34 @@ class BadRequestError extends CustomAPIError {
   }
 }
 
-const storeItems = new Map([
-  [1, { priceInCents: 10000, name: "Learn React Today" }],
-  [2, { priceInCents: 20000, name: "Learn CSS Today" }],
-]);
+// const storeItems = new Map([
+//   [1, { priceInCents: 10000, name: "Learn React Today" }],
+//   [2, { priceInCents: 20000, name: "Learn CSS Today" }],
+// ]);
+
 // ("/create-checkout-session",
 const checkoutSession = async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      line_items: req.body.items.map((item) => {
-        const storeItem = storeItems.get(item.id);
+      line_items: req.body.items.map(async (item) => {
+        const storeItem = await Product.findById(item.id)
+          .populate("categoryId")
+          .populate({
+            path: "Filter_list",
+            populate: {
+              path: "Variable_list",
+              model: "Variable",
+            },
+          });
         return {
           price_data: {
             currency: "usd",
             product_data: {
               name: storeItem.name,
             },
-            unit_amount: storeItem.priceInCents,
+            unit_amount: storeItem.Filter_list[0].price * 33,
           },
           quantity: item.quantity,
         };

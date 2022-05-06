@@ -101,7 +101,7 @@ const getProducts = async (products) => {
     // let link = await getCategoryLink(i.categoryId._id, cat);
 
     prodlist.push({
-      id: p.SKU,
+      id: p._id,
       name: p.name,
       SKU: p.SKU,
       description: p.description,
