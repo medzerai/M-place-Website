@@ -55,7 +55,7 @@ const checkoutSession = async (req, res) => {
       });
     }
 
-    console.log(productList);
+    // console.log(productList);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",

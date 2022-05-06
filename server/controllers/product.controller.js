@@ -457,7 +457,7 @@ const getFilterAndProducts = async (sf, filterby, page, val) => {
       price: i.Filter_list[0].price,
       reduction_percentage: i.reduction_percentage,
       picture: i.product_imgs,
-      filters: i.Filter_list,
+      filters: fils,
       PostedBy: {
         name: po.company_name,
         logo: po.logo_url,
