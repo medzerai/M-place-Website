@@ -32,30 +32,34 @@ class BadRequestError extends CustomAPIError {
 // ("/create-checkout-session",
 const checkoutSession = async (req, res) => {
   try {
+    let productList = [];
+    for (let item of req.body.items) {
+      const storeItem = await Product.findById(item.id)
+        .populate("categoryId")
+        .populate({
+          path: "Filter_list",
+          populate: {
+            path: "Variable_list",
+            model: "Variable",
+          },
+        });
+      productList.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: storeItem.name,
+          },
+          unit_amount: parseInt(storeItem.Filter_list[0].price * 33),
+        },
+        quantity: item.quantity,
+      });
+    }
+
+    console.log(productList);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      line_items: req.body.items.map(async (item) => {
-        const storeItem = await Product.findById(item.id)
-          .populate("categoryId")
-          .populate({
-            path: "Filter_list",
-            populate: {
-              path: "Variable_list",
-              model: "Variable",
-            },
-          });
-        return {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: storeItem.name,
-            },
-            unit_amount: storeItem.Filter_list[0].price * 33,
-          },
-          quantity: item.quantity,
-        };
-      }),
+      line_items: productList,
       success_url: `http://localhost:3000/`,
       cancel_url: `http://localhost:3000/panier`,
     });
