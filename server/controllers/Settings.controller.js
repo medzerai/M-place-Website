@@ -104,6 +104,7 @@ const getProducts = async (products) => {
       id: p._id,
       name: p.name,
       SKU: p.SKU,
+      marque: p.marque,
       description: p.description,
       short_description: p.short_description,
       stars: stars,

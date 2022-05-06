@@ -354,12 +354,14 @@ const getFilterAndProducts = async (catname, sf, filterby, page, val) => {
       id: i._id,
       name: i.name,
       SKU: i.SKU,
+      marque:i.marque,
       description: i.description,
       short_description: i.short_description,
       stars: stars,
       price: i.Filter_list[0].price,
       reduction_percentage: i.reduction_percentage,
       picture: i.product_imgs,
+
       filters: fils,
       PostedBy: {
         name: po.company_name,
