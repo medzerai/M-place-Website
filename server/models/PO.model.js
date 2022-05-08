@@ -119,7 +119,7 @@ const POSchema = new mongoose.Schema(
     },
     owner_ID: {
       type: String,
-      minlength: 20,
+      minlength: 8,
       required: [true, "Please provide your owner ID URL"],
     },
     RNE_number: {
