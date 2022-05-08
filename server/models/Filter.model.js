@@ -6,7 +6,7 @@ const FilterSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide your Filter name"],
       minlength: 3,
-      maxlength: 20,
+      maxlength: 100,
       trim: true,
     },
     Variable_list: [{ type: mongoose.Types.ObjectId, ref: "Variable" }],

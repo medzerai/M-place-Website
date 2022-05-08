@@ -469,6 +469,7 @@ const getFilterAndProducts = async (sf, filterby, page, val) => {
       picture: i.product_imgs,
       filters: fils,
       PostedBy: {
+        id: po._id,
         name: po.company_name,
         logo: po.logo_url,
       },
