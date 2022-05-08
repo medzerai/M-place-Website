@@ -4,6 +4,8 @@ import RefreshToken from "../models/RefreshToken.model.js";
 import verificationTempl from "../templates/validation.js";
 import resetPasswordTempl from "../templates/resetPassword.js";
 
+import nodemailer from "nodemailer";
+
 import jwt from "jsonwebtoken";
 
 class CustomAPIError extends Error {

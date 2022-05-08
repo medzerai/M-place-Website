@@ -3,17 +3,18 @@ import mongoose from "mongoose";
 const OrderSchema = new mongoose.Schema(
   {
     clientId: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref: "Client",
       required: true,
     },
     products: {
-      type: [String],
+      type: String,
       required: true,
     },
     paid: {
       type: Boolean,
       required: true,
-      default:false
+      default: true,
     },
   },
   { timestamps: true }

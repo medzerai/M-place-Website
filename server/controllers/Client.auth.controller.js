@@ -107,8 +107,8 @@ const login = async (req, res) => {
     token: refresh_token,
   });
   const savedToken = await refreshtoken.save();
-  console.log("refresh_token", savedToken.token);
-  console.log("access_token", access_token);
+  // console.log("refresh_token", savedToken.token);
+  // console.log("access_token", access_token);
   console.log("logged in");
   res.header("Authorization", access_token).json({
     access_token: access_token,
