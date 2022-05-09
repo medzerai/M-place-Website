@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 import Client from "../models/Client.model.js";
 import PO from "../models/PO.model.js";
@@ -66,12 +67,11 @@ const addMessage = async (req, res) => {
   }
 };
 
-const getTrueFalseMesages = async (val) => {
-  const room = await Room.findById(val[0].roomId);
+const getTrueFalseMesages = async (val, Userid) => {
   let tab = [];
   let a;
   for (let x of val) {
-    if (x.fromId.equals(room.User1Id)) {
+    if (x.fromId.equals(Userid)) {
       a = {
         _id: x._id,
         content: x.content,
@@ -101,13 +101,20 @@ const getTrueFalseMesages = async (val) => {
 
 // Get all Messages
 const getAllRoomMessages = async (req, res) => {
+  let authHeader = req.headers.authorization;
+  authHeader = authHeader || authHeader.startsWith("Bearer");
+  const token = authHeader.split(" ")[1];
+  const payload = await jwt.verify(token, process.env.ACCESS_TOKEN);
+  const idd = getIdFromToken(payload);
+  const Userid = mongoose.Types.ObjectId(idd);
+
   Message.find({ roomId: req.body.roomId })
     .sort({ createdAt: -1 })
     .then(async (val) => {
       if (val.length == 0) {
         res.status(StatusCodes.OK).json("No Mesasges to show");
       } else {
-        const tab = await getTrueFalseMesages(val);
+        const tab = await getTrueFalseMesages(val, Userid);
         res.status(StatusCodes.OK).json(tab);
       }
     })

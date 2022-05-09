@@ -110,13 +110,13 @@ const getDisc = async (val, id) => {
       const message = await Message.find({ roomId: x._id })
         .sort({ createdAt: -1 })
         .limit(1);
-      tab.push({ user: user, message: message[0] });
+      tab.push({ id: x._id, user: user, message: message[0] });
     } else {
       const user = await getUser(x.User1Id);
       const message = await Message.find({ roomId: x._id })
         .sort({ createdAt: -1 })
         .limit(1);
-      tab.push({ user: user, message: message[0] || "" });
+      tab.push({ id: x._id, user: user, message: message[0] || "" });
     }
   }
   return tab;

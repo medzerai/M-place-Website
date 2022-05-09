@@ -10,5 +10,4 @@ const messageRouter = express.Router();
 messageRouter.post("/AddChat", addMessage);
 messageRouter.get("/Chat", getAllRoomMessages);
 messageRouter.get("/Chat/disc", getMyDisc);
-
 export default messageRouter;
